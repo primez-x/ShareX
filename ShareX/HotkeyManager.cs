@@ -224,8 +224,9 @@ namespace ShareX
         {
             return new List<HotkeySettings>
             {
-                new HotkeySettings(HotkeyType.RectangleRegion, InputKey.Control | InputKey.PrintScreen),
-                new HotkeySettings(HotkeyType.PrintScreen, InputKey.PrintScreen),
+                // Print Screen selects a region, the same as the Windows Snipping Tool that ShareX replaces.
+                new HotkeySettings(HotkeyType.RectangleRegion, InputKey.PrintScreen),
+                new HotkeySettings(HotkeyType.PrintScreen, InputKey.Control | InputKey.PrintScreen),
                 new HotkeySettings(HotkeyType.ActiveWindow, InputKey.Alt | InputKey.PrintScreen),
                 new HotkeySettings(HotkeyType.ScreenRecorder, InputKey.Shift | InputKey.PrintScreen),
                 new HotkeySettings(HotkeyType.ScreenRecorderGIF, InputKey.Control | InputKey.Shift | InputKey.PrintScreen)

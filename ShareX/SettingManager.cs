@@ -336,6 +336,18 @@ namespace ShareX
                 taskSettings.EnforceUploadPolicy(!taskSettings.UseDefaultDestinations);
             }
 
+            // Print Screen selects a region now, the same as Snipping Tool. Swap the keys only when both still have the old default keys.
+            HotkeySettings regionHotkey = HotkeysConfig.Hotkeys.FirstOrDefault(x => x.TaskSettings?.Job == HotkeyType.RectangleRegion &&
+                x.HotkeyInfo?.Hotkey == (InputKey.Control | InputKey.PrintScreen));
+            HotkeySettings fullScreenHotkey = HotkeysConfig.Hotkeys.FirstOrDefault(x => x.TaskSettings?.Job == HotkeyType.PrintScreen &&
+                x.HotkeyInfo?.Hotkey == InputKey.PrintScreen);
+
+            if (regionHotkey != null && fullScreenHotkey != null)
+            {
+                regionHotkey.HotkeyInfo.Hotkey = InputKey.PrintScreen;
+                fullScreenHotkey.HotkeyInfo.Hotkey = InputKey.Control | InputKey.PrintScreen;
+            }
+
             if (SystemOptions.DisableUpload)
             {
                 foreach (TaskSettings taskSettings in HotkeysConfig.Hotkeys.Select(x => x.TaskSettings))

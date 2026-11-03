@@ -33,7 +33,8 @@ $legacyApp = @'
     "AdvancedSettings": { "AutoShortenURLLength": 20 }
   },
   "ShowTray": true,
-  "ShowStartScreen": false
+  "ShowStartScreen": false,
+  "PrintScreenKeyQuestionAsked": true
 }
 '@
 $legacyHotkeys = @'

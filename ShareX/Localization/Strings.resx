@@ -3194,4 +3194,15 @@ You can later disable it from "After capture tasks" menu.</value>
   <data name="YourSystemAdminDisabledTheUploadFeature" xml:space="preserve">
     <value>Your system admin disabled the upload feature.</value>
   </data>
+  <data name="IntegrationHelpers_UsePrintScreenKeyQuestion" xml:space="preserve">
+    <value>Windows opens Snipping Tool when you press Print Screen, so ShareX does not get the key.
+
+Use Print Screen for ShareX instead? You can change this later in ShareX Settings or in Windows Settings &gt; Accessibility &gt; Keyboard.</value>
+  </data>
+  <data name="SettingsWindow_PrintScreenKeyUsedBySnippingTool" xml:space="preserve">
+    <value>Windows opens Snipping Tool when you press Print Screen, so the shortcuts below that use Print Screen do not run.</value>
+  </data>
+  <data name="SettingsWindow_UsePrintScreenKey" xml:space="preserve">
+    <value>Use Print Screen for ShareX</value>
+  </data>
 </root>

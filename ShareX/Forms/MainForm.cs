@@ -87,6 +87,8 @@ internal sealed class MainForm
 
         hotkeyManager.UpdateHotkeys(ApplicationState.HotkeysConfig.Hotkeys, !StartupOptions.IgnoreHotkeyWarning);
         DebugHelper.WriteLine("HotkeyManager started.");
+
+        IntegrationHelpers.AskToUsePrintScreenKey();
     }
 
     private async void HandleHotkeys(HotkeySettings hotkeySetting)

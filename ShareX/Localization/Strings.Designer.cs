@@ -4979,6 +4979,21 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("TaskHelpers_OpenQuickScreenColorPicker_Copied_to_clipboard___0_", resourceCulture);
             }
         }
+        public static string IntegrationHelpers_UsePrintScreenKeyQuestion {
+            get {
+                return ResourceManager.GetString("IntegrationHelpers_UsePrintScreenKeyQuestion", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_PrintScreenKeyUsedBySnippingTool {
+            get {
+                return ResourceManager.GetString("SettingsWindow_PrintScreenKeyUsedBySnippingTool", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_UsePrintScreenKey {
+            get {
+                return ResourceManager.GetString("SettingsWindow_UsePrintScreenKey", resourceCulture);
+            }
+        }
         public static string WorkerTask_DestinationBlockedByUploadPolicy {
             get {
                 return ResourceManager.GetString("WorkerTask_DestinationBlockedByUploadPolicy", resourceCulture);

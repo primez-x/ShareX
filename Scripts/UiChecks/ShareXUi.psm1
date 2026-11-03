@@ -34,7 +34,10 @@ function Reset-SxApp([string]$Repo = (Split-Path (Split-Path $PSScriptRoot -Pare
     if (Test-Path $script:Profile) { Remove-Item -Recurse -Force $script:Profile }
     New-Item -ItemType Directory -Force $script:App, $script:Profile, $script:Out | Out-Null
     Copy-Item (Join-Path $Repo 'ShareX\bin\Debug\*') $script:App -Recurse -Force
-    [IO.File]::WriteAllText((Join-Path $script:Profile 'ApplicationConfig.json'), $ConfigJson)
+    # Pre-answer the one-time Print Screen question, so the question does not block unattended checks.
+    $config = $ConfigJson | ConvertFrom-Json
+    $config | Add-Member -NotePropertyName PrintScreenKeyQuestionAsked -NotePropertyValue $true -Force
+    [IO.File]::WriteAllText((Join-Path $script:Profile 'ApplicationConfig.json'), ($config | ConvertTo-Json -Depth 10))
 }
 
 function Start-SxApp([string[]]$Arguments = @('-portable')) {

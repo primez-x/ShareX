@@ -27,14 +27,20 @@ using ShareX.HelpersLib;
 using ShareX.Localization;
 using System;
 using System.IO;
+using System.Linq;
 using MessageBox = ShareX.AvaloniaUI.MessageBox;
 using MessageBoxButtons = ShareX.AvaloniaUI.MessageBoxButtons;
 using MessageBoxIcon = ShareX.AvaloniaUI.MessageBoxIcon;
+using MessageBoxResult = ShareX.AvaloniaUI.DialogResult;
 
 namespace ShareX
 {
     public static class IntegrationHelpers
     {
+        // Windows 11 opens Snipping Tool on Print Screen unless this value is 0. Settings > Accessibility > Keyboard writes the same value.
+        private const string PrintScreenKeyPath = @"Control Panel\Keyboard";
+        private const string PrintScreenKeyForSnippingName = "PrintScreenKeyForSnippingEnabled";
+
         private static readonly string ApplicationPath = $"\"{Environment.ProcessPath}\"";
         private static readonly string FileIconPath = $"\"{FileHelpers.GetAbsolutePath("ShareX_File_Icon.ico")}\"";
 
@@ -404,6 +410,40 @@ namespace ShareX
 
             MessageBox.Show(Strings.ApplicationSettingsForm_cbSteamShowInApp_CheckedChanged_For_settings_to_take_effect_ShareX_needs_to_be_reopened_from_Steam_,
                 "ShareX", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// True when Windows opens Snipping Tool on Print Screen, so ShareX hotkeys that use Print Screen never run.
+        /// Windows 11 turns the Snipping Tool behavior on when the registry value does not exist.
+        /// </summary>
+        public static bool IsPrintScreenKeyUsedBySnippingTool()
+        {
+            if (!Helpers.IsWindows11OrGreater()) return false;
+
+            int? value = RegistryHelpers.GetValueDWord(PrintScreenKeyPath, PrintScreenKeyForSnippingName);
+            return value != 0;
+        }
+
+        /// <summary>Turns off the Windows setting that opens Snipping Tool on Print Screen, for the current user only.</summary>
+        public static void UsePrintScreenKeyForShareX()
+        {
+            RegistryHelpers.CreateRegistry(PrintScreenKeyPath, PrintScreenKeyForSnippingName, 0);
+        }
+
+        public static bool HasPrintScreenHotkey() =>
+            ApplicationState.HotkeysConfigOrNull?.Hotkeys?.Any(x => x.HotkeyInfo?.KeyCode == InputKey.PrintScreen) == true;
+
+        /// <summary>Asks one time whether ShareX takes the Print Screen key from Snipping Tool.</summary>
+        public static void AskToUsePrintScreenKey()
+        {
+            if (ApplicationState.Settings.PrintScreenKeyQuestionAsked || !HasPrintScreenHotkey() || !IsPrintScreenKeyUsedBySnippingTool()) return;
+
+            ApplicationState.Settings.PrintScreenKeyQuestionAsked = true;
+
+            if (MessageBox.Show(Strings.IntegrationHelpers_UsePrintScreenKeyQuestion, "ShareX", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == MessageBoxResult.Yes)
+            {
+                UsePrintScreenKeyForShareX();
+            }
         }
 
         public static void Uninstall()

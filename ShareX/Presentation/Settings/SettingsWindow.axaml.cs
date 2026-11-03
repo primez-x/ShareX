@@ -238,6 +238,19 @@ public partial class SettingsWindow : Window
             Children = { PageTitle(title, icon), Hint(Strings.SettingsWindow_ShortcutsHint) }
         };
 
+        // While Windows opens Snipping Tool on Print Screen, the Print Screen shortcuts below never run.
+        if (IntegrationHelpers.IsPrintScreenKeyUsedBySnippingTool())
+        {
+            StackPanel notice = new() { Spacing = 6, Margin = new Thickness(0, 10, 0, 0) };
+            notice.Children.Add(Hint(Strings.SettingsWindow_PrintScreenKeyUsedBySnippingTool));
+            notice.Children.Add(ActionButton(Strings.SettingsWindow_UsePrintScreenKey, () =>
+            {
+                IntegrationHelpers.UsePrintScreenKeyForShareX();
+                notice.IsVisible = false;
+            }));
+            header.Children.Add(notice);
+        }
+
         Grid page = new() { RowDefinitions = new RowDefinitions("Auto,*"), IsVisible = false };
         SettingsSearch.SetPageId(page, id);
         page.Children.Add(header);
