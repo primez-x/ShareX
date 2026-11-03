@@ -1643,65 +1643,11 @@
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Рабочие процессы</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Добавить эффекты изображений...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Поверх всех окон</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Анализировать изображение</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Украсить изображение</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Очистить представление миниатюр</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Объединить изображения</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Объединить изображения...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Копировать</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Удалить элемент с сервера...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Вы действительно хотите удалить этот элемент с сервера?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Удалить выбранный файл...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Удалить выбранный элемент</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>Ссылка на удаление</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Скачать выбранный URL</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Редактировать изображение</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Редактировать в фоторедакторе...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Файл</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Имя файла</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Имя файла с расширением</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Путь к файлу</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Перетащенные сюда файлы будут загружены с помощью ShareX.</value>
@@ -1709,83 +1655,20 @@
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Папка</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Изображение для форума</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Ссылка для форума</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Связанное изображение для форума</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Горизонтальный</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Горизонтально</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Используйте горячую клавишу для захвата или загрузки. Результаты появятся здесь в виде миниатюр.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML-изображение</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML-ссылка</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Связанное HTML-изображение</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Изображение</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Размеры изображения</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Изображение Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Ссылка Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Связанное изображение Markdown</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Максимизировать или восстановить</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Свернуть</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>OCR изображения...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Открыть</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Закрепить на экране</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Отпустите, чтобы загрузить файлы</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Отпустите, чтобы загрузить текст</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Не удалось удалить элемент с сервера.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Элемент удалён с сервера.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Удаление с сервера</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Изменить размер изображения...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Выполнить действие</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Искать с помощью визуального поиска Bing...</value>
@@ -1796,59 +1679,17 @@
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Поделиться выбранным URL</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>Горячие клавиши ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Сократить выбранный URL</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>Короткая ссылка</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Показать ошибки...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Показать QR-код...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Показать ответ...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Остановить загрузку</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Текст</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Перетащенный сюда текст будет загружен с помощью ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Файл миниатюры</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Миниатюра изображения</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Ссылка на миниатюру</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Обрезать анимированный GIF...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Обрезать видео...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Загрузить выбранный файл</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>Ссылка</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Вертикальный</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Вертикально</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Подсветка кликов мыши</value>
@@ -3019,9 +2860,6 @@
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>Эта функция не будет работать, когда опция "DisableUpload" включена!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Задача без названия</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Отмена</value>

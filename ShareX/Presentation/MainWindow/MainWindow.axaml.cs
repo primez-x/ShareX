@@ -27,29 +27,28 @@
 
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
+using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using ShareX.AvaloniaUI.Theming;
 using ShareX.HelpersLib;
 using ShareX.Localization;
-using ShareX.UploadersLib;
-using ShareX.UploadersLib.FileUploaders;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using AvaloniaBitmap = Avalonia.Media.Imaging.Bitmap;
 using DrawingBitmap = SkiaSharp.SKBitmap;
 using DrawingPoint = System.Drawing.Point;
 using DrawingSize = System.Drawing.Size;
-using ImageOrientation = ShareX.HelpersLib.ImageOrientation;
 using MessageBox = ShareX.AvaloniaUI.MessageBox;
 using MessageBoxButtons = ShareX.AvaloniaUI.MessageBoxButtons;
 using MessageBoxResult = ShareX.AvaloniaUI.DialogResult;
@@ -58,33 +57,38 @@ namespace ShareX;
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    // Card margin (4 + 4), padding (6 + 6) and border (1 + 1).
+    private const double CardChrome = 22;
+    private const int PreviewWidth = 600;
+    private const int PreviewHeight = 440;
+
     private readonly ITrayIconService _trayIconService;
     private readonly MainMenuPresenter _menuPresenter;
-    private readonly MainMenuBuilder _navigationMenuBuilder;
-    private readonly UploadInfoManager _uploadInfoManager = new();
-    private PointerPressedEventArgs? _thumbnailDragTrigger;
-    private Task<IStorageFile?>? _thumbnailDragFileTask;
-    private IPointer? _thumbnailDragPointer;
-    private Point _thumbnailDragStart;
-    private bool _thumbnailDragStarted;
-    private int _thumbnailDragVersion;
-    private ThumbnailItemViewModel? _thumbnailDragSource;
-    private ThumbnailItemViewModel? _thumbnailCombineTarget;
-    private bool _suppressThumbnailClickAction;
+    private readonly MainMenuBuilder _menuBuilder = new();
+    private readonly CaptureLibrary _library = new();
+    private readonly DispatcherTimer _searchTimer;
+    private readonly DispatcherTimer _relativeTimeTimer;
+    private CaptureLibraryFilter _filter = CaptureLibraryFilter.All;
+    private DrawingSize _thumbnailSize;
+    private ScrollViewer? _scrollViewer;
+    private CaptureLibraryItem? _selected;
+    private CancellationTokenSource? _previewCancellation;
+    private AvaloniaBitmap? _previewBitmap;
+    private PointerPressedEventArgs? _dragTrigger;
+    private CaptureLibraryItem? _dragItem;
+    private Point _dragStart;
+    private bool _dragStarted;
+    private bool _libraryStarted;
     private bool _allowClose;
     private bool _disposed;
-    private readonly List<ThumbnailItemViewModel> _selectionOrder = new();
-    private ThumbnailItemViewModel? _selectionAnchor;
 
-    internal ObservableCollection<ThumbnailItemViewModel> ThumbnailItems { get; } = new();
-    internal ObservableCollection<HotkeyTipViewModel> HotkeyTips { get; } = new();
     public AvaloniaBitmap? TitleBarIcon { get; private set; }
-    public bool IsEmpty => ThumbnailItems.Count == 0;
     public bool IsWindowMaximized => WindowState == Avalonia.Controls.WindowState.Maximized;
     public bool IsDarkTheme => ThemeManager.IsDarkTheme;
     public string ThemeToggleText => IsDarkTheme
         ? Strings.ApplicationSettingsWindow_Dark
         : Strings.ApplicationSettingsWindow_Light;
+    public string NewCaptureTip => ActionsToolbarWindowIntegration.GetActionTip(HotkeyType.RectangleRegion);
 
     public MainWindow() : this(MainWindowIntegration.TrayIconService, MainWindowIntegration.MenuPresenter)
     {
@@ -94,35 +98,41 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         _trayIconService = trayIconService;
         _menuPresenter = menuPresenter;
-        _navigationMenuBuilder = new MainMenuBuilder();
 
         InitializeComponent();
         RequestedThemeVariant = ThemeManager.GetCurrentTheme();
         Title = ApplicationInfo.Title;
         UpdateTitleBarIcon();
         DataContext = this;
-
-        BuildNavigation();
-        ConfigureWindowHeightFromNavigation();
         RestoreWindowBounds();
-        RefreshHotkeyTips();
 
-        foreach (WorkerTask task in TaskManager.Tasks)
+        CaptureRows.ItemsSource = _library.Gallery.Rows;
+        CaptureRows.AddHandler(PointerPressedEvent, OnRowsPointerPressed, RoutingStrategies.Tunnel, handledEventsToo: true);
+        CaptureRows.AddHandler(PointerMovedEvent, OnRowsPointerMoved, RoutingStrategies.Tunnel, handledEventsToo: true);
+        CaptureRows.AddHandler(PointerReleasedEvent, OnRowsPointerReleased, RoutingStrategies.Tunnel, handledEventsToo: true);
+        CaptureRows.AddHandler(KeyDownEvent, OnRowsKeyDown, RoutingStrategies.Tunnel);
+        _library.ItemsChanged += OnLibraryItemsChanged;
+
+        _searchTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(250) };
+        _searchTimer.Tick += (_, _) =>
         {
-            AddTask(task);
-        }
+            _searchTimer.Stop();
+            ReloadLibrary();
+        };
 
-        TaskManager.TaskAdded += OnTaskAdded;
-        TaskManager.TaskRemoved += OnTaskRemoved;
-        TaskManager.TaskChanged += OnTaskChanged;
-        TaskManager.TaskImageReady += OnTaskImageReady;
-        TaskManager.TaskCollectionChanged += OnTaskCollectionChanged;
+        _relativeTimeTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
+        _relativeTimeTimer.Tick += (_, _) =>
+        {
+            foreach (CaptureLibraryItem item in _library.Items) item.RefreshTime();
+        };
+
         ThemeManager.ThemeChanged += OnThemeChanged;
-
+        Opened += OnOpened;
         Closing += OnClosing;
         PositionChanged += (_, _) => SaveWindowBounds();
         Resized += (_, _) => SaveWindowBounds();
         KeyDown += OnWindowKeyDown;
+        UpdatePreview();
     }
 
     public void ShowAndActivate()
@@ -160,6 +170,54 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         Title = title;
     }
 
+    /// <summary>
+    /// Runs after menu commands and setting changes. Updates the toolbar, the empty state and the preview actions.
+    /// The library data updates through history and task events, so the library loads again only when the thumbnail size changed.
+    /// </summary>
+    public void RefreshMenus()
+    {
+        RequestedThemeVariant = ThemeManager.GetCurrentTheme();
+        OnPropertyChanged(nameof(NewCaptureTip));
+        UpdateEmptyState();
+        UpdatePreviewActions();
+
+        if (_libraryStarted && GetThumbnailSize() != _thumbnailSize)
+        {
+            ReloadLibrary();
+        }
+    }
+
+    public void CloseFromHost()
+    {
+        if (_disposed)
+        {
+            return;
+        }
+
+        _allowClose = true;
+        Close();
+    }
+
+    private async void OnOpened(object? sender, EventArgs e)
+    {
+        Opened -= OnOpened;
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            _scrollViewer = CaptureRows.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.ScrollChanged += OnScrollChanged;
+            }
+            UpdateColumns();
+        }, DispatcherPriority.Loaded);
+
+        _libraryStarted = true;
+        _relativeTimeTimer.Start();
+        ReloadLibrary();
+    }
+
+    #region Title bar
+
     private void OnThemeToggleClick(object? sender, RoutedEventArgs e)
     {
         string theme = ThemeManager.IsDarkTheme ? "Light" : "Dark";
@@ -192,317 +250,192 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         Close();
     }
 
-    public void RefreshMenus()
+    #endregion Title bar
+
+    #region Toolbar
+
+    private void OnNewCaptureClick(object? sender, RoutedEventArgs e) => RunCaptureAction(HotkeyType.RectangleRegion);
+
+    private static void RunCaptureAction(HotkeyType action) => _ = TaskHelpers.ExecuteJob(action, autoHideMainWindow: true);
+
+    private void OnNewCaptureMenuClick(object? sender, RoutedEventArgs e)
     {
-        RequestedThemeVariant = ThemeManager.GetCurrentTheme();
-        BuildNavigation();
-        RefreshHotkeyTips();
+        List<MainMenuEntry> entries = [];
 
-        foreach (ThumbnailItemViewModel item in ThumbnailItems)
+        foreach (HotkeyType action in ApplicationState.Settings.CapturePanelActions ?? [])
         {
-            item.RefreshSettings();
-        }
-
-        NotifyTaskCollectionChanged();
-    }
-
-    public void CloseFromHost()
-    {
-        if (_disposed)
-        {
-            return;
-        }
-
-        _allowClose = true;
-        Close();
-    }
-
-    private void BuildNavigation()
-    {
-        NavigationPanel.Children.Clear();
-
-        foreach (IReadOnlyList<MainNavigationSection> group in _navigationMenuBuilder.BuildNavigation())
-        {
-            MainNavigationSection[] sections = group.Where(x => x.IsVisible).ToArray();
-            if (sections.Length == 0)
+            if (action == HotkeyType.None)
             {
+                if (entries.Count > 0 && !entries[^1].IsSeparator) entries.Add(MainMenuEntry.Separator());
                 continue;
             }
 
-            if (NavigationPanel.Children.Count > 0)
-            {
-                NavigationPanel.Children.Add(new Separator { Margin = new Thickness(5, 2) });
-            }
-
-            foreach (MainNavigationSection section in sections)
-            {
-                Button button = new()
-                {
-                    Classes = { "nav-button" },
-                    Content = CreateNavigationContent(section),
-                    Tag = section
-                };
-                button.Click += OnNavigationClick;
-                NavigationPanel.Children.Add(button);
-            }
+            HotkeyType selectedAction = action;
+            entries.Add(new MainMenuEntry(ActionsToolbarWindowIntegration.GetActionLabel(selectedAction),
+                TaskHelpers.FindMenuLucideIcon(selectedAction), () => RunCaptureAction(selectedAction)));
         }
+
+        if (entries.Count > 0 && !entries[^1].IsSeparator) entries.Add(MainMenuEntry.Separator());
+        entries.Add(new MainMenuEntry(Strings.MainWindow_ShowCapturePanel, LucideIcons.panel_top, ActionsToolbarWindowIntegration.Show));
+
+        _menuPresenter.TryOpenContextMenu(MainMenuPresenter.BuildContextMenu(entries), NewCaptureMenuButton,
+            PlacementMode.BottomEdgeAlignedLeft);
     }
 
-    private void ConfigureWindowHeightFromNavigation()
+    private void OnSearchTextChanged(object? sender, TextChangedEventArgs e)
     {
-        Avalonia.Size availableSize = new(double.PositiveInfinity, double.PositiveInfinity);
-        NavigationPanel.Measure(availableSize);
-        TitleBar.Measure(availableSize);
+        if (!_libraryStarted) return;
+        _searchTimer.Stop();
+        _searchTimer.Start();
+    }
 
-        double navigationHeight = Math.Ceiling(NavigationPanel.DesiredSize.Height);
-        double titleBarHeight = Math.Ceiling(TitleBar.DesiredSize.Height);
-        double frameHeight = WindowFrame.BorderThickness.Top + WindowFrame.BorderThickness.Bottom;
-        double windowHeight = navigationHeight + titleBarHeight + frameHeight;
-
-        if (windowHeight <= 0 || double.IsNaN(windowHeight) || double.IsInfinity(windowHeight))
+    private void OnFilterClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not ToggleButton { Tag: CaptureLibraryFilter filter })
         {
             return;
         }
 
-        MinHeight = windowHeight;
-
-        DrawingSize savedSize = ApplicationState.Settings.MainFormSize;
-        if (!ApplicationState.Settings.RememberMainFormSize || savedSize.IsEmpty)
+        foreach (ToggleButton chip in FilterPanel.Children.OfType<ToggleButton>())
         {
-            Height = windowHeight;
+            chip.IsChecked = Equals(chip.Tag, filter);
+        }
+
+        if (_filter != filter)
+        {
+            _filter = filter;
+            ReloadLibrary();
         }
     }
 
-    private static Control CreateNavigationContent(MainNavigationSection section)
+    private void OnMoreClick(object? sender, RoutedEventArgs e)
     {
-        Grid grid = new() { ColumnDefinitions = new ColumnDefinitions("20,7,*,Auto") };
-        grid.Children.Add(MainMenuPresenter.CreateAccentMenuIcon(section.Icon, 16));
-
-        TextBlock label = new()
-        {
-            Text = section.Header,
-            FontWeight = FontWeight.Normal,
-            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
-        };
-        Grid.SetColumn(label, 2);
-        grid.Children.Add(label);
-
-        if (section.CreateChildren != null || section.CreateCategories != null)
-        {
-            TextBlock chevron = MainMenuPresenter.CreateAccentMenuIcon(LucideIcons.chevron_right, 14);
-            chevron.Margin = new Thickness(5, 0, 0, 0);
-            chevron.Opacity = 0.7;
-            Grid.SetColumn(chevron, 3);
-            grid.Children.Add(chevron);
-        }
-
-        return grid;
+        _menuPresenter.TryOpenContextMenu(MainMenuPresenter.BuildContextMenu(_menuBuilder.BuildMoreMenu()), MoreButton,
+            PlacementMode.BottomEdgeAlignedRight);
     }
 
-    private void OnNavigationClick(object? sender, RoutedEventArgs e)
+    private void OnSettingsClick(object? sender, RoutedEventArgs e) => SettingsIntegration.Show();
+
+    #endregion Toolbar
+
+    #region Library
+
+    private static DrawingSize GetThumbnailSize()
     {
-        if (sender is not Button button || button.Tag is not MainNavigationSection section)
+        DrawingSize size = ApplicationState.Settings.ThumbnailSize;
+        return new DrawingSize(Math.Max(96, size.Width), Math.Max(72, size.Height));
+    }
+
+    private void ReloadLibrary()
+    {
+        if (_disposed || !_libraryStarted) return;
+
+        Select(null);
+        _thumbnailSize = GetThumbnailSize();
+        UpdateColumns();
+        if (_scrollViewer != null) _scrollViewer.Offset = default;
+        _ = _library.ReloadAsync(SearchTextBox.Text ?? string.Empty, _filter, _thumbnailSize.Width, _thumbnailSize.Height);
+    }
+
+    private void OnLibraryItemsChanged()
+    {
+        if (_selected != null && _library.Gallery.IndexOf(_selected) < 0)
+        {
+            Select(null);
+        }
+        else if (_selected?.IsTask == true)
+        {
+            UpdatePreviewText(_selected);
+            UpdatePreviewActions();
+        }
+
+        UpdateEmptyState();
+        Dispatcher.UIThread.Post(LoadMoreIfViewportNotFilled, DispatcherPriority.Background);
+    }
+
+    private void UpdateEmptyState()
+    {
+        bool empty = _library.IsLoaded && _library.Items.Count == 0;
+        EmptyState.IsVisible = empty;
+        if (!empty) return;
+
+        bool filtered = _library.HasSearchOrFilter;
+        EmptyStateTitle.Text = filtered ? Strings.MainWindow_NoMatchingCaptures : Strings.MainWindow_NoCapturesYet;
+        EmptyStateHint.IsVisible = !filtered;
+        EmptyStateCaptureButton.IsVisible = !filtered;
+
+        string? hotkey = ActionsToolbarWindowIntegration.GetHotkeyText(HotkeyType.RectangleRegion);
+        EmptyStateHint.Text = hotkey == null
+            ? Strings.MainWindow_CaptureHint
+            : string.Format(Strings.MainWindow_CaptureHintHotkey, hotkey);
+    }
+
+    private void OnCaptureRowsSizeChanged(object? sender, SizeChangedEventArgs e) => UpdateColumns();
+
+    private void UpdateColumns()
+    {
+        // The list padding (6 + 6) and the vertical scroll bar take part of the width.
+        double availableWidth = CaptureRows.Bounds.Width - 12 - 14;
+        double cardWidth = GetThumbnailSize().Width + CardChrome;
+        _library.Gallery.UpdateColumns(availableWidth, cardWidth);
+
+        // Center the columns, so the space left over after the last column does not collect on the right side.
+        double leftover = Math.Max(0, availableWidth - _library.Gallery.Columns * cardWidth);
+        CaptureRows.Padding = new Thickness(6 + Math.Floor(leftover / 2), 6, 6, 6);
+    }
+
+    private void OnScrollChanged(object? sender, ScrollChangedEventArgs e)
+    {
+        if (_scrollViewer == null) return;
+        double remaining = _scrollViewer.Extent.Height - _scrollViewer.Viewport.Height - _scrollViewer.Offset.Y;
+        if (remaining <= Math.Max(300, _thumbnailSize.Height * 2)) _ = _library.LoadMoreAsync();
+    }
+
+    private void LoadMoreIfViewportNotFilled()
+    {
+        if (_scrollViewer == null || !_library.HasMore) return;
+        if (_scrollViewer.Extent.Height <= _scrollViewer.Viewport.Height + 1) _ = _library.LoadMoreAsync();
+    }
+
+    private async void OnCardAttached(object? sender, VisualTreeAttachmentEventArgs e) =>
+        await _library.Gallery.AttachAsync(sender as Control);
+
+    private void OnCardDetached(object? sender, VisualTreeAttachmentEventArgs e) => _library.Gallery.Detach(sender as Control);
+
+    private async void OnCardDataContextChanged(object? sender, EventArgs e)
+    {
+        if (sender is Control control && control.IsAttachedToVisualTree())
+        {
+            _library.Gallery.Detach(control);
+            await _library.Gallery.AttachAsync(control);
+        }
+    }
+
+    private void OnCardClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is Control { DataContext: CaptureLibraryItem item })
+        {
+            Select(item);
+        }
+    }
+
+    private static CaptureLibraryItem? GetItem(object? source) =>
+        (source as Visual)?.FindAncestorOfType<Button>(includeSelf: true)?.DataContext as CaptureLibraryItem;
+
+    private void OnRowsPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if ((e.Source as Visual)?.FindAncestorOfType<ScrollBar>(includeSelf: true) != null)
         {
             return;
         }
 
-        if (section.Execute != null)
-        {
-            section.Execute();
-            return;
-        }
-
-        if (section.CreateCategories != null)
-        {
-            Flyout flyout = MainMenuPresenter.BuildGridMenu(section.CreateCategories());
-            _menuPresenter.TryOpenGridMenu(flyout, button);
-        }
-        else if (section.CreateChildren != null)
-        {
-            ContextMenu menu = MainMenuPresenter.BuildContextMenu(section.CreateChildren());
-            _menuPresenter.TryOpenContextMenu(menu, button, PlacementMode.RightEdgeAlignedTop);
-        }
-    }
-
-    private void OnTaskAdded(WorkerTask task) => Dispatcher.UIThread.Post(() => AddTask(task));
-
-    private void AddTask(WorkerTask task)
-    {
-        if (ThumbnailItems.Any(x => ReferenceEquals(x.Task, task)))
-        {
-            return;
-        }
-
-        ThumbnailItemViewModel item = new(task);
-        ThumbnailItems.Insert(0, item);
-
-        NotifyTaskCollectionChanged();
-    }
-
-    private void OnTaskRemoved(WorkerTask task) => Dispatcher.UIThread.Post(() =>
-    {
-        ThumbnailItemViewModel? item = ThumbnailItems.FirstOrDefault(x => ReferenceEquals(x.Task, task));
-        if (item != null)
-        {
-            _selectionOrder.Remove(item);
-            if (ReferenceEquals(_selectionAnchor, item))
-            {
-                _selectionAnchor = null;
-            }
-
-            ThumbnailItems.Remove(item);
-            item.Dispose();
-        }
-
-        NotifyTaskCollectionChanged();
-    });
-
-    private void OnTaskChanged(WorkerTask task) => Dispatcher.UIThread.Post(() =>
-    {
-        ThumbnailItems.FirstOrDefault(x => ReferenceEquals(x.Task, task))?.Refresh();
-    });
-
-    private void OnTaskImageReady(WorkerTask task, DrawingBitmap image)
-    {
-        if (image == null)
-        {
-            return;
-        }
-
-        DrawingBitmap imageCopy;
-
-        try
-        {
-            // WorkerTask owns and disposes the ImageReady bitmap as soon as the event returns.
-            // Give the asynchronous Avalonia decoder its own image to avoid sharing mutable bitmap pixels.
-            imageCopy = (DrawingBitmap)image.Copy();
-        }
-        catch (Exception e)
-        {
-            DebugHelper.WriteException(e);
-            return;
-        }
-
-        Dispatcher.UIThread.Post(() =>
-        {
-            if (_disposed)
-            {
-                imageCopy.Dispose();
-                return;
-            }
-
-            ThumbnailItemViewModel? item = ThumbnailItems.FirstOrDefault(x => ReferenceEquals(x.Task, task));
-
-            if (item != null)
-            {
-                item.RefreshFromOwnedImage(imageCopy);
-            }
-            else
-            {
-                imageCopy.Dispose();
-            }
-        });
-    }
-
-    private void OnTaskCollectionChanged() => Dispatcher.UIThread.Post(NotifyTaskCollectionChanged);
-
-    private void OnThemeChanged(object? sender, Avalonia.Styling.ThemeVariant theme) =>
-        Dispatcher.UIThread.Post(() =>
-        {
-            RequestedThemeVariant = theme;
-            OnPropertyChanged(nameof(IsDarkTheme));
-            OnPropertyChanged(nameof(ThemeToggleText));
-        });
-
-    private void NotifyTaskCollectionChanged()
-    {
-        OnPropertyChanged(nameof(IsEmpty));
-    }
-
-    private void RefreshHotkeyTips()
-    {
-        HotkeyTips.Clear();
-
-        if (ApplicationState.HotkeysConfigOrNull?.Hotkeys == null)
-        {
-            return;
-        }
-
-        foreach (HotkeySettings hotkey in ApplicationState.HotkeysConfig.Hotkeys.Where(x => x.HotkeyInfo.IsValidHotkey))
-        {
-            HotkeyTips.Add(new HotkeyTipViewModel(hotkey));
-        }
-    }
-
-    private IReadOnlyList<ThumbnailItemViewModel> GetSelectedItems()
-    {
-        _selectionOrder.RemoveAll(item => !item.IsSelected || !ThumbnailItems.Contains(item));
-
-        // Keep the list resilient if selection state is ever changed outside the
-        // pointer handlers. Such items have no interaction order, so append them.
-        foreach (ThumbnailItemViewModel item in ThumbnailItems.Where(item => item.IsSelected && !_selectionOrder.Contains(item)))
-        {
-            _selectionOrder.Add(item);
-        }
-
-        return _selectionOrder.ToArray();
-    }
-
-    private void SetSelected(ThumbnailItemViewModel item, bool selected)
-    {
-        item.IsSelected = selected;
-
-        if (selected)
-        {
-            if (!_selectionOrder.Contains(item))
-            {
-                _selectionOrder.Add(item);
-            }
-        }
-        else
-        {
-            _selectionOrder.Remove(item);
-        }
-    }
-
-    private void ClearSelection()
-    {
-        foreach (ThumbnailItemViewModel item in ThumbnailItems)
-        {
-            item.IsSelected = false;
-        }
-
-        _selectionOrder.Clear();
-    }
-
-    private void SelectOnly(ThumbnailItemViewModel selected)
-    {
-        ClearSelection();
-        SetSelected(selected, true);
-        _selectionAnchor = selected;
-    }
-
-    private void OnThumbnailPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (sender is not Control control || control.DataContext is not ThumbnailItemViewModel item)
-        {
-            return;
-        }
-
-        PointerPoint point = e.GetCurrentPoint(control);
-        int index = ThumbnailItems.IndexOf(item);
+        CaptureLibraryItem? item = GetItem(e.Source);
+        PointerPoint point = e.GetCurrentPoint(CaptureRows);
 
         if (point.Properties.PointerUpdateKind == PointerUpdateKind.RightButtonPressed)
         {
             _menuPresenter.CloseActiveContextMenu();
-            ThumbnailPanel.Focus(NavigationMethod.Pointer, e.KeyModifiers);
-
-            if (!item.IsSelected)
-            {
-                SelectOnly(item);
-            }
-
-            e.Handled = true;
+            if (item != null) Select(item);
             return;
         }
 
@@ -511,97 +444,60 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             return;
         }
 
-        ThumbnailPanel.Focus(NavigationMethod.Pointer, e.KeyModifiers);
+        ResetDrag();
+        Select(item);
 
-        bool isControlPressed = e.KeyModifiers.HasFlag(KeyModifiers.Control);
-        bool isShiftPressed = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
-        _suppressThumbnailClickAction = isControlPressed || isShiftPressed;
-
-        int anchorIndex = _selectionAnchor == null ? -1 : ThumbnailItems.IndexOf(_selectionAnchor);
-
-        if (isShiftPressed && anchorIndex >= 0)
-        {
-            if (!isControlPressed)
-            {
-                ClearSelection();
-            }
-
-            int direction = index >= anchorIndex ? 1 : -1;
-            for (int i = anchorIndex; ; i += direction)
-            {
-                SetSelected(ThumbnailItems[i], true);
-                if (i == index) break;
-            }
-        }
-        else if (isControlPressed)
-        {
-            SetSelected(item, !item.IsSelected);
-            _selectionAnchor = item;
-        }
-        else
-        {
-            SelectOnly(item);
-        }
-
-        PrepareThumbnailDrag(control, item, e);
-        e.Handled = true;
-    }
-
-    private void PrepareThumbnailDrag(Control control, ThumbnailItemViewModel item, PointerPressedEventArgs e)
-    {
-        ResetThumbnailDrag();
-
-        string? filePath = item.Task.Info?.FilePath;
-        if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+        if (item == null)
         {
             return;
         }
 
-        _thumbnailDragTrigger = e;
-        _thumbnailDragFileTask = StorageProvider.TryGetFileFromPathAsync(filePath);
-        _thumbnailDragSource = item;
-        _thumbnailDragPointer = e.Pointer;
-        _thumbnailDragStart = e.GetPosition(control);
-        e.Pointer.Capture(control);
+        if (e.ClickCount == 2)
+        {
+            Dispatcher.UIThread.Post(() => RunDefaultAction(item));
+            return;
+        }
+
+        _dragTrigger = e;
+        _dragItem = item;
+        _dragStart = point.Position;
     }
 
-    private async void OnThumbnailPointerMoved(object? sender, PointerEventArgs e)
+    private async void OnRowsPointerMoved(object? sender, PointerEventArgs e)
     {
-        if (sender is not Control control ||
-            _thumbnailDragTrigger == null ||
-            _thumbnailDragFileTask == null ||
-            _thumbnailDragStarted ||
-            !e.GetCurrentPoint(control).Properties.IsLeftButtonPressed)
+        if (_dragTrigger == null || _dragItem == null || _dragStarted ||
+            !e.GetCurrentPoint(CaptureRows).Properties.IsLeftButtonPressed)
         {
             return;
         }
 
-        Point position = e.GetPosition(control);
+        Point position = e.GetPosition(CaptureRows);
         Size dragSize = Application.Current?.PlatformSettings?.GetTapSize(PointerType.Mouse) ?? new Size(4, 4);
-        if (Math.Abs(position.X - _thumbnailDragStart.X) < dragSize.Width / 2d &&
-            Math.Abs(position.Y - _thumbnailDragStart.Y) < dragSize.Height / 2d)
+        if (Math.Abs(position.X - _dragStart.X) < dragSize.Width / 2d &&
+            Math.Abs(position.Y - _dragStart.Y) < dragSize.Height / 2d)
         {
             return;
         }
 
-        _thumbnailDragStarted = true;
-        int version = _thumbnailDragVersion;
-        PointerPressedEventArgs trigger = _thumbnailDragTrigger;
-        Task<IStorageFile?> fileTask = _thumbnailDragFileTask;
-        _thumbnailDragPointer = null;
+        if (!TryGetExistingFile(_dragItem, out string filePath))
+        {
+            ResetDrag();
+            return;
+        }
+
+        _dragStarted = true;
+        PointerPressedEventArgs trigger = _dragTrigger;
         e.Pointer.Capture(null);
 
         try
         {
-            IStorageFile? file = await fileTask;
-            if (file == null || version != _thumbnailDragVersion)
+            IStorageFile? file = await StorageProvider.TryGetFileFromPathAsync(filePath);
+            if (file != null)
             {
-                return;
+                DataTransfer data = new();
+                data.Add(DataTransferItem.CreateFile(file));
+                await DragDrop.DoDragDropAsync(trigger, data, DragDropEffects.Copy);
             }
-
-            DataTransfer data = new();
-            data.Add(DataTransferItem.CreateFile(file));
-            await DragDrop.DoDragDropAsync(trigger, data, DragDropEffects.Copy);
         }
         catch (Exception ex)
         {
@@ -609,473 +505,337 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
         finally
         {
-            ResetThumbnailDrag();
+            ResetDrag();
         }
     }
 
-    private void OnThumbnailPointerReleased(object? sender, PointerReleasedEventArgs e)
+    private void OnRowsPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        if (sender is not Control control || control.DataContext is not ThumbnailItemViewModel item)
+        PointerUpdateKind kind = e.GetCurrentPoint(CaptureRows).Properties.PointerUpdateKind;
+
+        if (kind == PointerUpdateKind.LeftButtonReleased && !_dragStarted)
         {
-            return;
+            ResetDrag();
         }
-
-        PointerUpdateKind pointerUpdateKind = e.GetCurrentPoint(control).Properties.PointerUpdateKind;
-
-        if (pointerUpdateKind == PointerUpdateKind.LeftButtonReleased)
+        else if (kind == PointerUpdateKind.RightButtonReleased && GetItem(e.Source) is { } item &&
+            (e.Source as Visual)?.FindAncestorOfType<Button>(includeSelf: true) is Button card)
         {
-            bool wasDragging = _thumbnailDragStarted;
-            ResetThumbnailDrag();
+            _menuPresenter.TryOpenContextMenu(MainMenuPresenter.BuildContextMenu(BuildItemMenu(item)), card, PlacementMode.Pointer);
+            e.Handled = true;
+        }
+    }
 
-            if (!wasDragging &&
-                !_suppressThumbnailClickAction &&
-                ApplicationState.Settings.ThumbnailClickAction != ThumbnailViewClickAction.Select)
+    private void ResetDrag()
+    {
+        _dragTrigger = null;
+        _dragItem = null;
+        _dragStarted = false;
+    }
+
+    private void OnRowsKeyDown(object? sender, KeyEventArgs e)
+    {
+        CaptureLibraryItem? item = _selected;
+        int count = _library.Items.Count;
+
+        if (count > 0 && e.Key is Key.Left or Key.Right or Key.Up or Key.Down or Key.Home or Key.End)
+        {
+            int current = item == null ? -1 : _library.Gallery.IndexOf(item);
+            int columns = _library.Gallery.Columns;
+            int next = e.Key switch
             {
-                ExecuteThumbnailClick(item, ApplicationState.Settings.ThumbnailClickAction);
-            }
-
-            e.Handled = true;
-            return;
+                Key.Left => current - 1,
+                Key.Right => current + 1,
+                Key.Up => current - columns,
+                Key.Down => current + columns,
+                Key.Home => 0,
+                _ => count - 1
+            };
+            SelectAndFocus(_library.Items[Math.Clamp(current < 0 ? 0 : next, 0, count - 1)]);
         }
-
-        if (pointerUpdateKind != PointerUpdateKind.RightButtonReleased)
-        {
-            return;
-        }
-
-        ContextMenu contextMenu = BuildTaskContextMenu();
-        _menuPresenter.TryOpenContextMenu(contextMenu, control, PlacementMode.Pointer);
-        e.Handled = true;
-    }
-
-    private void OnThumbnailPointerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
-    {
-        if (!_thumbnailDragStarted)
-        {
-            ResetThumbnailDrag();
-        }
-    }
-
-    private void ResetThumbnailDrag()
-    {
-        _thumbnailDragVersion++;
-        _thumbnailDragTrigger = null;
-        _thumbnailDragFileTask = null;
-        _thumbnailDragStarted = false;
-        _thumbnailDragSource = null;
-        ClearThumbnailCombineTarget();
-
-        IPointer? pointer = _thumbnailDragPointer;
-        _thumbnailDragPointer = null;
-        pointer?.Capture(null);
-    }
-
-    private void OnThumbnailTitlePointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (sender is Control control &&
-            e.GetCurrentPoint(control).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed)
-        {
-            e.Handled = true;
-        }
-    }
-
-    private void OnThumbnailTitlePointerReleased(object? sender, PointerReleasedEventArgs e)
-    {
-        if (sender is not Control { DataContext: ThumbnailItemViewModel item } control ||
-            e.GetCurrentPoint(control).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonReleased)
-        {
-            return;
-        }
-
-        TaskInfo? info = item.Task.Info;
-        string? url = info?.Result?.ToString();
-
-        if (!string.IsNullOrEmpty(url))
-        {
-            URLHelpers.OpenURL(url);
-        }
-        else if (!string.IsNullOrEmpty(info?.FilePath))
-        {
-            FileHelpers.OpenFile(info.FilePath);
-        }
+        else if (item != null && e.Key == Key.Enter && e.KeyModifiers == KeyModifiers.None) RunDefaultAction(item);
+        else if (item != null && e.Key == Key.Delete) DeleteItem(item);
+        else if (item != null && e.Key == Key.C && e.KeyModifiers == KeyModifiers.Control) CopyItem(item);
+        else if (item != null && e.Key == Key.C && e.KeyModifiers == (KeyModifiers.Control | KeyModifiers.Shift)) CopyFilePath(item);
+        else if (item != null && e.Key == Key.E && e.KeyModifiers == KeyModifiers.Control) EditItem(item);
+        else return;
 
         e.Handled = true;
     }
 
-    private void OnThumbnailDoubleTapped(object? sender, TappedEventArgs e)
+    private void SelectAndFocus(CaptureLibraryItem item)
     {
-        if (sender is Control { DataContext: ThumbnailItemViewModel item } &&
-            !_suppressThumbnailClickAction &&
-            ApplicationState.Settings.ThumbnailClickAction == ThumbnailViewClickAction.Select)
+        Select(item);
+        int index = _library.Gallery.IndexOf(item);
+        CaptureRows.ScrollIntoView(index / _library.Gallery.Columns);
+
+        Dispatcher.UIThread.Post(() =>
         {
-            ExecuteThumbnailClick(item, ThumbnailViewClickAction.OpenFile);
-            e.Handled = true;
+            CaptureRows.GetVisualDescendants().OfType<Button>()
+                .FirstOrDefault(x => ReferenceEquals(x.DataContext, item))?
+                .Focus(NavigationMethod.Directional);
+        }, DispatcherPriority.Loaded);
+    }
+
+    private void Select(CaptureLibraryItem? item)
+    {
+        if (ReferenceEquals(_selected, item)) return;
+
+        if (_selected != null) _selected.IsSelected = false;
+        _selected = item;
+        if (item != null) item.IsSelected = true;
+        UpdatePreview();
+    }
+
+    #endregion Library
+
+    #region Preview and actions
+
+    private void UpdatePreview()
+    {
+        CaptureLibraryItem? item = _selected;
+        _previewCancellation?.Cancel();
+        _previewCancellation = null;
+        SetPreviewBitmap(null);
+
+        PreviewHint.IsVisible = item == null;
+        PreviewPanel.IsVisible = item != null;
+        if (item == null) return;
+
+        PreviewPlaceholder.Text = item.PlaceholderIcon;
+        PreviewDimensionsLabel.IsVisible = false;
+        PreviewDimensions.IsVisible = false;
+        UpdatePreviewText(item);
+        UpdatePreviewActions();
+
+        if (TryGetExistingFile(item, out string filePath))
+        {
+            CancellationTokenSource cancellation = new();
+            _previewCancellation = cancellation;
+            _ = LoadPreviewAsync(item, filePath, cancellation.Token);
         }
     }
 
-    private void ExecuteThumbnailClick(ThumbnailItemViewModel item, ThumbnailViewClickAction action)
+    private void UpdatePreviewText(CaptureLibraryItem item)
     {
-        TaskInfo? info = item.Task.Info;
-        if (info == null)
-        {
-            return;
-        }
+        string? filePath = item.FilePath;
+        bool fileExists = TryGetExistingFile(item, out _);
 
-        string filePath = info.FilePath;
-        switch (action)
-        {
-            case ThumbnailViewClickAction.Default:
-                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-                {
-                    if (FileHelpers.IsImageFile(filePath))
-                    {
-                        string[] images = ThumbnailItems.Select(x => x.Task.Info?.FilePath)
-                            .Where(x => !string.IsNullOrEmpty(x) && File.Exists(x) && FileHelpers.IsImageFile(x))
-                            .Cast<string>().ToArray();
-                        ImageViewerWindowIntegration.ShowImage(
-                            images,
-                            Math.Max(0, Array.IndexOf(images, filePath)),
-                            this);
-                    }
-                    else
-                    {
-                        FileHelpers.OpenFile(filePath);
-                    }
-                }
-                break;
-            case ThumbnailViewClickAction.OpenImageViewer:
-                if (File.Exists(filePath) && FileHelpers.IsImageFile(filePath))
-                {
-                    ImageViewerWindowIntegration.ShowImage(filePath, this);
-                }
-                break;
-            case ThumbnailViewClickAction.OpenFile:
-                if (!string.IsNullOrEmpty(filePath)) FileHelpers.OpenFile(filePath);
-                break;
-            case ThumbnailViewClickAction.OpenFolder:
-                if (!string.IsNullOrEmpty(filePath)) FileHelpers.OpenFolderWithFile(filePath);
-                break;
-            case ThumbnailViewClickAction.OpenURL:
-                URLHelpers.OpenURL(info.Result?.ToString());
-                break;
-            case ThumbnailViewClickAction.EditImage:
-                if (File.Exists(filePath) && FileHelpers.IsImageFile(filePath)) TaskHelpers.AnnotateImageFromFile(filePath);
-                break;
-        }
+        PreviewName.Text = item.FileName;
+        PreviewStatus.Text = item.Subtitle;
+        PreviewStatus.IsVisible = item.IsTask;
+        PreviewDate.Text = item.DateTime == DateTime.MinValue ? string.Empty : item.DateTime.ToString("G");
+        PreviewFolder.Text = string.IsNullOrEmpty(filePath) ? string.Empty : Path.GetDirectoryName(filePath);
+        PreviewSize.Text = fileExists ? FileHelpers.GetFileSizeReadable(filePath!, ApplicationState.Settings.BinaryUnits) : string.Empty;
+        PreviewSizeLabel.IsVisible = PreviewSize.IsVisible = !string.IsNullOrEmpty(PreviewSize.Text);
     }
 
-    private ContextMenu BuildTaskContextMenu()
+    private void UpdatePreviewActions()
     {
-        ThumbnailItemViewModel[] selectedModels = GetSelectedItems().ToArray();
-        WorkerTask[] selectedTasks = selectedModels.Select(x => x.Task).ToArray();
-        _uploadInfoManager.UpdateSelectedItems(selectedTasks);
+        CaptureLibraryItem? item = _selected;
+        bool fileExists = item != null && TryGetExistingFile(item, out _);
+        bool isWorking = item?.Task?.IsWorking == true;
 
-        UploadInfoStatus? selected = _uploadInfoManager.SelectedItem;
-        UploadInfoStatus[] statuses = _uploadInfoManager.SelectedItems ?? Array.Empty<UploadInfoStatus>();
-        bool hasSelection = selected != null;
-        bool isWorking = selectedTasks.Any(x => x.IsWorking);
-        bool canDeleteRemotely = selectedModels.Length == 1 && !isWorking && CanDeleteAmazonS3Object(selected);
-
-        List<MainMenuEntry> entries = new()
-        {
-            Item(Strings.MainWindow_ShowErrors, LucideIcons.triangle_alert, _uploadInfoManager.ShowErrors,
-                hasSelection && !isWorking && selected!.Info.Result.IsError),
-            Item(Strings.MainWindow_StopUpload, LucideIcons.circle_stop, _uploadInfoManager.StopUpload, isWorking),
-            Submenu(Strings.MainWindow_Open, LucideIcons.external_link, () => BuildOpenTaskMenu(selected, statuses), hasSelection),
-            Submenu(Strings.MainWindow_Copy, LucideIcons.copy, () => BuildCopyTaskMenu(selected, statuses), hasSelection && !isWorking),
-            Item(Strings.MainWindow_UploadSelectedFile, LucideIcons.file_up, _uploadInfoManager.Upload,
-                !SystemOptions.DisableUpload && hasSelection && !isWorking && selected!.IsFileExist,
-                new KeyGesture(Key.U, KeyModifiers.Control)),
-            Item(Strings.MainWindow_DownloadSelectedUrl, LucideIcons.download, _uploadInfoManager.Download,
-                hasSelection && !isWorking && selected!.IsFileURL,
-                new KeyGesture(Key.D, KeyModifiers.Control)),
-            Item(Strings.MainWindow_EditImage, LucideIcons.image, _uploadInfoManager.EditImage,
-                hasSelection && !isWorking && selected!.IsImageFile,
-                new KeyGesture(Key.E, KeyModifiers.Control)),
-            Item(Strings.MainWindow_EditImageInPhotoEditor, LucideIcons.layers, _uploadInfoManager.EditImageInPhotoEditor,
-                hasSelection && !isWorking && statuses.Any(x => x.IsImageFile)),
-            Item(Strings.MainWindow_ResizeImage, LucideIcons.maximize_2, _uploadInfoManager.ResizeImages,
-                hasSelection && !isWorking && statuses.Any(x => x.IsImageFile)),
-            Item(Strings.MainWindow_TrimVideo, LucideIcons.scissors, _uploadInfoManager.TrimVideo,
-                hasSelection && !isWorking && selected!.IsVideoFile),
-            Item(Strings.MainWindow_TrimAnimatedGif, LucideIcons.scissors, _uploadInfoManager.TrimAnimatedGif,
-                hasSelection && !isWorking && selected!.IsFileExist &&
-                string.Equals(Path.GetExtension(selected.Info.FilePath), ".gif", StringComparison.OrdinalIgnoreCase)),
-            Item(Strings.MainWindow_BeautifyImage, LucideIcons.sparkles, _uploadInfoManager.BeautifyImage,
-                hasSelection && !isWorking && selected!.IsImageFile),
-            Item(Strings.MainWindow_AddImageEffects, LucideIcons.wand_sparkles, _uploadInfoManager.AddImageEffects,
-                hasSelection && !isWorking && selected!.IsImageFile),
-            Item(Strings.MainWindow_PinToScreen, LucideIcons.pin, _uploadInfoManager.PinToScreen,
-                hasSelection && !isWorking && selected!.IsImageFile,
-                new KeyGesture(Key.P, KeyModifiers.Control)),
-            Submenu(Strings.MainWindow_RunAction, LucideIcons.play, () => BuildExternalActionsMenu(selected),
-                hasSelection && !isWorking && HasExternalActions(selected!.Info.FilePath)),
-            Item(Strings.MainWindow_DeleteSelectedItem, LucideIcons.trash_2, RemoveSelectedTasks, hasSelection && !isWorking,
-                new KeyGesture(Key.Delete)),
-            Item(Strings.MainWindow_DeleteSelectedFile, LucideIcons.file_x, DeleteSelectedFiles,
-                hasSelection && !isWorking && selected!.IsFileExist,
-                new KeyGesture(Key.Delete, KeyModifiers.Shift)),
-            Item(Strings.MainWindow_DeleteItemRemotely, LucideIcons.cloud_off, DeleteSelectedItemRemotelyAsync,
-                canDeleteRemotely),
-            Item(Strings.MainWindow_AnalyzeImage, LucideIcons.bot, _uploadInfoManager.AnalyzeImage,
-                hasSelection && !isWorking && selected!.IsImageFile),
-            Item(Strings.MainWindow_ShowQRCode, LucideIcons.qr_code, _uploadInfoManager.ShowQRCode,
-                hasSelection && !isWorking && selected!.IsURLExist),
-            Item(Strings.MainWindow_OCRImage, LucideIcons.scan_text, async () => await _uploadInfoManager.OCRImage(),
-                hasSelection && !isWorking && selected!.IsImageFile),
-            Submenu(Strings.MainWindow_CombineImagesDialog, LucideIcons.combine, BuildCombineImagesMenu,
-                hasSelection && !isWorking && statuses.Count(x => x.IsImageFile) > 1),
-            Item(Strings.MainWindow_ShowResponse, LucideIcons.file_text, _uploadInfoManager.ShowResponse,
-                hasSelection && !isWorking && !string.IsNullOrEmpty(selected!.Info.Result.Response)),
-            MainMenuEntry.Separator(),
-            Item(Strings.MainWindow_ClearThumbnailView, LucideIcons.list_x, ClearTasks, ThumbnailItems.Count > 0)
-        };
-
-        return MainMenuPresenter.BuildContextMenu(entries);
+        EditButton.IsVisible = fileExists && item!.IsImage && !isWorking;
+        OpenButton.IsEnabled = fileExists;
+        CopyButton.IsEnabled = fileExists;
+        CopyFilePathButton.IsEnabled = !string.IsNullOrEmpty(item?.FilePath);
+        ShowInFolderButton.IsEnabled = fileExists;
+        ShareButton.IsVisible = fileExists && !isWorking && CanShare(item!.FilePath!);
+        DeleteButton.IsEnabled = fileExists && !isWorking;
     }
 
-    private IReadOnlyList<MainMenuEntry> BuildOpenTaskMenu(UploadInfoStatus? selected, UploadInfoStatus[] statuses)
+    private async Task LoadPreviewAsync(CaptureLibraryItem item, string filePath, CancellationToken token)
     {
-        return new List<MainMenuEntry>
-        {
-            Item(Strings.MainWindow_Url, LucideIcons.link, _uploadInfoManager.OpenURL, selected?.IsURLExist == true,
-                new KeyGesture(Key.Enter)),
-            Item(Strings.MainWindow_ShortenedUrl, LucideIcons.link_2, _uploadInfoManager.OpenShortenedURL, selected?.IsShortenedURLExist == true),
-            Item(Strings.MainWindow_ThumbnailUrl, LucideIcons.image, _uploadInfoManager.OpenThumbnailURL, selected?.IsThumbnailURLExist == true),
-            Item(Strings.MainWindow_DeletionUrl, LucideIcons.trash_2, _uploadInfoManager.OpenDeletionURL, selected?.IsDeletionURLExist == true),
-            MainMenuEntry.Separator(),
-            Item(Strings.MainWindow_File, LucideIcons.file, _uploadInfoManager.OpenFile, selected?.IsFileExist == true,
-                new KeyGesture(Key.Enter, KeyModifiers.Control)),
-            Item(Strings.MainWindow_Folder, LucideIcons.folder_open, _uploadInfoManager.OpenFolder, selected?.IsFileExist == true,
-                new KeyGesture(Key.Enter, KeyModifiers.Shift)),
-            Item(Strings.MainWindow_ThumbnailFile, LucideIcons.file_image, _uploadInfoManager.OpenThumbnailFile, selected?.IsThumbnailFileExist == true)
-        };
-    }
-
-    private IReadOnlyList<MainMenuEntry> BuildCopyTaskMenu(UploadInfoStatus? selected, UploadInfoStatus[] statuses)
-    {
-        List<MainMenuEntry> entries = new()
-        {
-            Item(Strings.MainWindow_Url, LucideIcons.link, _uploadInfoManager.CopyURL, statuses.Any(x => x.IsURLExist),
-                new KeyGesture(Key.C, KeyModifiers.Control)),
-            Item(Strings.MainWindow_ShortenedUrl, LucideIcons.link_2, _uploadInfoManager.CopyShortenedURL, statuses.Any(x => x.IsShortenedURLExist)),
-            Item(Strings.MainWindow_ThumbnailUrl, LucideIcons.image, _uploadInfoManager.CopyThumbnailURL, statuses.Any(x => x.IsThumbnailURLExist)),
-            Item(Strings.MainWindow_DeletionUrl, LucideIcons.trash_2, _uploadInfoManager.CopyDeletionURL, statuses.Any(x => x.IsDeletionURLExist)),
-            MainMenuEntry.Separator(),
-            Item(Strings.MainWindow_File, LucideIcons.file, _uploadInfoManager.CopyFile, selected?.IsFileExist == true,
-                new KeyGesture(Key.C, KeyModifiers.Shift)),
-            Item(Strings.MainWindow_Image, LucideIcons.image, _uploadInfoManager.CopyImage, selected?.IsImageFile == true,
-                new KeyGesture(Key.C, KeyModifiers.Alt)),
-            Item(Strings.MainWindow_ImageDimensions, LucideIcons.ruler, _uploadInfoManager.CopyImageDimensions, selected?.IsImageFile == true),
-            Item(Strings.MainWindow_Text, LucideIcons.file_text, _uploadInfoManager.CopyText, selected?.IsTextFile == true),
-            Item(Strings.MainWindow_ThumbnailFile, LucideIcons.file_image, _uploadInfoManager.CopyThumbnailFile, selected?.IsThumbnailFileExist == true),
-            Item(Strings.MainWindow_ThumbnailImage, LucideIcons.images, _uploadInfoManager.CopyThumbnailImage, selected?.IsThumbnailFileExist == true),
-            MainMenuEntry.Separator(),
-            Item(Strings.MainWindow_HtmlLink, LucideIcons.code, _uploadInfoManager.CopyHTMLLink, statuses.Any(x => x.IsURLExist)),
-            Item(Strings.MainWindow_HtmlImage, LucideIcons.file_code, _uploadInfoManager.CopyHTMLImage, statuses.Any(x => x.IsImageURL)),
-            Item(Strings.MainWindow_HtmlLinkedImage, LucideIcons.braces, _uploadInfoManager.CopyHTMLLinkedImage, statuses.Any(x => x.IsImageURL && x.IsThumbnailURLExist)),
-            Item(Strings.MainWindow_ForumLink, LucideIcons.message_square, _uploadInfoManager.CopyForumLink, statuses.Any(x => x.IsURLExist)),
-            Item(Strings.MainWindow_ForumImage, LucideIcons.messages_square, _uploadInfoManager.CopyForumImage, statuses.Any(x => x.IsImageURL && x.IsURLExist)),
-            Item(Strings.MainWindow_ForumLinkedImage, LucideIcons.message_square_share, _uploadInfoManager.CopyForumLinkedImage, statuses.Any(x => x.IsImageURL && x.IsThumbnailURLExist)),
-            Item(Strings.MainWindow_MarkdownLink, LucideIcons.link, _uploadInfoManager.CopyMarkdownLink, statuses.Any(x => x.IsURLExist)),
-            Item(Strings.MainWindow_MarkdownImage, LucideIcons.image, _uploadInfoManager.CopyMarkdownImage, statuses.Any(x => x.IsImageURL)),
-            Item(Strings.MainWindow_MarkdownLinkedImage, LucideIcons.images, _uploadInfoManager.CopyMarkdownLinkedImage, statuses.Any(x => x.IsImageURL && x.IsThumbnailURLExist)),
-            MainMenuEntry.Separator(),
-            Item(Strings.MainWindow_FilePath, LucideIcons.route, _uploadInfoManager.CopyFilePath, statuses.Any(x => x.IsFilePathValid),
-                new KeyGesture(Key.C, KeyModifiers.Control | KeyModifiers.Shift)),
-            Item(Strings.MainWindow_FileName, LucideIcons.file, _uploadInfoManager.CopyFileName, statuses.Any(x => x.IsFilePathValid)),
-            Item(Strings.MainWindow_FileNameWithExtension, LucideIcons.files, _uploadInfoManager.CopyFileNameWithExtension, statuses.Any(x => x.IsFilePathValid)),
-            Item(Strings.MainWindow_Folder, LucideIcons.folder, _uploadInfoManager.CopyFolder, statuses.Any(x => x.IsFilePathValid))
-        };
-
-        if (ApplicationState.Settings.ClipboardContentFormats?.Count > 0)
-        {
-            entries.Add(MainMenuEntry.Separator());
-            foreach (ClipboardFormat format in ApplicationState.Settings.ClipboardContentFormats)
-            {
-                ClipboardFormat selectedFormat = format;
-                entries.Add(Item(selectedFormat.Description, LucideIcons.clipboard_copy,
-                    () => _uploadInfoManager.CopyCustomFormat(selectedFormat.Format)));
-            }
-        }
-
-        return entries;
-    }
-
-    private static bool HasExternalActions(string filePath) =>
-        !string.IsNullOrEmpty(filePath) && File.Exists(filePath) &&
-        ApplicationState.DefaultTaskSettings.ExternalPrograms.Any(x => !string.IsNullOrEmpty(x.Name) && x.CheckExtension(filePath));
-
-    private static IReadOnlyList<MainMenuEntry> BuildExternalActionsMenu(UploadInfoStatus? selected)
-    {
-        string filePath = selected?.Info.FilePath ?? string.Empty;
-        return ApplicationState.DefaultTaskSettings.ExternalPrograms
-            .Where(x => !string.IsNullOrEmpty(x.Name) && x.CheckExtension(filePath))
-            .Select(action => Item(action.Name.Truncate(50, "..."), LucideIcons.play,
-                async () => await action.RunAsync(filePath))).ToArray();
-    }
-
-    private IReadOnlyList<MainMenuEntry> BuildCombineImagesMenu() => new List<MainMenuEntry>
-    {
-            Item(Strings.MainWindow_Horizontally, LucideIcons.rows_2, () => _uploadInfoManager.CombineImages(ImageOrientation.Horizontal)),
-            Item(Strings.MainWindow_Vertically, LucideIcons.columns_2, () => _uploadInfoManager.CombineImages(ImageOrientation.Vertical))
-    };
-
-    private void RemoveSelectedTasks()
-    {
-        foreach (WorkerTask task in GetSelectedItems().Select(x => x.Task).ToArray())
-        {
-            TaskManager.Remove(task);
-        }
-    }
-
-    private void DeleteSelectedFiles()
-    {
-        if (MessageBox.Show(Strings.MainForm_tsmiDeleteSelectedFile_Click_Do_you_really_want_to_delete_this_file_,
-            "ShareX - " + Strings.MainForm_tsmiDeleteSelectedFile_Click_File_delete_confirmation,
-            MessageBoxButtons.YesNo) == MessageBoxResult.Yes)
-        {
-            _uploadInfoManager.DeleteFiles();
-            RemoveSelectedTasks();
-        }
-    }
-
-    private static bool CanDeleteAmazonS3Object(UploadInfoStatus? selected)
-    {
-        if (selected?.Info is not TaskInfo info ||
-            string.IsNullOrEmpty(info.Result?.URL) ||
-            !info.IsUploadJob ||
-            info.UploadDestination != EDataType.File ||
-            info.TaskSettings.GetFileDestinationByDataType(info.DataType) != FileDestination.AmazonS3)
-        {
-            return false;
-        }
-
-        return ApplicationState.UploadersConfigOrNull != null &&
-            UploadersConfigValidator.Validate(FileDestination.AmazonS3, ApplicationState.UploadersConfig);
-    }
-
-    private async Task DeleteSelectedItemRemotelyAsync()
-    {
-        UploadInfoStatus? selected = _uploadInfoManager.SelectedItem;
-
-        if (!CanDeleteAmazonS3Object(selected))
-        {
-            return;
-        }
-
-        if (MessageBox.Show(Strings.MainWindow_DeleteItemRemotelyConfirmation,
-            "ShareX - " + Strings.MainWindow_RemoteDeletion,
-            MessageBoxButtons.YesNo) != MessageBoxResult.Yes)
-        {
-            return;
-        }
-
-        bool isSuccess = false;
-
         try
         {
-            AmazonS3 uploader = new AmazonS3(ApplicationState.UploadersConfig.AmazonS3Settings);
-
-            if (uploader.TryGetObjectKey(selected!.Info.Result.URL, out string objectKey))
+            AvaloniaBitmap? bitmap = await _library.Gallery.Loader.LoadAsync(filePath, PreviewWidth, PreviewHeight, token);
+            if (token.IsCancellationRequested || !ReferenceEquals(_selected, item))
             {
-                isSuccess = await uploader.DeleteObjectAsync(objectKey);
+                bitmap?.Dispose();
+                return;
+            }
+
+            SetPreviewBitmap(bitmap);
+
+            if (item.IsImage)
+            {
+                DrawingSize size = await Task.Run(() => SkiaImageHelpers.GetImageFileDimensions(filePath), token);
+                if (!token.IsCancellationRequested && !size.IsEmpty)
+                {
+                    PreviewDimensions.Text = $"{size.Width} × {size.Height}";
+                    PreviewDimensionsLabel.IsVisible = PreviewDimensions.IsVisible = true;
+                }
             }
         }
-        catch (Exception ex)
+        catch (OperationCanceledException)
         {
-            DebugHelper.WriteException(ex);
+            // A new selection cancels the preview of the previous selection.
         }
-
-        TaskHelpers.ShowNotificationTip(
-            isSuccess ? Strings.MainWindow_RemoteDeleteSucceeded : Strings.MainWindow_RemoteDeleteFailed,
-            "ShareX - " + Strings.MainWindow_RemoteDeletion);
+        catch (Exception e)
+        {
+            DebugHelper.WriteException(e);
+        }
     }
 
-    private void ClearTasks()
+    private void SetPreviewBitmap(AvaloniaBitmap? bitmap)
     {
-        foreach (WorkerTask task in TaskManager.Tasks.ToArray())
-        {
-            TaskManager.Remove(task);
-        }
-
-        TaskManager.RecentManager.Clear();
+        AvaloniaBitmap? previous = _previewBitmap;
+        _previewBitmap = bitmap;
+        PreviewImage.Source = bitmap;
+        PreviewPlaceholder.IsVisible = bitmap == null;
+        previous?.Dispose();
     }
 
-    private void OnMainContentPointerPressed(object? sender, PointerPressedEventArgs e)
+    private static bool TryGetExistingFile(CaptureLibraryItem item, out string filePath)
     {
-        PointerUpdateKind pointerUpdateKind = e.GetCurrentPoint(this).Properties.PointerUpdateKind;
-
-        if (pointerUpdateKind == PointerUpdateKind.LeftButtonPressed)
-        {
-            ThumbnailPanel.Focus(NavigationMethod.Pointer, e.KeyModifiers);
-            ClearSelection();
-            _selectionAnchor = null;
-            e.Handled = true;
-            return;
-        }
-
-        if (pointerUpdateKind != PointerUpdateKind.RightButtonPressed)
-        {
-            return;
-        }
-
-        _menuPresenter.CloseActiveContextMenu();
-        ThumbnailPanel.Focus(NavigationMethod.Pointer, e.KeyModifiers);
-        e.Handled = true;
+        filePath = item.FilePath ?? string.Empty;
+        return filePath.Length > 0 && File.Exists(filePath);
     }
 
-    private void OnMainContentPointerReleased(object? sender, PointerReleasedEventArgs e)
+    private static bool CanShare(string filePath)
     {
-        if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.RightButtonReleased)
-        {
-            return;
-        }
+        TaskSettings taskSettings = ApplicationState.DefaultTaskSettings;
+        return TaskHelpers.IsShareAvailable(taskSettings.GetFileDestinationByDataType(TaskHelpers.FindDataType(filePath, taskSettings)));
+    }
 
-        if (ThumbnailItems.Count == 0)
-        {
-            return;
-        }
+    private IReadOnlyList<MainMenuEntry> BuildItemMenu(CaptureLibraryItem item)
+    {
+        bool fileExists = TryGetExistingFile(item, out string filePath);
+        WorkerTask? task = item.Task;
+        bool isWorking = task?.IsWorking == true;
 
-        if (sender is Control control)
+        return
+        [
+            new(Strings.MainWindow_Edit, LucideIcons.pencil, () => EditItem(item),
+                isVisible: fileExists && item.IsImage && !isWorking, inputGesture: new KeyGesture(Key.E, KeyModifiers.Control)),
+            new(Strings.MainWindow_Open, LucideIcons.external_link, () => OpenItem(item), isVisible: fileExists),
+            new(Strings.MainWindow_Copy, LucideIcons.copy, () => CopyItem(item), isVisible: fileExists,
+                inputGesture: new KeyGesture(Key.C, KeyModifiers.Control)),
+            new(Strings.MainWindow_CopyFilePath, LucideIcons.route, () => CopyFilePath(item), isVisible: filePath.Length > 0,
+                inputGesture: new KeyGesture(Key.C, KeyModifiers.Control | KeyModifiers.Shift)),
+            new(Strings.MainWindow_ShowInFolder, LucideIcons.folder_open, () => ShowInFolder(item), isVisible: fileExists),
+            new(Strings.MainWindow_Share, LucideIcons.share_2, () => ShareItem(item),
+                isVisible: fileExists && !isWorking && CanShare(filePath)),
+            MainMenuEntry.Separator(),
+            new(Strings.MainWindow_StopUpload, LucideIcons.circle_stop, () => task?.Stop(), isVisible: isWorking),
+            new(Strings.MainWindow_ShowErrors, LucideIcons.triangle_alert, () => task?.ShowErrorWindow(),
+                isVisible: task?.Status == TaskStatus.Failed && task.Info?.Result?.IsError == true),
+            new(Strings.MainWindow_RemoveFromList, LucideIcons.list_x, () => TaskManager.Remove(task),
+                isVisible: task != null && !isWorking),
+            MainMenuEntry.Separator(),
+            new(Strings.MainWindow_Delete, LucideIcons.trash_2, () => DeleteItem(item), isVisible: fileExists && !isWorking,
+                inputGesture: new KeyGesture(Key.Delete))
+        ];
+    }
+
+    private void RunDefaultAction(CaptureLibraryItem item)
+    {
+        if (item.IsImage && item.Task?.IsWorking != true) EditItem(item);
+        else OpenItem(item);
+    }
+
+    private void OnEditClick(object? sender, RoutedEventArgs e) => WithSelected(EditItem);
+    private void OnOpenClick(object? sender, RoutedEventArgs e) => WithSelected(OpenItem);
+    private void OnCopyClick(object? sender, RoutedEventArgs e) => WithSelected(CopyItem);
+    private void OnCopyFilePathClick(object? sender, RoutedEventArgs e) => WithSelected(CopyFilePath);
+    private void OnShowInFolderClick(object? sender, RoutedEventArgs e) => WithSelected(ShowInFolder);
+    private void OnShareClick(object? sender, RoutedEventArgs e) => WithSelected(ShareItem);
+    private void OnDeleteClick(object? sender, RoutedEventArgs e) => WithSelected(DeleteItem);
+
+    private void WithSelected(Action<CaptureLibraryItem> action)
+    {
+        if (_selected != null) action(_selected);
+    }
+
+    private static void EditItem(CaptureLibraryItem item)
+    {
+        if (TryGetExistingFile(item, out string filePath) && FileHelpers.IsImageFile(filePath))
         {
-            ContextMenu menu = MainMenuPresenter.BuildContextMenu([
-            Item(Strings.MainWindow_ClearThumbnailView, LucideIcons.list_x, ClearTasks)
-            ]);
-            _menuPresenter.TryOpenContextMenu(menu, control, PlacementMode.Pointer);
-            e.Handled = true;
+            TaskHelpers.AnnotateImageFromFile(filePath);
         }
     }
+
+    private static void OpenItem(CaptureLibraryItem item)
+    {
+        if (TryGetExistingFile(item, out string filePath)) FileHelpers.OpenFile(filePath);
+    }
+
+    private static void CopyItem(CaptureLibraryItem item)
+    {
+        if (!TryGetExistingFile(item, out string filePath)) return;
+
+        bool copied = FileHelpers.IsImageFile(filePath)
+            ? ClipboardHelpers.CopyImageFromFile(filePath)
+            : ClipboardHelpers.CopyFile(filePath);
+
+        if (copied) TaskHelpers.PlayNotificationSoundAsync(NotificationSound.ActionCompleted);
+    }
+
+    private static void CopyFilePath(CaptureLibraryItem item)
+    {
+        if (!string.IsNullOrEmpty(item.FilePath)) ClipboardHelpers.CopyText(item.FilePath);
+    }
+
+    private static void ShowInFolder(CaptureLibraryItem item)
+    {
+        if (TryGetExistingFile(item, out string filePath)) FileHelpers.OpenFolderWithFile(filePath);
+    }
+
+    private static void ShareItem(CaptureLibraryItem item)
+    {
+        if (TryGetExistingFile(item, out string filePath) && CanShare(filePath)) UploadManager.UploadFile(filePath);
+    }
+
+    private static void DeleteItem(CaptureLibraryItem item)
+    {
+        if (!TryGetExistingFile(item, out string filePath) || item.Task?.IsWorking == true ||
+            MessageBox.Show(Strings.MainForm_tsmiDeleteSelectedFile_Click_Do_you_really_want_to_delete_this_file_,
+                "ShareX - " + Strings.MainForm_tsmiDeleteSelectedFile_Click_File_delete_confirmation,
+                MessageBoxButtons.YesNo) != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        FileHelpers.DeleteFile(filePath, true);
+
+        // The history change event and the task removal event remove the card.
+        if (item.History != null)
+        {
+            ApplicationState.HistoryManager?.Delete(item.History);
+        }
+        else
+        {
+            TaskManager.Remove(item.Task);
+        }
+    }
+
+    #endregion Preview and actions
+
+    #region Window
 
     private void OnWindowKeyDown(object? sender, KeyEventArgs e)
     {
-        if (e.Key == Key.Escape)
+        if (e.Key == Key.Escape && SearchTextBox.IsFocused && !string.IsNullOrEmpty(SearchTextBox.Text))
+        {
+            SearchTextBox.Text = string.Empty;
+        }
+        else if (e.Key == Key.Escape)
         {
             Close();
-            e.Handled = true;
+        }
+        else if (e.Key == Key.F && e.KeyModifiers == KeyModifiers.Control)
+        {
+            SearchTextBox.Focus();
+            SearchTextBox.SelectAll();
+        }
+        else if (e.Key == Key.V && e.KeyModifiers == KeyModifiers.Control)
+        {
+            UploadManager.ClipboardUploadMainWindow();
+        }
+        else
+        {
             return;
         }
-
-        _uploadInfoManager.UpdateSelectedItems(GetSelectedItems().Select(x => x.Task));
-        bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
-        bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
-        bool alt = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
-
-        if (e.Key == Key.Enter && control) _uploadInfoManager.OpenFile();
-        else if (e.Key == Key.Enter && shift) _uploadInfoManager.OpenFolder();
-        else if (e.Key == Key.Enter) _uploadInfoManager.TryOpen();
-        else if (e.Key == Key.C && control && shift) _uploadInfoManager.CopyFilePath();
-        else if (e.Key == Key.C && shift) _uploadInfoManager.CopyFile();
-        else if (e.Key == Key.C && alt) _uploadInfoManager.CopyImage();
-        else if (e.Key == Key.C && control) _uploadInfoManager.TryCopy();
-        else if (e.Key == Key.V && control) UploadManager.ClipboardUploadMainWindow();
-        else if (e.Key == Key.U && control) _uploadInfoManager.Upload();
-        else if (e.Key == Key.D && control) _uploadInfoManager.Download();
-        else if (e.Key == Key.E && control) _uploadInfoManager.EditImage();
-        else if (e.Key == Key.P && control) _uploadInfoManager.PinToScreen();
-        else if (e.Key == Key.Delete && shift) DeleteSelectedFiles();
-        else if (e.Key == Key.Delete) RemoveSelectedTasks();
-        else return;
 
         e.Handled = true;
     }
@@ -1084,13 +844,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void OnDragLeave(object? sender, DragEventArgs e)
     {
-        Point position = e.GetPosition(this);
-        if (_thumbnailDragSource != null &&
-            (position.X < 0 || position.Y < 0 || position.X > ClientSize.Width || position.Y > ClientSize.Height))
-        {
-            ClearThumbnailCombineTarget();
-        }
-
         DropOverlay.IsVisible = false;
         e.Handled = true;
     }
@@ -1099,13 +852,11 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void UpdateDropOverlay(DragEventArgs e)
     {
-        if (_thumbnailDragSource != null)
+        // A card dragged out of the library must not upload when the card drops back on the window.
+        if (_dragStarted)
         {
-            ThumbnailItemViewModel? target = GetThumbnailItem(e.Source);
-            bool canCombine = CanCombineThumbnails(_thumbnailDragSource, target);
-            SetThumbnailCombineTarget(canCombine ? target : null);
             DropOverlay.IsVisible = false;
-            e.DragEffects = canCombine ? DragDropEffects.Copy : DragDropEffects.None;
+            e.DragEffects = DragDropEffects.None;
             e.Handled = true;
             return;
         }
@@ -1134,113 +885,24 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private void OnDrop(object? sender, DragEventArgs e)
     {
         DropOverlay.IsVisible = false;
+        e.Handled = true;
 
-        if (_thumbnailDragSource != null)
+        if (_dragStarted)
         {
-            ClearThumbnailCombineTarget();
             e.DragEffects = DragDropEffects.None;
-            e.Handled = true;
             return;
         }
 
         UploadManager.DragDropUpload(e.DataTransfer);
-        e.Handled = true;
     }
 
-    private void OnCombineImagesDragEnter(object? sender, DragEventArgs e) =>
-        UpdateCombineImagesDragZone(sender, e, true);
-
-    private void OnCombineImagesDragOver(object? sender, DragEventArgs e) =>
-        UpdateCombineImagesDragZone(sender, e, true);
-
-    private void OnCombineImagesDragLeave(object? sender, DragEventArgs e) =>
-        UpdateCombineImagesDragZone(sender, e, false);
-
-    private void UpdateCombineImagesDragZone(object? sender, DragEventArgs e, bool isDragOver)
-    {
-        ThumbnailItemViewModel? target = GetThumbnailItem(sender);
-        bool canCombine = CanCombineThumbnails(_thumbnailDragSource, target);
-
-        if (sender is Border border)
+    private void OnThemeChanged(object? sender, Avalonia.Styling.ThemeVariant theme) =>
+        Dispatcher.UIThread.Post(() =>
         {
-            border.Classes.Set("drag-over", isDragOver && canCombine);
-        }
-
-        e.DragEffects = canCombine ? DragDropEffects.Copy : DragDropEffects.None;
-        e.Handled = true;
-    }
-
-    private void OnCombineImagesDrop(object? sender, DragEventArgs e)
-    {
-        ThumbnailItemViewModel? source = _thumbnailDragSource;
-        ThumbnailItemViewModel? target = GetThumbnailItem(sender);
-
-        if (sender is Border dropZone)
-        {
-            dropZone.Classes.Set("drag-over", false);
-        }
-
-        if (sender is Border { Tag: string orientationName } &&
-            CanCombineThumbnails(source, target) &&
-            Enum.TryParse(orientationName, out ImageOrientation orientation))
-        {
-            string sourcePath = source!.Task.Info.FilePath;
-            string targetPath = target!.Task.Info.FilePath;
-
-            try
-            {
-                TaskHelpers.CombineImages(new[] { sourcePath, targetPath }, orientation);
-                e.DragEffects = DragDropEffects.Copy;
-            }
-            catch (Exception ex)
-            {
-                DebugHelper.WriteException(ex);
-                e.DragEffects = DragDropEffects.None;
-            }
-        }
-        else
-        {
-            e.DragEffects = DragDropEffects.None;
-        }
-
-        ClearThumbnailCombineTarget();
-        e.Handled = true;
-    }
-
-    private static ThumbnailItemViewModel? GetThumbnailItem(object? source) =>
-        source is StyledElement { DataContext: ThumbnailItemViewModel item } ? item : null;
-
-    private static bool CanCombineThumbnails(ThumbnailItemViewModel? source, ThumbnailItemViewModel? target) =>
-        source != null && target != null && !ReferenceEquals(source, target) &&
-        IsExistingImage(source.Task.Info?.FilePath) && IsExistingImage(target.Task.Info?.FilePath);
-
-    private static bool IsExistingImage(string? filePath) =>
-        !string.IsNullOrEmpty(filePath) && File.Exists(filePath) && FileHelpers.IsImageFile(filePath);
-
-    private void SetThumbnailCombineTarget(ThumbnailItemViewModel? target)
-    {
-        if (ReferenceEquals(_thumbnailCombineTarget, target))
-        {
-            return;
-        }
-
-        ClearThumbnailCombineTarget();
-        _thumbnailCombineTarget = target;
-
-        if (_thumbnailCombineTarget != null)
-        {
-            _thumbnailCombineTarget.IsCombineTarget = true;
-        }
-    }
-
-    private void ClearThumbnailCombineTarget()
-    {
-        if (_thumbnailCombineTarget != null)
-        {
-            _thumbnailCombineTarget.IsCombineTarget = false;
-            _thumbnailCombineTarget = null;
-        }
-    }
+            RequestedThemeVariant = theme;
+            OnPropertyChanged(nameof(IsDarkTheme));
+            OnPropertyChanged(nameof(ThemeToggleText));
+        });
 
     private void OnClosing(object? sender, WindowClosingEventArgs e)
     {
@@ -1278,39 +940,54 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         SaveWindowBounds();
         _disposed = true;
-        TaskManager.TaskAdded -= OnTaskAdded;
-        TaskManager.TaskRemoved -= OnTaskRemoved;
-        TaskManager.TaskChanged -= OnTaskChanged;
-        TaskManager.TaskImageReady -= OnTaskImageReady;
-        TaskManager.TaskCollectionChanged -= OnTaskCollectionChanged;
+        _searchTimer.Stop();
+        _relativeTimeTimer.Stop();
         ThemeManager.ThemeChanged -= OnThemeChanged;
-        ResetThumbnailDrag();
+        if (_scrollViewer != null) _scrollViewer.ScrollChanged -= OnScrollChanged;
+        _library.ItemsChanged -= OnLibraryItemsChanged;
+        _previewCancellation?.Cancel();
+        SetPreviewBitmap(null);
+        _library.Dispose();
+        ResetDrag();
         _menuPresenter.CloseAllMenus();
         _trayIconService.Visible = false;
         TitleBarIcon?.Dispose();
-
-        foreach (ThumbnailItemViewModel item in ThumbnailItems)
-        {
-            item.Dispose();
-        }
-
-        _selectionOrder.Clear();
-        _selectionAnchor = null;
     }
 
     private void RestoreWindowBounds()
     {
+        Screen? screen = Screens.Primary;
+
+        DrawingPoint savedPosition = ApplicationState.Settings.MainFormPosition;
+        PixelPoint? position = null;
+        if (ApplicationState.Settings.RememberMainFormPosition && !savedPosition.IsEmpty)
+        {
+            PixelPoint point = new(savedPosition.X, savedPosition.Y);
+            if (Screens.ScreenFromPoint(point) is Screen savedScreen)
+            {
+                screen = savedScreen;
+                position = point;
+            }
+        }
+
         DrawingSize savedSize = ApplicationState.Settings.MainFormSize;
         if (ApplicationState.Settings.RememberMainFormSize && !savedSize.IsEmpty)
         {
-            Width = Math.Max(MinWidth, savedSize.Width);
-            Height = Math.Max(MinHeight, savedSize.Height);
+            Width = savedSize.Width;
+            Height = savedSize.Height;
         }
 
-        DrawingPoint savedPosition = ApplicationState.Settings.MainFormPosition;
-        if (ApplicationState.Settings.RememberMainFormPosition && !savedPosition.IsEmpty)
+        if (screen != null)
         {
-            Position = new PixelPoint(savedPosition.X, savedPosition.Y);
+            // The default size and a saved size from a larger monitor must fit the work area.
+            Rect workArea = screen.WorkingArea.ToRect(screen.Scaling);
+            Width = Math.Max(MinWidth, Math.Min(Width, workArea.Width));
+            Height = Math.Max(MinHeight, Math.Min(Height, workArea.Height));
+        }
+
+        if (position != null)
+        {
+            Position = position.Value;
             WindowStartupLocation = WindowStartupLocation.Manual;
         }
     }
@@ -1358,14 +1035,5 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-    private static MainMenuEntry Item(string header, string icon, Action execute, bool visible = true,
-        KeyGesture? inputGesture = null) =>
-        new(header, icon, execute, isVisible: visible, inputGesture: inputGesture);
-
-    private static MainMenuEntry Item(string header, string icon, Func<Task> execute, bool visible = true,
-        KeyGesture? inputGesture = null) =>
-        new(header, icon, execute, isVisible: visible, inputGesture: inputGesture);
-
-    private static MainMenuEntry Submenu(string header, string icon, Func<IReadOnlyList<MainMenuEntry>> children, bool visible = true) =>
-        new(header, icon, createChildren: children, isVisible: visible);
+    #endregion Window
 }

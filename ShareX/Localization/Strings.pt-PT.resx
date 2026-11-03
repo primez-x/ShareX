@@ -1643,65 +1643,11 @@ Por favor, selecione uma tecla de atalho diferente ou feche o programa que está
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Fluxos de trabalho</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Adicionar efeitos de imagem...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Sempre no topo</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Analisar imagem</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Beautify imagem</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Limpar vista de miniaturas</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Combinar imagens</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Combinar imagens...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Copiar</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Eliminar item remotamente...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Tem a certeza de que pretende eliminar este item remotamente?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Eliminar ficheiro selecionado...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Eliminar item selecionado</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>URL de eliminação</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Transferir URL selecionado</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Editar imagem</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Editar no editor de fotos...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Ficheiro</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Nome do ficheiro</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Nome do ficheiro com extensão</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Caminho do ficheiro</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Os ficheiros largados aqui serão carregados pelo ShareX.</value>
@@ -1709,83 +1655,20 @@ Por favor, selecione uma tecla de atalho diferente ou feche o programa que está
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Pasta</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Imagem de fórum</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Ligação de fórum</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Imagem ligada de fórum</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Horizontal</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Horizontalmente</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Use uma tecla de atalho para capturar ou carregar. Os resultados aparecerão aqui como miniaturas.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>Imagem HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>Ligação HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Imagem HTML ligada</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Imagem</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Dimensões da imagem</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Imagem Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Ligação Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Imagem Markdown ligada</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maximizar ou restaurar</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Minimizar</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>Imagem OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Abrir</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Fixar no ecrã</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Largue para carregar ficheiros</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Largue para carregar texto</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Não foi possível eliminar o item remotamente.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>O item foi eliminado remotamente.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Eliminação remota</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Redimensionar imagem...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Executar ação</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Pesquisar com a Pesquisa Visual do Bing...</value>
@@ -1796,59 +1679,17 @@ Por favor, selecione uma tecla de atalho diferente ou feche o programa que está
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Partilhar URL selecionado</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>Teclas de atalho do ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Encurtar URL selecionado</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>URL encurtado</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Mostrar erros...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Mostrar código QR...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Mostrar resposta...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Parar carregamento</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Texto</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>O texto largado aqui será carregado pelo ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Ficheiro de miniatura</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Imagem em miniatura</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Miniatura URL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Cortar GIF animado...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Cortar vídeo...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Carregar ficheiro selecionado</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Vertical</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Verticalmente</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Marcador de rato</value>
@@ -3019,9 +2860,6 @@ Pretende cancelar a gravação de ecrã ativa?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>Esta função não irá funcionar quando a opção "DesativarEnvio" estiver activada!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Tarefa sem título</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Cancelar</value>

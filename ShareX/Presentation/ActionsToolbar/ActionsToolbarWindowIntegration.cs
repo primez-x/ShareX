@@ -26,6 +26,9 @@
 #nullable enable
 
 using Avalonia.Threading;
+using ShareX.HelpersLib;
+using ShareX.Localization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShareX;
@@ -77,6 +80,32 @@ public static class ActionsToolbarWindowIntegration
     }
 
     public static void Refresh() => Dispatcher.UIThread.Post(() => _window?.RefreshToolbar());
+
+    /// <summary>The short label of a capture panel action. The main window capture menu uses the same labels.</summary>
+    internal static string GetActionLabel(HotkeyType action) => action switch
+    {
+        HotkeyType.RectangleRegion => Strings.ActionsToolbarWindow_ActionRegion,
+        HotkeyType.PrintScreen => Strings.ActionsToolbarWindow_ActionFullScreen,
+        HotkeyType.ScrollingCapture => Strings.ActionsToolbarWindow_ActionScrolling,
+        HotkeyType.ScreenRecorder => Strings.ActionsToolbarWindow_ActionVideo,
+        HotkeyType.ScreenRecorderGIF => Strings.ActionsToolbarWindow_ActionGIF,
+        HotkeyType.ActiveWindow => Strings.ActionsToolbarWindow_ActionWindow,
+        HotkeyType.ActiveMonitor => Strings.ActionsToolbarWindow_ActionMonitor,
+        HotkeyType.OCR => Strings.ActionsToolbarWindow_ActionOCR,
+        HotkeyType.ScreenColorPicker => Strings.ActionsToolbarWindow_ActionColor,
+        _ => action.GetLocalizedDescription()
+    };
+
+    /// <summary>The action description, with the hotkey when a valid hotkey runs the action.</summary>
+    internal static string GetActionTip(HotkeyType action)
+    {
+        string description = action.GetLocalizedDescription();
+        string? hotkey = GetHotkeyText(action);
+        return hotkey == null ? description : $"{description} ({hotkey})";
+    }
+
+    internal static string? GetHotkeyText(HotkeyType action) => ApplicationState.HotkeysConfigOrNull?.Hotkeys?
+        .FirstOrDefault(x => x.TaskSettings?.Job == action && x.HotkeyInfo.IsValidHotkey)?.HotkeyInfo.ToString();
 
     // Keeps the panel out of screenshots, recordings, and capture overlays.
     // Every call must be paired with RestoreAfterCapture. Returns true when a visible panel was hidden.

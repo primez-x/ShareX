@@ -1643,65 +1643,11 @@
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>זרימות עבודה</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>הוסף אפקטי תמונה...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>תמיד מעל</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>נתח תמונה</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>ייפוי תמונה</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>נקה תצוגת תמונות ממוזערות</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>שילוב תמונות</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>שילוב תמונות...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>העתק</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>מחיקת הפריט מרחוק...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>האם באמת למחוק את הפריט הזה מרחוק?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>מחק קובץ נבחר...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>מחק פריט נבחר</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>קישור הסרה</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>הורד כתובת URL נבחרת</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>ערוך תמונה</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>ערוך בעורך התמונות...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>קובץ</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>שם קובץ</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>שם קובץ עם סיומת</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>נתיב קובץ</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>קבצים שיושלכו כאן יועלו באמצעות ShareX.</value>
@@ -1709,83 +1655,20 @@
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>תיקייה</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>תמונת פורום</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>קישור פורום</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>תמונת פורום מקושרת</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>אופקי</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>אופקית</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>השתמש במקש קיצור כדי ללכוד או להעלות. התוצאות יופיעו כאן כתמונות ממוזערות.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>תמונת HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>קישור HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>תמונת HTML מקושרת</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>תמונה</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>ממדי תמונה</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>תמונת Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>קישור Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>תמונת Markdown מקושרת</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>למקסם או לשחזר</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>לְצַמְצֵם</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>תמונת OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>פתח</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>הצמד למסך</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>שחרר כדי להעלות קבצים</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>שחרר כדי להעלות טקסט</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>מחיקת הפריט מרחוק נכשלה.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>הפריט נמחק מרחוק.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>מחיקה מרחוק</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>שינוי גודל התמונה...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>הפעל פעולה</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>חפש באמצעות החיפוש החזותי של Bing...</value>
@@ -1796,59 +1679,17 @@
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>שתף כתובת URL נבחרת</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>מקשי קיצור של ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>קצר כתובת URL נבחרת</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>קישור מקוצר</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>הצג שגיאות...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>הצג קוד QR...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>הצג תגובה...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>עצור העלאה</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>טקסט</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>טקסט שיושלך כאן יועלה באמצעות ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>קובץ תמונה ממוזערת</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>תמונה ממוזערת</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>קישור תמונה ממוזערת</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>חיתוך GIF מונפש...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>חיתוך וידאו...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>העלה קובץ נבחר</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>קישור</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>אנכי</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>אנכית</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>סימון עכבר</value>
@@ -3019,9 +2860,6 @@
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>תכונה זו לא תעבוד כאשר האפשרות "השבת העלאה" פעילה!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>משימה ללא כותרת</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>ביטול</value>

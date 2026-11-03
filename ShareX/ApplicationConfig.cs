@@ -61,9 +61,9 @@ namespace ShareX
         public bool TrayIconProgressEnabled = true;
         public bool TaskbarProgressEnabled = true;
         public bool UseWhiteShareXIcon = false;
-        public bool RememberMainFormPosition = false;
+        public bool RememberMainFormPosition = true;
         public Point MainFormPosition = Point.Empty;
-        public bool RememberMainFormSize = false;
+        public bool RememberMainFormSize = true;
         public Size MainFormSize = Size.Empty;
 
         public HotkeyType TrayLeftClickAction = HotkeyType.RectangleRegion;

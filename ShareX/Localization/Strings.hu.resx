@@ -1643,65 +1643,11 @@ Kérlek, válassz egy másik gyorsbillentyűt vagy zárd be a problémát okozó
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Munkafolyamatok</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Hozzáadás képeffektusok...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Mindig felül</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Analyze kép</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Beautify kép</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Miniatűrnézet törlése</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Képek egyesítése</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Képek egyesítése...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Másolás</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Elem távoli törlése...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Biztosan távolról szeretné törölni ezt az elemet?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Kijelölt fájl törlése...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Kijelölt elem törlése</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>Törlési URL</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Kijelölt URL letöltése</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Szerkesztés kép</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Szerkesztés a fotószerkesztőben...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Fájl</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Fájlnév</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Fájlnév kiterjesztéssel</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Fájl elérési út</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Az ide ejtett fájlokat a ShareX feltölti.</value>
@@ -1709,83 +1655,20 @@ Kérlek, válassz egy másik gyorsbillentyűt vagy zárd be a problémát okozó
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Mappa</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Fórumkép</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Fórumhivatkozás</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Hivatkozott fórumkép</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Vízszintes</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Vízszintesen</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Használjon gyorsbillentyűt rögzítéshez vagy feltöltéshez. Az eredmények itt miniatűrökként jelennek meg.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML-kép</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML-hivatkozás</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Hivatkozott HTML-kép</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Kép</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Kép méretei</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Markdown-kép</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Markdown-hivatkozás</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Hivatkozott Markdown-kép</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maximalizálás vagy visszaállítás</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Minimalizálás</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>OCR-kép...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Megnyitás</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Pin to képernyő</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Engedje el a fájlok feltöltéséhez</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Engedje el a szöveg feltöltéséhez</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Nem sikerült távolról törölni az elemet.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Az elem távolról törölve.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Távoli törlés</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Kép átméretezése...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Művelet futtatása</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Keresés a Bing Vizuális kereséssel...</value>
@@ -1796,59 +1679,17 @@ Kérlek, válassz egy másik gyorsbillentyűt vagy zárd be a problémát okozó
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Kijelölt URL megosztása</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>ShareX gyorsbillentyűk</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Kijelölt URL rövidítése</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>Rövidített URL</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Hibák megjelenítése...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>QR-kód megjelenítése...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Válasz megjelenítése...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Feltöltés leállítása</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Szöveg</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Az ide ejtett szöveget a ShareX feltölti.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Miniatűrfájl</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Miniatűrkép</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Miniatűr URL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Animált GIF vágása...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Videó vágása...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Kijelölt fájl feltöltése</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Függőleges</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Függőlegesen</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Egér kiemelő</value>
@@ -3019,9 +2860,6 @@ Do you want to megszakítás the active képernyőfelvétel?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>This feature will not work when "DisableFeltöltés" option is engedélyezve!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Névtelen feladat</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Mégse</value>

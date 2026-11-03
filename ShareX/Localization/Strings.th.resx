@@ -1643,65 +1643,11 @@
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>เวิร์กโฟลว์</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>เพิ่มเอฟเฟกต์รูปภาพ...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>เสมอ บน ด้านบน</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>วิเคราะห์รูปภาพ...</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>ตกแต่ง รูปภาพ...</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>ล้าง ภาพขนาดย่อ มุมมอง</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>รวม รูปภาพ</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>รวมรูปภาพ...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>คัดลอก</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>ลบรายการจากระยะไกล...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>คุณต้องการลบรายการนี้จากระยะไกลจริงหรือไม่?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>ลบ ไฟล์ที่เลือก...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>ลบ รายการที่เลือก</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>URL สำหรับลบ</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>ดาวน์โหลด ที่เลือก URL</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>แก้ไข รูปภาพ...</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>แก้ไขในตัวแก้ไขรูปภาพ...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>ไฟล์</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>ชื่อไฟล์</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>ชื่อไฟล์พร้อมนามสกุล</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>เส้นทางไฟล์</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>ไฟล์ที่วางที่นี่จะถูกอัปโหลดโดย ShareX</value>
@@ -1709,83 +1655,20 @@
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>โฟลเดอร์</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Forum รูปภาพ</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Forum ลิงก์</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>รูปภาพเชื่อมโยงสำหรับฟอรัม</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>แนวนอน</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>ในแนวนอน</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>ใช้ปุ่มลัดเพื่อจับภาพหรืออัปโหลด ผลลัพธ์ของคุณจะแสดงเป็นภาพขนาดย่อที่นี่</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML รูปภาพ</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML ลิงก์</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>รูปภาพเชื่อมโยง HTML</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>รูปภาพ</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>รูปภาพ มิติ</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>มาร์กดาวน์ รูปภาพ</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>มาร์กดาวน์ ลิงก์</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>มาร์กดาวน์ รูปภาพเชื่อมโยง</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>ขยายใหญ่สุดหรือคืนค่า</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>ย่อเล็กสุด</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>OCR รูปภาพ...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>เปิด</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>ปักหมุดบนหน้าจอ</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>ปล่อยเพื่ออัปโหลดไฟล์</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>ปล่อยเพื่ออัปโหลดข้อความ</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>ไม่สามารถลบรายการจากระยะไกลได้</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>ลบรายการจากระยะไกลแล้ว</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>การลบจากระยะไกล</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>ปรับขนาดรูปภาพ...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>เรียกใช้ การดำเนินการ</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>ค้นหาด้วย Bing Visual Search...</value>
@@ -1796,59 +1679,17 @@
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>แชร์ ที่เลือก URL</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>ปุ่มลัด ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>ย่อ ที่เลือก URL</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>URL แบบย่อ</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>แสดง ข้อผิดพลาด...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>แสดง QR โค้ด...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>แสดง การตอบกลับ...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>หยุด อัปโหลด</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>ข้อความ</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>ข้อความที่วางที่นี่จะถูกอัปโหลดโดย ShareX</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>ภาพขนาดย่อ ไฟล์</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>ภาพขนาดย่อ รูปภาพ</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>URL ภาพขนาดย่อ</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>ตัด GIF แบบเคลื่อนไหว...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>ตัดวิดีโอ...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>อัปโหลด ไฟล์ที่เลือก</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>แนวตั้ง</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>ในแนวตั้ง</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>ปากกาเน้นข้อความเมาส์</value>
@@ -3019,9 +2860,6 @@
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>คุณลักษณะนี้จะไม่ทำงานเมื่อเปิดตัวเลือก "DisableUpload"</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>ไม่มีชื่อ งาน</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>ยกเลิก</value>

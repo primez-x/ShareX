@@ -1643,65 +1643,11 @@
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>مهام سير العمل</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>إضافة مؤثرات للصورة...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>دائمًا في المقدمة</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>تحليل الصورة</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>تحسين صورة</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>مسح عرض الصور المصغرة</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>دمج الصور</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>دمج الصور...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>نسخ</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>حذف العنصر عن بُعد...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>هل تريد حقًا حذف هذا العنصر عن بُعد؟</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>حذف الملف المحدد...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>حذف العنصر المحدد</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>عنوان الحذف</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>تنزيل عنوان URL المحدد</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>تعديل الصورة</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>تعديل في محرر الصور...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>ملف</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>اسم الملف</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>اسم الملف مع الامتداد</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>مسار الملف</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>سيتم رفع الملفات التي تُفلت هنا بواسطة ShareX.</value>
@@ -1709,83 +1655,20 @@
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>المجلد</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>صورة المنتدى</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>رابط المنتدى</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>صورة المنتدى المرتبطة</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>أفقي</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>أفقياً</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>استخدم مفتاح اختصار للالتقاط أو الرفع. ستظهر نتائجك هنا كصور مصغرة.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>صورة HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>رابط HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>صورة HTML مرتبطة</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>الصورة</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>أبعاد الصورة</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>صورة Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>رابط Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>صورة Markdown مرتبطة</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>تعظيم أو استعادة</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>تصغير</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>صورة OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>فتح</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>تثيبت على الشاشة</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>أفلت لرفع الملفات</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>أفلت لرفع النص</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>فشل حذف العنصر عن بُعد.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>تم حذف العنصر عن بُعد.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>الحذف عن بُعد</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>تغيير حجم الصورة...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>تشغيل الإجراء</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>البحث باستخدام البحث المرئي من Bing...</value>
@@ -1796,59 +1679,17 @@
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>مشاركة عنوان URL المحدد</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>اختصارات ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>اختصار عنوان URL المحدد</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>عنوان URL المختصر</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>إظهار الأخطاء...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>إظهار رمز QR...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>إظهار الاستجابة...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>إيقاف الرفع</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>النص</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>سيتم رفع النص الذي يُفلت هنا بواسطة ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>ملف الصورة المصغرة</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>الصورة المصغرة</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>عنوان URL للصورة المصغرة</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>قص صورة GIF متحركة...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>قص الفيديو...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>رفع الملف المحدد</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>عنوان URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>عمودي</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>عمودياً</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>تمييز الماوس</value>
@@ -3019,9 +2860,6 @@
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>هذا الميزة لن تعمل عندما يكون الخيار "تعطيل الرفع" مفعلًا!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>مهمة بلا عنوان</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>إلغاء</value>

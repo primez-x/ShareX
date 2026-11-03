@@ -1686,113 +1686,62 @@ Please select a different hotkey or quit the conflicting application and reopen 
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Workflows</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Add image effects...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Always on top</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Analyze image...</value>
+  <data name="MainWindow_CaptureHint" xml:space="preserve">
+    <value>Click Capture region to capture a part of your screen.</value>
   </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Beautify image...</value>
+  <data name="MainWindow_CaptureHintHotkey" xml:space="preserve">
+    <value>Press {0} or click Capture region to capture a part of your screen.</value>
   </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Clear thumbnail view</value>
+  <data name="MainWindow_CaptureOptions" xml:space="preserve">
+    <value>Capture options</value>
   </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Combine images</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Combine images...</value>
+  <data name="MainWindow_CaptureRegion" xml:space="preserve">
+    <value>Capture region</value>
   </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Delete item remotely...</value>
+  <data name="MainWindow_CopyFilePath" xml:space="preserve">
+    <value>Copy file path</value>
   </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Do you really want to delete this item remotely?</value>
+  <data name="MainWindow_Date" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Delete selected file...</value>
+  <data name="MainWindow_Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Delete selected item</value>
+  <data name="MainWindow_Dimensions" xml:space="preserve">
+    <value>Dimensions</value>
   </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>Deletion URL</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Download selected URL</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Edit image...</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Edit in Photo editor...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>File name</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>File name with extension</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>File path</value>
+  <data name="MainWindow_Edit" xml:space="preserve">
+    <value>Edit</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Files dropped here will be uploaded by ShareX.</value>
   </data>
+  <data name="MainWindow_FilterAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="MainWindow_FilterImages" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="MainWindow_FilterOtherFiles" xml:space="preserve">
+    <value>Other files</value>
+  </data>
+  <data name="MainWindow_FilterVideos" xml:space="preserve">
+    <value>Videos</value>
+  </data>
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Folder</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Forum image</value>
+  <data name="MainWindow_HoursAgo" xml:space="preserve">
+    <value>{0} h ago</value>
   </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Forum link</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Forum linked image</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Horizontal</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Horizontally</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Use a hotkey to capture or upload. Your results will appear here as thumbnails.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML image</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML link</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>HTML linked image</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Image</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Image dimensions</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Markdown image</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Markdown link</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Markdown linked image</value>
+  <data name="MainWindow_JustNow" xml:space="preserve">
+    <value>Just now</value>
   </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maximize or restore</value>
@@ -1800,14 +1749,23 @@ Please select a different hotkey or quit the conflicting application and reopen 
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Minimize</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>OCR image...</value>
+  <data name="MainWindow_MinutesAgo" xml:space="preserve">
+    <value>{0} min ago</value>
+  </data>
+  <data name="MainWindow_More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="MainWindow_NewCapture" xml:space="preserve">
+    <value>New capture</value>
+  </data>
+  <data name="MainWindow_NoCapturesYet" xml:space="preserve">
+    <value>No captures yet</value>
+  </data>
+  <data name="MainWindow_NoMatchingCaptures" xml:space="preserve">
+    <value>No captures match the search or the filter</value>
   </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Open</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Pin to screen</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Release to upload files</value>
@@ -1815,20 +1773,11 @@ Please select a different hotkey or quit the conflicting application and reopen 
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Release to upload text</value>
   </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Failed to delete the item remotely.</value>
+  <data name="MainWindow_RemoveFromList" xml:space="preserve">
+    <value>Remove from list</value>
   </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>The item was deleted remotely.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Remote deletion</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Resize image...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Run action</value>
+  <data name="MainWindow_SearchCaptures" xml:space="preserve">
+    <value>Search captures</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Search with Bing Visual Search...</value>
@@ -1836,62 +1785,44 @@ Please select a different hotkey or quit the conflicting application and reopen 
   <data name="MainWindow_SearchWithGoogleLens" xml:space="preserve">
     <value>Search with Google Lens...</value>
   </data>
+  <data name="MainWindow_SelectCaptureHint" xml:space="preserve">
+    <value>Select a capture to see the details and the actions.</value>
+  </data>
+  <data name="MainWindow_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainWindow_Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Share selected URL</value>
-  </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>ShareX hotkeys</value>
   </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Shorten selected URL</value>
   </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>Shortened URL</value>
+  <data name="MainWindow_ShowCapturePanel" xml:space="preserve">
+    <value>Show capture panel</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Show errors...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Show QR code...</value>
+  <data name="MainWindow_ShowInFolder" xml:space="preserve">
+    <value>Show in folder</value>
   </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Show response...</value>
+  <data name="MainWindow_Size" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Stop upload</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Text</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Text dropped here will be uploaded by ShareX.</value>
   </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Thumbnail file</value>
+  <data name="MainWindow_UntitledCapture" xml:space="preserve">
+    <value>Untitled capture</value>
   </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Thumbnail image</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Thumbnail URL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Trim animated GIF...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Trim video...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Upload selected file</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Vertical</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Vertically</value>
+  <data name="MainWindow_Yesterday" xml:space="preserve">
+    <value>Yesterday</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Mouse highlighter</value>
@@ -3178,9 +3109,6 @@ Do you want to abort the active screen recording?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>This feature will not work when "DisableUpload" option is enabled!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Untitled task</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Cancel</value>

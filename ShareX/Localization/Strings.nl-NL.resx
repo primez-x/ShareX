@@ -1643,65 +1643,11 @@ Gelieve een andere sneltoets te selecteren of sluit het conflicterende programma
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Werkstromen</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Toevoegen afbeelding effects...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Altijd op de voorgrond</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Afbeelding analyseren</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Beautify afbeelding</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Miniatuurweergave wissen</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Afbeeldingen combineren</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Afbeeldingen combineren...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Kopieer</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Item extern verwijderen...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Wilt u dit item echt extern verwijderen?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Geselecteerd bestand verwijderen...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Geselecteerd item verwijderen</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>Verwijderings-URL</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Geselecteerde URL downloaden</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Bewerken afbeelding</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Bewerken in foto-editor...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Bestand</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Bestandsnaam</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Bestandsnaam met extensie</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Bestandspad</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Bestanden die hier worden neergezet, worden door ShareX geüpload.</value>
@@ -1709,83 +1655,20 @@ Gelieve een andere sneltoets te selecteren of sluit het conflicterende programma
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Map</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Forumafbeelding</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Forumlink</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Gekoppelde forumafbeelding</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Horizontaal</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Horizontaal</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Gebruik een sneltoets om vast te leggen of te uploaden. Uw resultaten verschijnen hier als miniaturen.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML-afbeelding</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML-link</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Gekoppelde HTML-afbeelding</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Afbeelding</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Afbeeldingsafmetingen</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Markdown-afbeelding</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Markdown-link</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Gekoppelde Markdown-afbeelding</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maximaliseren of herstellen</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Minimaliseer</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>OCR-afbeelding...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Openen</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Pin to scherm</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Loslaten om bestanden te uploaden</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Loslaten om tekst te uploaden</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Het item kon niet extern worden verwijderd.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Het item is extern verwijderd.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Extern verwijderen</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Afbeeldingsgrootte wijzigen...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Actie uitvoeren</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Zoeken met Bing Visueel zoeken...</value>
@@ -1796,59 +1679,17 @@ Gelieve een andere sneltoets te selecteren of sluit het conflicterende programma
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Geselecteerde URL delen</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>ShareX-sneltoetsen</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Geselecteerde URL verkorten</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>Verkorte URL</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Fouten weergeven...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>QR-code weergeven...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Antwoord weergeven...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Upload stoppen</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Tekst</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Tekst die hier wordt neergezet, wordt door ShareX geüpload.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Miniatuurbestand</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Miniatuurafbeelding</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Miniatuur URL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Geanimeerde GIF bijsnijden...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Video bijsnijden...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Geselecteerd bestand uploaden</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Verticaal</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Verticaal</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Muisklikmarkering</value>
@@ -3019,9 +2860,6 @@ Do you want to abort the active scherm opname?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>This feature will not work when "DisableUploaden" option is inschakelend!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Naamloze taak</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Annuleren</value>

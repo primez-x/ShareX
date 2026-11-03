@@ -1643,65 +1643,11 @@ Vælg en anden genvejstast, eller afslut det program, der forårsager konflikten
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Arbejdsforløb</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Tilføj billedeffekter...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Altid øverst</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Analysér billede...</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Forskøn billede...</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Ryd miniaturevisningen</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Kombinér billeder</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Kombinér billeder...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Kopiér</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Slet elementet eksternt...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Vil du virkelig slette dette element eksternt?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Fjern valgt fil...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Fjern valgt objekt</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>Slette-URL</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Hent valgt URL</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Rediger billede...</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Rediger i fotoredigering...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Fil</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Filnavn</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Filnavn med filtypenavn</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Filsti</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Filer, der slippes her, bliver uploadet af ShareX.</value>
@@ -1709,83 +1655,20 @@ Vælg en anden genvejstast, eller afslut det program, der forårsager konflikten
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Mappe</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Forumbillede</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Forumlink</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Tilknyttet forumbillede</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Vandret</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Vandret</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Brug en genvejstast til at tage et billede eller uploade. Resultaterne vises her som miniaturer.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML-billede</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML-link</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Tilknyttet HTML-billede</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Billede</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Billedmål</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Markdown-billede</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Markdown-link</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Tilknyttet Markdown-billede</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maksimer eller gendan</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Minimer</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>OCR af billede...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Åbn</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Fastgør på skærmen</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Slip for at uploade filer</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Slip for at uploade tekst</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Elementet kunne ikke slettes eksternt.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Elementet blev slettet eksternt.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Ekstern sletning</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Skift billedstørrelse...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Kør handling</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Søg med Bing visuel søgning...</value>
@@ -1796,59 +1679,17 @@ Vælg en anden genvejstast, eller afslut det program, der forårsager konflikten
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Del valgt URL</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>ShareX-genvejstaster</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Forkort valgt URL</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>Forkortet URL</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Vis fejl...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Vis QR-kode...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Vis svar...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Stop upload</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Tekst</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Tekst, der slippes her, bliver uploadet af ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Miniaturefil</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Miniaturebillede</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Miniature-URL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Beskær animeret GIF...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Beskær video...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Upload valgt fil</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Lodret</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Lodret</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Mus highlighter</value>
@@ -3019,9 +2860,6 @@ Vil du afbryde den aktive skærmoptagelse?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>Denne funktion virker ikke, når indstillingen ”DisableUpload” er aktiveret!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Unavngiven opgave</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Annuller</value>

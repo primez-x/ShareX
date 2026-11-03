@@ -1643,65 +1643,11 @@
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>ワークフロー</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>画像エフェクトを追加...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>常に手前に表示</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>画像を解析</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>画像装飾</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>サムネイル表示をクリア</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>画像を結合</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>画像を結合...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>コピー</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>項目をリモートから削除...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>この項目をリモートから削除してもよろしいですか？</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>選択したファイルを削除...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>選択した項目を削除</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>削除用URL</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>選択した URL をダウンロード</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>画像エディタで編集</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>フォトエディターで編集...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>ファイル</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>ファイル名</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>拡張子付きファイル名</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>ファイルのパス</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>ここにドロップしたファイルは ShareX によってアップロードされます。</value>
@@ -1709,83 +1655,20 @@
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>フォルダー</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>フォーラム画像</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>フォーラムリンク</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>フォーラムのリンク画像</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>横方向</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>水平方向</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>ホットキーを使用してキャプチャまたはアップロードします。結果はここにサムネイルとして表示されます。</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML 画像</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML リンク</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>HTML リンク画像</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>画像</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>画像の寸法</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Markdown 画像</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Markdown リンク</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Markdown リンク画像</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>最大化または復元</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>最小化する</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>画像を OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>開く</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>最前面に固定</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>離してファイルをアップロード</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>離してテキストをアップロード</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>項目をリモートから削除できませんでした。</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>項目をリモートから削除しました。</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>リモート削除</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>画像のサイズ変更...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>アクションを実行</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Bing Visual Search で検索...</value>
@@ -1796,59 +1679,17 @@
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>選択した URL を共有</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>ShareX ホットキー</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>選択した URL を短縮</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>短縮URL</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>エラーを表示...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>QR コードを表示...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>応答を表示...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>アップロードを停止</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>テキスト</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>ここにドロップしたテキストは ShareX によってアップロードされます。</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>サムネイル ファイル</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>サムネイル画像</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>サムネイルURL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>アニメーションGIFをトリミング...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>動画をトリミング...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>選択したファイルをアップロード</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>縦方向</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>垂直方向</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>マウスハイライター</value>
@@ -3019,9 +2860,6 @@
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>DisableUpload (アップロード無効)の設定が有効のためこの機能は動作しません！</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>無題のタスク</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>キャンセル</value>

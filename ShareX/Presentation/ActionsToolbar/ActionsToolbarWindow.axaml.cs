@@ -87,7 +87,7 @@ public partial class ActionsToolbarWindow : Window
             icon.Classes.Add("icon");
             icon.Classes.Add("panel-icon");
 
-            string label = GetShortLabel(action);
+            string label = ActionsToolbarWindowIntegration.GetActionLabel(action);
             TextBlock text = new() { Text = label };
             text.Classes.Add("panel-label");
 
@@ -104,7 +104,7 @@ public partial class ActionsToolbarWindow : Window
             }
 
             AutomationProperties.SetName(button, label);
-            ToolTip.SetTip(button, GetActionTip(action));
+            ToolTip.SetTip(button, ActionsToolbarWindowIntegration.GetActionTip(action));
             button.Click += OnActionClick;
             ActionItems.Children.Add(button);
         }
@@ -114,29 +114,6 @@ public partial class ActionsToolbarWindow : Window
         PresetsButton.IsVisible = hasPresets;
 
         Dispatcher.UIThread.Post(ClampAndSavePosition, DispatcherPriority.Loaded);
-    }
-
-    private static string GetShortLabel(HotkeyType action) => action switch
-    {
-        HotkeyType.RectangleRegion => Strings.ActionsToolbarWindow_ActionRegion,
-        HotkeyType.PrintScreen => Strings.ActionsToolbarWindow_ActionFullScreen,
-        HotkeyType.ScrollingCapture => Strings.ActionsToolbarWindow_ActionScrolling,
-        HotkeyType.ScreenRecorder => Strings.ActionsToolbarWindow_ActionVideo,
-        HotkeyType.ScreenRecorderGIF => Strings.ActionsToolbarWindow_ActionGIF,
-        HotkeyType.ActiveWindow => Strings.ActionsToolbarWindow_ActionWindow,
-        HotkeyType.ActiveMonitor => Strings.ActionsToolbarWindow_ActionMonitor,
-        HotkeyType.OCR => Strings.ActionsToolbarWindow_ActionOCR,
-        HotkeyType.ScreenColorPicker => Strings.ActionsToolbarWindow_ActionColor,
-        _ => action.GetLocalizedDescription()
-    };
-
-    private static string GetActionTip(HotkeyType action)
-    {
-        string description = action.GetLocalizedDescription();
-        HotkeySettings? hotkey = ApplicationState.HotkeysConfigOrNull?.Hotkeys?
-            .FirstOrDefault(x => x.TaskSettings?.Job == action && x.HotkeyInfo.IsValidHotkey);
-
-        return hotkey == null ? description : $"{description} ({hotkey.HotkeyInfo})";
     }
 
     private async void OnActionClick(object? sender, RoutedEventArgs e)

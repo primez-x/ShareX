@@ -151,34 +151,6 @@ internal sealed class MainMenuEntry
     public static MainMenuEntry Separator() => new();
 }
 
-internal sealed class MainNavigationSection
-{
-    public string Header { get; }
-    public string Icon { get; }
-    public Func<IReadOnlyList<MainMenuEntry>>? CreateChildren { get; }
-    public Func<IReadOnlyList<MainMenuCategory>>? CreateCategories { get; }
-    public Action? Execute { get; }
-    public bool IsVisible { get; }
-
-    public MainNavigationSection(string header, string icon, Func<IReadOnlyList<MainMenuEntry>> createChildren,
-        bool isVisible = true, Func<IReadOnlyList<MainMenuCategory>>? createCategories = null)
-    {
-        Header = header;
-        Icon = icon;
-        CreateChildren = createChildren;
-        CreateCategories = createCategories;
-        IsVisible = isVisible;
-    }
-
-    public MainNavigationSection(string header, string icon, Action execute, bool isVisible = true)
-    {
-        Header = header;
-        Icon = icon;
-        Execute = execute;
-        IsVisible = isVisible;
-    }
-}
-
 internal sealed class MainMenuCategory
 {
     public string Header { get; }

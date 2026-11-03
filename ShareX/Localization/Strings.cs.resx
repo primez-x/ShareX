@@ -1643,65 +1643,11 @@ Vyberte jinou klávesovou zkratku nebo ukončete konfliktní aplikaci a znovu ot
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Pracovní postupy</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Přidat efekty obrázku...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Vždy navrchu</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Analyzovat obrázek...</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Vylepšit obrázek...</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Vymazat zobrazení miniatur</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Spojit obrázky</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Spojit obrázky...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Kopírovat</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Odstranit položku vzdáleně...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Opravdu chcete tuto položku vzdáleně odstranit?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Odstranit vybraný soubor...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Odstranit vybranou položku</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>Adresa URL pro odstranění</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Stáhnout vybranou adresu URL</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Upravit obrázek...</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Upravit v editoru fotografií...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Soubor</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Název souboru</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Název souboru s příponou</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Cesta k souboru</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Soubory přetažené sem budou nahrány pomocí ShareX.</value>
@@ -1709,83 +1655,20 @@ Vyberte jinou klávesovou zkratku nebo ukončete konfliktní aplikaci a znovu ot
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Složka</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Obrázek pro fórum</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Odkaz pro fórum</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Obrázek s odkazem pro fórum</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Vodorovně</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Vodorovně</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>K zachycení nebo nahrání použijte klávesovou zkratku. Výsledky se zde zobrazí jako miniatury.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>Obrázek HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>Odkaz HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Obrázek HTML s odkazem</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Obrázek</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Rozměry obrázku</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Obrázek Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Odkaz Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Obrázek Markdown s odkazem</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maximalizovat nebo obnovit</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Minimalizovat</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>OCR obrázku...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Otevřít</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Připnout na obrazovku</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Uvolněním nahrajete soubory</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Uvolněním nahrajete text</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Položku se nepodařilo vzdáleně odstranit.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Položka byla vzdáleně odstraněna.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Vzdálené odstranění</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Změnit velikost obrázku...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Spustit akci</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Hledat pomocí Vizuálního vyhledávání Bing...</value>
@@ -1796,59 +1679,17 @@ Vyberte jinou klávesovou zkratku nebo ukončete konfliktní aplikaci a znovu ot
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Sdílet vybranou adresu URL</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>Klávesové zkratky ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Zkrátit vybranou adresu URL</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>Zkrácená adresa URL</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Zobrazit chyby...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Zobrazit QR kód...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Zobrazit odpověď...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Zastavit nahrávání</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Text</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Text přetažený sem bude nahrán pomocí ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Soubor miniatury</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Obrázek miniatury</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Adresa URL miniatury</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Oříznout animovaný GIF...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Oříznout video...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Nahrát vybraný soubor</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>Adresa URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Svisle</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Svisle</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Zvýrazňovač myši</value>
@@ -3019,9 +2860,6 @@ Chcete aktivní nahrávání obrazovky přerušit?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>Tato funkce nebude fungovat, když je povolena možnost „DisableUpload“!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Úloha bez názvu</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Zrušit</value>

@@ -51,42 +51,34 @@ internal sealed class MainMenuBuilder
     }
 
     /// <summary>
-    /// Returns the navigation in groups. The main window draws a separator between groups.
+    /// The main window "More" menu. The menu holds every feature of the former navigation panel.
+    /// Settings has a separate toolbar button, so the menu does not repeat Settings.
     /// </summary>
-    public IReadOnlyList<IReadOnlyList<MainNavigationSection>> BuildNavigation()
+    public IReadOnlyList<MainMenuEntry> BuildMoreMenu()
     {
         bool uploadsEnabled = !SystemOptions.DisableUpload;
 
         return
         [
-            [
-                new(Strings.MainMenuBuilder_Capture, LucideIcons.camera, BuildCaptureMenu),
-                new(Strings.MainMenuBuilder_Upload, LucideIcons.upload, BuildUploadMenu, uploadsEnabled),
-                new(Strings.MainMenuBuilder_Workflows, LucideIcons.list_checks, BuildWorkflowsMenu),
-                new(Strings.MainMenuBuilder_Tools, LucideIcons.wrench, BuildToolsMenu,
-                    createCategories: BuildToolCategories)
-            ],
-            [
-                new(Strings.MainMenuBuilder_AfterCaptureTasks, LucideIcons.image_up, BuildAfterCaptureMenu),
-                new(Strings.MainMenuBuilder_AfterUploadTasks, LucideIcons.cloud_upload, BuildAfterUploadMenu, uploadsEnabled),
-                new(Strings.MainMenuBuilder_Destinations, LucideIcons.server, BuildDestinationsMenu, uploadsEnabled)
-            ],
-            [
-                new(Strings.MainMenuBuilder_Settings, LucideIcons.settings, () => Run(MainFormCommand.Settings)),
-                new(Strings.MainMenuBuilder_ScreenshotsFolder, LucideIcons.folder_open, () => Run(MainFormCommand.ScreenshotsFolder))
-            ],
-            [
-                new(Strings.MainMenuBuilder_History, LucideIcons.history, () => Run(MainFormCommand.History)),
-                new(Strings.MainMenuBuilder_ImageHistory, LucideIcons.images, () => Run(MainFormCommand.ImageHistory)),
-                new(Strings.MainMenuBuilder_Stats, LucideIcons.chart_column, () => Run(MainFormCommand.Stats)),
-                new(Strings.MainMenuBuilder_Debug, LucideIcons.bug, BuildDebugMenu)
-            ],
-            [
-                new(Strings.MainMenuBuilder_Donate, LucideIcons.heart, () => Run(MainFormCommand.Donate)),
-                new(Strings.MainMenuBuilder_FollowShareX, LucideIcons.external_link, () => Run(MainFormCommand.X)),
-                new(Strings.MainMenuBuilder_Discord, LucideIcons.message_circle, () => Run(MainFormCommand.Discord)),
-                new(Strings.MainMenuBuilder_About, LucideIcons.info, () => Run(MainFormCommand.About))
-            ]
+            Parent(Strings.MainMenuBuilder_Capture, LucideIcons.camera, BuildCaptureMenu),
+            Parent(Strings.MainMenuBuilder_Upload, LucideIcons.upload, BuildUploadMenu, uploadsEnabled),
+            Parent(Strings.MainMenuBuilder_Workflows, LucideIcons.list_checks, BuildWorkflowsMenu),
+            CategoryParent(Strings.MainMenuBuilder_Tools, LucideIcons.wrench, BuildToolCategories),
+            MainMenuEntry.Separator(),
+            Parent(Strings.MainMenuBuilder_AfterCaptureTasks, LucideIcons.image_up, BuildAfterCaptureMenu),
+            Parent(Strings.MainMenuBuilder_AfterUploadTasks, LucideIcons.cloud_upload, BuildAfterUploadMenu, uploadsEnabled),
+            Parent(Strings.MainMenuBuilder_Destinations, LucideIcons.server, BuildDestinationsMenu, uploadsEnabled),
+            MainMenuEntry.Separator(),
+            Item(Strings.MainMenuBuilder_ScreenshotsFolder, LucideIcons.folder_open, () => Run(MainFormCommand.ScreenshotsFolder)),
+            Item(Strings.MainMenuBuilder_History, LucideIcons.history, () => Run(MainFormCommand.History)),
+            Item(Strings.MainMenuBuilder_ImageHistory, LucideIcons.images, () => Run(MainFormCommand.ImageHistory)),
+            Item(Strings.MainMenuBuilder_Stats, LucideIcons.chart_column, () => Run(MainFormCommand.Stats)),
+            Parent(Strings.MainMenuBuilder_Debug, LucideIcons.bug, BuildDebugMenu),
+            MainMenuEntry.Separator(),
+            Item(Strings.MainMenuBuilder_Donate, LucideIcons.heart, () => Run(MainFormCommand.Donate)),
+            Item(Strings.MainMenuBuilder_FollowShareX, LucideIcons.external_link, () => Run(MainFormCommand.X)),
+            Item(Strings.MainMenuBuilder_Discord, LucideIcons.message_circle, () => Run(MainFormCommand.Discord)),
+            Item(Strings.MainMenuBuilder_About, LucideIcons.info, () => Run(MainFormCommand.About))
         ];
     }
 
@@ -232,23 +224,6 @@ internal sealed class MainMenuBuilder
             Item(Strings.MainMenuBuilder_UploadUrl, LucideIcons.link, async () => await UploadManager.UploadURL()),
             Item(Strings.MainMenuBuilder_DragAndDropUpload, LucideIcons.mouse_pointer_2, () => TaskHelpers.OpenDropWindow())
         };
-    }
-
-    private static IReadOnlyList<MainMenuEntry> BuildToolsMenu()
-    {
-        List<MainMenuEntry> items = new();
-
-        foreach (MainMenuCategory category in BuildToolCategories())
-        {
-            if (items.Count > 0)
-            {
-                items.Add(MainMenuEntry.Separator());
-            }
-
-            items.AddRange(category.Entries);
-        }
-
-        return items;
     }
 
     private static IReadOnlyList<MainMenuCategory> BuildToolCategories() =>

@@ -1643,65 +1643,11 @@ Silakan pilih tombol cepat yang berbeda atau keluar dari aplikasi yang bertentan
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Alur kerja</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Tambahkan efek gambar...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Selalu di atas</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Analisis gambar</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Percantik gambar</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Bersihkan tampilan gambar mini</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Gabungkan gambar</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Gabungkan gambar...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Salin</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Hapus item dari jarak jauh...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Apakah Anda yakin ingin menghapus item ini dari jarak jauh?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Hapus file terpilih...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Hapus item terpilih</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>URL penghapusan</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Unduh URL terpilih</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Edit gambar</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Edit di editor foto...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Nama file</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Nama file dengan ekstensi</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Jalur file</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>File yang dijatuhkan di sini akan diunggah oleh ShareX.</value>
@@ -1709,83 +1655,20 @@ Silakan pilih tombol cepat yang berbeda atau keluar dari aplikasi yang bertentan
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Folder</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Gambar forum</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Tautan forum</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Gambar forum tertaut</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Horisontal</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Secara horizontal</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Gunakan tombol pintas untuk menangkap atau mengunggah. Hasil Anda akan muncul di sini sebagai gambar mini.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>Gambar HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>Tautan HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Gambar HTML tertaut</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Gambar</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Dimensi gambar</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Gambar Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Tautan Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Gambar Markdown tertaut</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maksimalkan atau pulihkan</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Memperkecil</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>Gambar OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Buka</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Sematkan ke layar</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Lepaskan untuk mengunggah file</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Lepaskan untuk mengunggah teks</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Gagal menghapus item dari jarak jauh.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Item berhasil dihapus dari jarak jauh.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Penghapusan jarak jauh</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Ubah ukuran gambar...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Jalankan tindakan</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Cari dengan Pencarian Visual Bing...</value>
@@ -1796,59 +1679,17 @@ Silakan pilih tombol cepat yang berbeda atau keluar dari aplikasi yang bertentan
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Bagikan URL terpilih</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>Tombol pintas ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Pendekkan URL terpilih</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>URL yang dipersingkat</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Tampilkan kesalahan...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Tampilkan kode QR...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Tampilkan respons...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Hentikan unggahan</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Teks</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Teks yang dijatuhkan di sini akan diunggah oleh ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>File gambar mini</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Gambar mini</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>URL thumbnail</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Pangkas GIF animasi...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Potong video...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Unggah file terpilih</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Vertikal</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Secara vertikal</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Penyorot mouse</value>
@@ -3019,9 +2860,6 @@ Apakah Anda ingin membatalkan perekaman layar aktif?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>Fitur ini tidak akan berfungsi saat opsi "DisableUpload" diaktifkan!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Tugas tanpa judul</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Batal</value>

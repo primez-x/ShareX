@@ -41,8 +41,6 @@ namespace ShareX
         public static event Action<WorkerTask> TaskAdded;
         public static event Action<WorkerTask> TaskRemoved;
         public static event Action<WorkerTask> TaskChanged;
-        public static event Action<WorkerTask, Bitmap> TaskImageReady;
-        public static event Action TaskCollectionChanged;
 
         public static List<WorkerTask> Tasks { get; } = new List<WorkerTask>();
         public static RecentTaskManager RecentManager { get; } = new RecentTaskManager();
@@ -68,7 +66,6 @@ namespace ShareX
                 }
 
                 TaskAdded?.Invoke(task);
-                TaskCollectionChanged?.Invoke();
 
                 if (task.Status != TaskStatus.History)
                 {
@@ -85,7 +82,6 @@ namespace ShareX
                 Tasks.Remove(task);
 
                 TaskRemoved?.Invoke(task);
-                TaskCollectionChanged?.Invoke();
 
                 task.Dispose();
             }
@@ -135,7 +131,6 @@ namespace ShareX
         private static void Task_ImageReady(WorkerTask task, Bitmap image)
         {
             TaskChanged?.Invoke(task);
-            TaskImageReady?.Invoke(task, image);
         }
 
         private static void Task_UploadStarted(WorkerTask task)

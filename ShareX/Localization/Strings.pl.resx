@@ -1643,65 +1643,11 @@ Proszę wybrać inny skrót klawiszowy lub zamknąć konfliktową aplikację i p
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Przepływy pracy</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Dodawanie efektów obrazu...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Zawsze na wierzchu</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Analizuj obraz</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Upiększ obraz</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Wyczyść widok miniatur</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Połącz obrazy</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Połącz obrazy...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Kopiuj</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Usuń element zdalnie...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Czy na pewno chcesz zdalnie usunąć ten element?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Usuń wybrany plik...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Usuń wybrany element</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>Link usuwania</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Pobierz wybrany adres URL</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Edytuj obraz</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Edytuj w edytorze zdjęć...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Plik</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Nazwa pliku</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Nazwa pliku z rozszerzeniem</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Ścieżka pliku</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Upuszczone tutaj pliki zostaną przesłane przez ShareX.</value>
@@ -1709,83 +1655,20 @@ Proszę wybrać inny skrót klawiszowy lub zamknąć konfliktową aplikację i p
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Folder</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Obraz forum</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Łącze forum</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Połączony obraz forum</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Poziomo</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Poziomo</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Użyj skrótu klawiszowego, aby przechwycić lub przesłać. Wyniki pojawią się tutaj jako miniatury.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>Obraz HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>Łącze HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Połączony obraz HTML</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Obraz</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Wymiary obrazu</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Obraz Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Łącze Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Połączony obraz Markdown</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Maksymalizuj lub przywróć</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Zminimalizować</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>Obraz OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Otwórz</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Przypnij do ekranu</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Zwolnij, aby przesłać pliki</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Zwolnij, aby przesłać tekst</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Nie udało się zdalnie usunąć elementu.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Element został usunięty zdalnie.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Usuwanie zdalne</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Zmień rozmiar obrazu...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Uruchom działanie</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Wyszukaj za pomocą wyszukiwania wizualnego Bing...</value>
@@ -1796,59 +1679,17 @@ Proszę wybrać inny skrót klawiszowy lub zamknąć konfliktową aplikację i p
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Udostępnij wybrany adres URL</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>Skróty klawiszowe ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Skróć wybrany adres URL</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>Skrócony link</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Pokaż błędy...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Pokaż kod QR...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Pokaż odpowiedź...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Zatrzymaj przesyłanie</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Tekst</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Upuszczony tutaj tekst zostanie przesłany przez ShareX.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Plik miniatury</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Obraz miniatury</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>Link miniatury</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Przytnij animowany GIF...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Przytnij wideo...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Prześlij wybrany plik</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>Link</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Pionowo</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Pionowo</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Podświetlanie kliknięć myszy</value>
@@ -3019,9 +2860,6 @@ Czy chcesz przerwać aktywne nagrywanie ekranu?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>Ta funkcja nie będzie działać, gdy opcja "DisableUpload" jest włączona!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Zadanie bez tytułu</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Anuluj</value>

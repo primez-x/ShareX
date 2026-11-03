@@ -1643,65 +1643,11 @@
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>कार्यप्रवाह</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>छवि प्रभाव जोड़ें...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>हमेशा ऊपर</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>छवि का विश्लेषण करें...</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>छवि सुंदर बनाएँ...</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>थंबनेल दृश्य साफ़ करें</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>छवियाँ जोड़ें</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>छवियाँ जोड़ें...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>कॉपी करें</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>आइटम को रिमोट रूप से हटाएं...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>क्या आप वाकई इस आइटम को रिमोट रूप से हटाना चाहते हैं?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>चुनी गई फ़ाइल हटाएँ...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>चुना गया आइटम हटाएँ</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>हटाने का URL</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>चुना गया URL डाउनलोड करें</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>छवि संपादित करें...</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>फ़ोटो संपादक में संपादित करें...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>फ़ाइल</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>फ़ाइल नाम</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>एक्सटेंशन सहित फ़ाइल नाम</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>फ़ाइल पथ</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>यहाँ छोड़ी गई फ़ाइलें ShareX द्वारा अपलोड की जाएँगी।</value>
@@ -1709,83 +1655,20 @@
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>फ़ोल्डर</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>फ़ोरम छवि</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>फ़ोरम लिंक</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>फ़ोरम लिंक की गई छवि</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>क्षैतिज</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>क्षैतिज रूप से</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>कैप्चर या अपलोड के लिए हॉटकी उपयोग करें। आपके परिणाम यहाँ थंबनेल के रूप में दिखाई देंगे।</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>HTML छवि</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>HTML लिंक</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>HTML लिंक की गई छवि</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>छवि</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>छवि आयाम</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Markdown छवि</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Markdown लिंक</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Markdown लिंक की गई छवि</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>अधिकतम करना या पुनर्स्थापित करना</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>छोटा करना</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>छवि पर OCR करें...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>खोलें</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>स्क्रीन पर पिन करें</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>फ़ाइलें अपलोड करने के लिए छोड़ें</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>पाठ अपलोड करने के लिए छोड़ें</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>आइटम को रिमोट रूप से हटाने में विफल.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>आइटम को रिमोट रूप से हटा दिया गया.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>रिमोट विलोपन</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>चित्र का आकार बदलें...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>क्रिया चलाएँ</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Bing दृश्य खोज से खोजें...</value>
@@ -1796,59 +1679,17 @@
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>चुना गया URL साझा करें</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>ShareX हॉटकी</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>चुना गया URL संक्षिप्त करें</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>संक्षिप्त URL</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>त्रुटियाँ दिखाएँ...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>QR कोड दिखाएँ...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>प्रतिक्रिया दिखाएँ...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>अपलोड रोकें</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>पाठ</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>यहाँ छोड़ा गया पाठ ShareX द्वारा अपलोड किया जाएगा।</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>थंबनेल फ़ाइल</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>थंबनेल छवि</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>थंबनेल URL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>एनिमेटेड GIF ट्रिम करें...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>वीडियो ट्रिम करें...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>चुनी गई फ़ाइल अपलोड करें</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>लंबवत</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>लंबवत रूप से</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>माउस हाइलाइटर</value>
@@ -3019,9 +2860,6 @@
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>"DisableUpload" विकल्प सक्षम होने पर यह सुविधा काम नहीं करेगी!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>शीर्षकहीन कार्य</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>रद्द करें</value>

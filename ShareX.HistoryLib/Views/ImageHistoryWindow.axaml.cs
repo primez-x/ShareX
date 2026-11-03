@@ -37,7 +37,6 @@ using ShareX.HelpersLib;
 using ShareX.HistoryLib.Localization;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -52,18 +51,14 @@ public partial class ImageHistoryWindow : Window
     private readonly HistoryManagerSQLite _historyManager;
     private readonly ImageHistorySettings _settings;
     private readonly HistoryWindowServices _services;
-    private readonly ImageHistoryThumbnailLoader _thumbnailLoader = new();
+    private readonly ThumbnailGallery<ImageHistoryEntry> _gallery = new();
     private readonly DispatcherTimer _filterTimer;
-    private readonly ObservableCollection<ImageHistoryRow> _rows = [];
-    private readonly List<ImageHistoryEntry> _loadedEntries = [];
-    private readonly Dictionary<Control, ImageHistoryEntry> _realizedControls = [];
     private List<HistoryItem> _allHistoryItems = [];
     private HistoryItem[] _filteredHistoryItems = [];
     private CancellationTokenSource? _filterCancellation;
     private ScrollViewer? _scrollViewer;
     private int _filterVersion;
     private int _nextItemIndex;
-    private int _columns = 1;
     private int _selectionAnchor = -1;
     private bool _isBusy;
     private bool _checkingLoadMore;
@@ -87,7 +82,7 @@ public partial class ImageHistoryWindow : Window
         _services = new HistoryWindowServices();
         InitializeComponent();
         RequestedThemeVariant = ThemeManager.GetCurrentTheme();
-        ThumbnailRows.ItemsSource = _rows;
+        ThumbnailRows.ItemsSource = _gallery.Rows;
         ThumbnailRows.AddHandler(KeyDownEvent, OnWindowKeyDown, RoutingStrategies.Tunnel);
         _filterTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(220) };
         _filterTimer.Tick += OnFilterTimerTick;
@@ -140,8 +135,7 @@ public partial class ImageHistoryWindow : Window
         _filterCancellation?.Cancel();
         _filterCancellation?.Dispose();
         if (_scrollViewer != null) _scrollViewer.ScrollChanged -= OnScrollChanged;
-        foreach (ImageHistoryEntry entry in _loadedEntries) entry.Dispose();
-        _thumbnailLoader.Dispose();
+        _gallery.Dispose();
     }
 
     private void ApplySavedWindowState()
@@ -320,10 +314,7 @@ public partial class ImageHistoryWindow : Window
 
     private void ResetLoadedEntries()
     {
-        foreach (ImageHistoryEntry entry in _loadedEntries) entry.Dispose();
-        _realizedControls.Clear();
-        _loadedEntries.Clear();
-        _rows.Clear();
+        _gallery.Clear();
         _nextItemIndex = 0;
         _selectionAnchor = -1;
         if (_scrollViewer != null) _scrollViewer.Offset = new Vector(0, 0);
@@ -339,16 +330,8 @@ public partial class ImageHistoryWindow : Window
 
         for (int i = _nextItemIndex; i < end; i++)
         {
-            ImageHistoryEntry entry = new(_filteredHistoryItems[i], _settings.ThumbnailSize.Width,
-                _settings.ThumbnailSize.Height, _settings.ThumbnailHeaderPosition);
-            _loadedEntries.Add(entry);
-            ImageHistoryRow? row = _rows.LastOrDefault();
-            if (row == null || row.Items.Count >= _columns)
-            {
-                row = new ImageHistoryRow();
-                _rows.Add(row);
-            }
-            row.Items.Add(entry);
+            _gallery.Add(new ImageHistoryEntry(_filteredHistoryItems[i], _settings.ThumbnailSize.Width,
+                _settings.ThumbnailSize.Height, _settings.ThumbnailHeaderPosition));
         }
 
         _nextItemIndex = end;
@@ -390,58 +373,21 @@ public partial class ImageHistoryWindow : Window
     private void UpdateColumnCount()
     {
         const double cardChrome = 18; // 4px margins, 1px borders and 4px padding on both sides.
-        double cardWidth = Math.Max(50, _settings.ThumbnailSize.Width + cardChrome);
-        int columns = Math.Max(1, (int)Math.Floor(
-            Math.Max(1, ThumbnailRows.Bounds.Width) / cardWidth));
-        if (columns == _columns) return;
-        _columns = columns;
-        RebuildRows();
-    }
-
-    private void RebuildRows()
-    {
-        _rows.Clear();
-        foreach (ImageHistoryEntry entry in _loadedEntries)
-        {
-            ImageHistoryRow? row = _rows.LastOrDefault();
-            if (row == null || row.Items.Count >= _columns)
-            {
-                row = new ImageHistoryRow();
-                _rows.Add(row);
-            }
-            row.Items.Add(entry);
-        }
+        _gallery.UpdateColumns(ThumbnailRows.Bounds.Width, Math.Max(50, _settings.ThumbnailSize.Width + cardChrome));
     }
 
     private async void OnThumbnailAttached(object? sender, VisualTreeAttachmentEventArgs e) =>
-        await AttachThumbnailControlAsync(sender as Control);
+        await _gallery.AttachAsync(sender as Control);
 
-    private void OnThumbnailDetached(object? sender, VisualTreeAttachmentEventArgs e) => DetachThumbnailControl(sender as Control);
+    private void OnThumbnailDetached(object? sender, VisualTreeAttachmentEventArgs e) => _gallery.Detach(sender as Control);
 
     private async void OnThumbnailDataContextChanged(object? sender, EventArgs e)
     {
         if (sender is Control control && control.IsAttachedToVisualTree())
         {
-            DetachThumbnailControl(control);
-            await AttachThumbnailControlAsync(control);
+            _gallery.Detach(control);
+            await _gallery.AttachAsync(control);
         }
-    }
-
-    private async Task AttachThumbnailControlAsync(Control? control)
-    {
-        if (control?.DataContext is not ImageHistoryEntry entry) return;
-        if (_realizedControls.TryGetValue(control, out ImageHistoryEntry? previous))
-        {
-            if (ReferenceEquals(previous, entry)) return;
-            previous.Unrealize();
-        }
-        _realizedControls[control] = entry;
-        await entry.RealizeAsync(_thumbnailLoader);
-    }
-
-    private void DetachThumbnailControl(Control? control)
-    {
-        if (control != null && _realizedControls.Remove(control, out ImageHistoryEntry? entry)) entry.Unrealize();
     }
 
     private void OnThumbnailPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -456,7 +402,7 @@ public partial class ImageHistoryWindow : Window
         }
 
         if (!point.Properties.IsLeftButtonPressed) return;
-        int index = _loadedEntries.IndexOf(entry);
+        int index = _gallery.IndexOf(entry);
         _suppressThumbnailClickAction = e.KeyModifiers.HasFlag(KeyModifiers.Control) ||
             e.KeyModifiers.HasFlag(KeyModifiers.Shift);
         if (e.KeyModifiers.HasFlag(KeyModifiers.Shift) && _selectionAnchor >= 0)
@@ -480,24 +426,24 @@ public partial class ImageHistoryWindow : Window
 
     private void SelectOnly(ImageHistoryEntry entry)
     {
-        foreach (ImageHistoryEntry candidate in _loadedEntries) candidate.IsSelected = ReferenceEquals(candidate, entry);
-        _selectionAnchor = _loadedEntries.IndexOf(entry);
+        foreach (ImageHistoryEntry candidate in _gallery.Items) candidate.IsSelected = ReferenceEquals(candidate, entry);
+        _selectionAnchor = _gallery.IndexOf(entry);
     }
 
     private void SelectRange(int first, int second)
     {
         int start = Math.Min(first, second);
         int end = Math.Max(first, second);
-        for (int i = 0; i < _loadedEntries.Count; i++) _loadedEntries[i].IsSelected = i >= start && i <= end;
+        for (int i = 0; i < _gallery.Items.Count; i++) _gallery.Items[i].IsSelected = i >= start && i <= end;
     }
 
     private void SelectIndex(int index, bool extendSelection)
     {
-        if (_loadedEntries.Count == 0) return;
-        index = Math.Clamp(index, 0, _loadedEntries.Count - 1);
+        if (_gallery.Items.Count == 0) return;
+        index = Math.Clamp(index, 0, _gallery.Items.Count - 1);
         if (extendSelection && _selectionAnchor >= 0) SelectRange(_selectionAnchor, index);
-        else SelectOnly(_loadedEntries[index]);
-        ThumbnailRows.ScrollIntoView(index / Math.Max(1, _columns));
+        else SelectOnly(_gallery.Items[index]);
+        ThumbnailRows.ScrollIntoView(index / _gallery.Columns);
     }
 
     private async void OnThumbnailPointerMoved(object? sender, PointerEventArgs e)
@@ -543,7 +489,7 @@ public partial class ImageHistoryWindow : Window
 
     private void OnThumbnailDoubleTapped(object? sender, TappedEventArgs e) => OpenSelectedItem();
 
-    private HistoryItem[] GetSelectedItems() => _loadedEntries.Where(entry => entry.IsSelected).Select(entry => entry.Item).ToArray();
+    private HistoryItem[] GetSelectedItems() => _gallery.Items.Where(entry => entry.IsSelected).Select(entry => entry.Item).ToArray();
     private HistoryItem? GetPrimaryItem() => GetSelectedItems().FirstOrDefault();
 
     private void OnThumbnailContextMenuOpening(object? sender, CancelEventArgs e)
@@ -804,7 +750,7 @@ public partial class ImageHistoryWindow : Window
 
     private void RefreshVisibleItem(HistoryItem item)
     {
-        _loadedEntries.FirstOrDefault(entry => ReferenceEquals(entry.Item, item))?.RefreshMetadata();
+        _gallery.Items.FirstOrDefault(entry => ReferenceEquals(entry.Item, item))?.RefreshMetadata();
     }
 
     private void OnRenameFileClick(object? sender, RoutedEventArgs e)
@@ -1033,20 +979,19 @@ public partial class ImageHistoryWindow : Window
         }
         else if (e.Key == Key.A && e.KeyModifiers == KeyModifiers.Control)
         {
-            foreach (ImageHistoryEntry entry in _loadedEntries) entry.IsSelected = true;
+            foreach (ImageHistoryEntry entry in _gallery.Items) entry.IsSelected = true;
         }
         else if (e.Key is Key.Left or Key.Right or Key.Up or Key.Down or Key.Home or Key.End)
         {
-            int current = _loadedEntries.FindIndex(entry => entry.IsSelected);
-            if (current < 0) current = 0;
+            int current = Math.Max(0, _gallery.Items.ToList().FindIndex(entry => entry.IsSelected));
             int next = e.Key switch
             {
                 Key.Left => current - 1,
                 Key.Right => current + 1,
-                Key.Up => current - _columns,
-                Key.Down => current + _columns,
+                Key.Up => current - _gallery.Columns,
+                Key.Down => current + _gallery.Columns,
                 Key.Home => 0,
-                Key.End => _loadedEntries.Count - 1,
+                Key.End => _gallery.Items.Count - 1,
                 _ => current
             };
             SelectIndex(next, e.KeyModifiers.HasFlag(KeyModifiers.Shift));

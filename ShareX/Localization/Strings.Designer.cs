@@ -905,218 +905,11 @@ namespace ShareX.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add image effects....
-        /// </summary>
-        public static string MainWindow_AddImageEffects {
-            get {
-                return ResourceManager.GetString("MainWindow_AddImageEffects", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Analyze image....
-        /// </summary>
-        public static string MainWindow_AnalyzeImage {
-            get {
-                return ResourceManager.GetString("MainWindow_AnalyzeImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Beautify image....
-        /// </summary>
-        public static string MainWindow_BeautifyImage {
-            get {
-                return ResourceManager.GetString("MainWindow_BeautifyImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear thumbnail view.
-        /// </summary>
-        public static string MainWindow_ClearThumbnailView {
-            get {
-                return ResourceManager.GetString("MainWindow_ClearThumbnailView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Combine images.
-        /// </summary>
-        public static string MainWindow_CombineImages {
-            get {
-                return ResourceManager.GetString("MainWindow_CombineImages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Combine images....
-        /// </summary>
-        public static string MainWindow_CombineImagesDialog {
-            get {
-                return ResourceManager.GetString("MainWindow_CombineImagesDialog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string MainWindow_Copy {
             get {
                 return ResourceManager.GetString("MainWindow_Copy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete selected file....
-        /// </summary>
-        public static string MainWindow_DeleteSelectedFile {
-            get {
-                return ResourceManager.GetString("MainWindow_DeleteSelectedFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete selected item.
-        /// </summary>
-        public static string MainWindow_DeleteSelectedItem {
-            get {
-                return ResourceManager.GetString("MainWindow_DeleteSelectedItem", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Delete item remotely....
-        /// </summary>
-        public static string MainWindow_DeleteItemRemotely {
-            get {
-                return ResourceManager.GetString("MainWindow_DeleteItemRemotely", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Do you really want to delete this item remotely?.
-        /// </summary>
-        public static string MainWindow_DeleteItemRemotelyConfirmation {
-            get {
-                return ResourceManager.GetString("MainWindow_DeleteItemRemotelyConfirmation", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Remote deletion.
-        /// </summary>
-        public static string MainWindow_RemoteDeletion {
-            get {
-                return ResourceManager.GetString("MainWindow_RemoteDeletion", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to The item was deleted remotely..
-        /// </summary>
-        public static string MainWindow_RemoteDeleteSucceeded {
-            get {
-                return ResourceManager.GetString("MainWindow_RemoteDeleteSucceeded", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to delete the item remotely..
-        /// </summary>
-        public static string MainWindow_RemoteDeleteFailed {
-            get {
-                return ResourceManager.GetString("MainWindow_RemoteDeleteFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deletion URL.
-        /// </summary>
-        public static string MainWindow_DeletionUrl {
-            get {
-                return ResourceManager.GetString("MainWindow_DeletionUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download selected URL.
-        /// </summary>
-        public static string MainWindow_DownloadSelectedUrl {
-            get {
-                return ResourceManager.GetString("MainWindow_DownloadSelectedUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit image....
-        /// </summary>
-        public static string MainWindow_EditImage {
-            get {
-                return ResourceManager.GetString("MainWindow_EditImage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Edit in Photo editor....
-        /// </summary>
-        public static string MainWindow_EditImageInPhotoEditor {
-            get {
-                return ResourceManager.GetString("MainWindow_EditImageInPhotoEditor", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Resize image....
-        /// </summary>
-        public static string MainWindow_ResizeImage {
-            get {
-                return ResourceManager.GetString("MainWindow_ResizeImage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Trim video....
-        /// </summary>
-        public static string MainWindow_TrimVideo {
-            get {
-                return ResourceManager.GetString("MainWindow_TrimVideo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File.
-        /// </summary>
-        public static string MainWindow_File {
-            get {
-                return ResourceManager.GetString("MainWindow_File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File name.
-        /// </summary>
-        public static string MainWindow_FileName {
-            get {
-                return ResourceManager.GetString("MainWindow_FileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File name with extension.
-        /// </summary>
-        public static string MainWindow_FileNameWithExtension {
-            get {
-                return ResourceManager.GetString("MainWindow_FileNameWithExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File path.
-        /// </summary>
-        public static string MainWindow_FilePath {
-            get {
-                return ResourceManager.GetString("MainWindow_FilePath", resourceCulture);
             }
         }
         
@@ -1139,155 +932,11 @@ namespace ShareX.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forum image.
-        /// </summary>
-        public static string MainWindow_ForumImage {
-            get {
-                return ResourceManager.GetString("MainWindow_ForumImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forum link.
-        /// </summary>
-        public static string MainWindow_ForumLink {
-            get {
-                return ResourceManager.GetString("MainWindow_ForumLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forum linked image.
-        /// </summary>
-        public static string MainWindow_ForumLinkedImage {
-            get {
-                return ResourceManager.GetString("MainWindow_ForumLinkedImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Horizontal.
-        /// </summary>
-        public static string MainWindow_Horizontal {
-            get {
-                return ResourceManager.GetString("MainWindow_Horizontal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Horizontally.
-        /// </summary>
-        public static string MainWindow_Horizontally {
-            get {
-                return ResourceManager.GetString("MainWindow_Horizontally", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use a hotkey to capture or upload. Your results will appear here as thumbnails..
-        /// </summary>
-        public static string MainWindow_HotkeyHint {
-            get {
-                return ResourceManager.GetString("MainWindow_HotkeyHint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to HTML image.
-        /// </summary>
-        public static string MainWindow_HtmlImage {
-            get {
-                return ResourceManager.GetString("MainWindow_HtmlImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to HTML link.
-        /// </summary>
-        public static string MainWindow_HtmlLink {
-            get {
-                return ResourceManager.GetString("MainWindow_HtmlLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to HTML linked image.
-        /// </summary>
-        public static string MainWindow_HtmlLinkedImage {
-            get {
-                return ResourceManager.GetString("MainWindow_HtmlLinkedImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image.
-        /// </summary>
-        public static string MainWindow_Image {
-            get {
-                return ResourceManager.GetString("MainWindow_Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image dimensions.
-        /// </summary>
-        public static string MainWindow_ImageDimensions {
-            get {
-                return ResourceManager.GetString("MainWindow_ImageDimensions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Markdown image.
-        /// </summary>
-        public static string MainWindow_MarkdownImage {
-            get {
-                return ResourceManager.GetString("MainWindow_MarkdownImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Markdown link.
-        /// </summary>
-        public static string MainWindow_MarkdownLink {
-            get {
-                return ResourceManager.GetString("MainWindow_MarkdownLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Markdown linked image.
-        /// </summary>
-        public static string MainWindow_MarkdownLinkedImage {
-            get {
-                return ResourceManager.GetString("MainWindow_MarkdownLinkedImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OCR image....
-        /// </summary>
-        public static string MainWindow_OCRImage {
-            get {
-                return ResourceManager.GetString("MainWindow_OCRImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string MainWindow_Open {
             get {
                 return ResourceManager.GetString("MainWindow_Open", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pin to screen.
-        /// </summary>
-        public static string MainWindow_PinToScreen {
-            get {
-                return ResourceManager.GetString("MainWindow_PinToScreen", resourceCulture);
             }
         }
         
@@ -1306,15 +955,6 @@ namespace ShareX.Localization {
         public static string MainWindow_ReleaseToUploadText {
             get {
                 return ResourceManager.GetString("MainWindow_ReleaseToUploadText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Run action.
-        /// </summary>
-        public static string MainWindow_RunAction {
-            get {
-                return ResourceManager.GetString("MainWindow_RunAction", resourceCulture);
             }
         }
         
@@ -1346,24 +986,6 @@ namespace ShareX.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ShareX hotkeys.
-        /// </summary>
-        public static string MainWindow_ShareXHotkeys {
-            get {
-                return ResourceManager.GetString("MainWindow_ShareXHotkeys", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Shortened URL.
-        /// </summary>
-        public static string MainWindow_ShortenedUrl {
-            get {
-                return ResourceManager.GetString("MainWindow_ShortenedUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Shorten selected URL.
         /// </summary>
         public static string MainWindow_ShortenSelectedUrl {
@@ -1382,38 +1004,11 @@ namespace ShareX.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show QR code....
-        /// </summary>
-        public static string MainWindow_ShowQRCode {
-            get {
-                return ResourceManager.GetString("MainWindow_ShowQRCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show response....
-        /// </summary>
-        public static string MainWindow_ShowResponse {
-            get {
-                return ResourceManager.GetString("MainWindow_ShowResponse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Stop upload.
         /// </summary>
         public static string MainWindow_StopUpload {
             get {
                 return ResourceManager.GetString("MainWindow_StopUpload", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text.
-        /// </summary>
-        public static string MainWindow_Text {
-            get {
-                return ResourceManager.GetString("MainWindow_Text", resourceCulture);
             }
         }
         
@@ -1426,77 +1021,6 @@ namespace ShareX.Localization {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Thumbnail file.
-        /// </summary>
-        public static string MainWindow_ThumbnailFile {
-            get {
-                return ResourceManager.GetString("MainWindow_ThumbnailFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thumbnail image.
-        /// </summary>
-        public static string MainWindow_ThumbnailImage {
-            get {
-                return ResourceManager.GetString("MainWindow_ThumbnailImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thumbnail URL.
-        /// </summary>
-        public static string MainWindow_ThumbnailUrl {
-            get {
-                return ResourceManager.GetString("MainWindow_ThumbnailUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upload selected file.
-        /// </summary>
-        public static string MainWindow_UploadSelectedFile {
-            get {
-                return ResourceManager.GetString("MainWindow_UploadSelectedFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URL.
-        /// </summary>
-        public static string MainWindow_Url {
-            get {
-                return ResourceManager.GetString("MainWindow_Url", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vertical.
-        /// </summary>
-        public static string MainWindow_Vertical {
-            get {
-                return ResourceManager.GetString("MainWindow_Vertical", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vertically.
-        /// </summary>
-        public static string MainWindow_Vertically {
-            get {
-                return ResourceManager.GetString("MainWindow_Vertically", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Untitled task.
-        /// </summary>
-        public static string ThumbnailItemViewModel_UntitledTask {
-            get {
-                return ResourceManager.GetString("ThumbnailItemViewModel_UntitledTask", resourceCulture);
-            }
-        }
         public static string ApplicationSettingsWindow_WindowTitle {
             get {
                 return ResourceManager.GetString("ApplicationSettingsWindow_WindowTitle", resourceCulture);
@@ -5808,7 +5332,6 @@ namespace ShareX.Localization {
         }
 
         public static string MainMenuBuilder_AnimatedGifTrimmer => ResourceManager.GetString("MainMenuBuilder_AnimatedGifTrimmer", resourceCulture);
-        public static string MainWindow_TrimAnimatedGif => ResourceManager.GetString("MainWindow_TrimAnimatedGif", resourceCulture);
         public static string TaskSettingsWindow_NativeRecorderEnabled => ResourceManager.GetString("TaskSettingsWindow_NativeRecorderEnabled", resourceCulture);
         public static string TaskSettingsWindow_NativeRecorder => ResourceManager.GetString("TaskSettingsWindow_NativeRecorder", resourceCulture);
         public static string TaskSettingsWindow_NativeRecorderSystemAudio => ResourceManager.GetString("TaskSettingsWindow_NativeRecorderSystemAudio", resourceCulture);
@@ -5842,5 +5365,35 @@ namespace ShareX.Localization {
         public static string ScreenRecorderBar_StartDelay_5Seconds => ResourceManager.GetString("ScreenRecorderBar_StartDelay_5Seconds", resourceCulture);
         public static string MainMenuBuilder_VideoPlayer => ResourceManager.GetString("MainMenuBuilder_VideoPlayer", resourceCulture);
         public static string MainMenuBuilder_Stats => ResourceManager.GetString("MainMenuBuilder_Stats", resourceCulture);
+        public static string MainWindow_NewCapture => ResourceManager.GetString("MainWindow_NewCapture", resourceCulture);
+        public static string MainWindow_CaptureOptions => ResourceManager.GetString("MainWindow_CaptureOptions", resourceCulture);
+        public static string MainWindow_ShowCapturePanel => ResourceManager.GetString("MainWindow_ShowCapturePanel", resourceCulture);
+        public static string MainWindow_SearchCaptures => ResourceManager.GetString("MainWindow_SearchCaptures", resourceCulture);
+        public static string MainWindow_FilterAll => ResourceManager.GetString("MainWindow_FilterAll", resourceCulture);
+        public static string MainWindow_FilterImages => ResourceManager.GetString("MainWindow_FilterImages", resourceCulture);
+        public static string MainWindow_FilterVideos => ResourceManager.GetString("MainWindow_FilterVideos", resourceCulture);
+        public static string MainWindow_FilterOtherFiles => ResourceManager.GetString("MainWindow_FilterOtherFiles", resourceCulture);
+        public static string MainWindow_More => ResourceManager.GetString("MainWindow_More", resourceCulture);
+        public static string MainWindow_Settings => ResourceManager.GetString("MainWindow_Settings", resourceCulture);
+        public static string MainWindow_Edit => ResourceManager.GetString("MainWindow_Edit", resourceCulture);
+        public static string MainWindow_CopyFilePath => ResourceManager.GetString("MainWindow_CopyFilePath", resourceCulture);
+        public static string MainWindow_ShowInFolder => ResourceManager.GetString("MainWindow_ShowInFolder", resourceCulture);
+        public static string MainWindow_Share => ResourceManager.GetString("MainWindow_Share", resourceCulture);
+        public static string MainWindow_Delete => ResourceManager.GetString("MainWindow_Delete", resourceCulture);
+        public static string MainWindow_RemoveFromList => ResourceManager.GetString("MainWindow_RemoveFromList", resourceCulture);
+        public static string MainWindow_NoCapturesYet => ResourceManager.GetString("MainWindow_NoCapturesYet", resourceCulture);
+        public static string MainWindow_NoMatchingCaptures => ResourceManager.GetString("MainWindow_NoMatchingCaptures", resourceCulture);
+        public static string MainWindow_CaptureHint => ResourceManager.GetString("MainWindow_CaptureHint", resourceCulture);
+        public static string MainWindow_CaptureHintHotkey => ResourceManager.GetString("MainWindow_CaptureHintHotkey", resourceCulture);
+        public static string MainWindow_CaptureRegion => ResourceManager.GetString("MainWindow_CaptureRegion", resourceCulture);
+        public static string MainWindow_SelectCaptureHint => ResourceManager.GetString("MainWindow_SelectCaptureHint", resourceCulture);
+        public static string MainWindow_Date => ResourceManager.GetString("MainWindow_Date", resourceCulture);
+        public static string MainWindow_Dimensions => ResourceManager.GetString("MainWindow_Dimensions", resourceCulture);
+        public static string MainWindow_Size => ResourceManager.GetString("MainWindow_Size", resourceCulture);
+        public static string MainWindow_JustNow => ResourceManager.GetString("MainWindow_JustNow", resourceCulture);
+        public static string MainWindow_MinutesAgo => ResourceManager.GetString("MainWindow_MinutesAgo", resourceCulture);
+        public static string MainWindow_HoursAgo => ResourceManager.GetString("MainWindow_HoursAgo", resourceCulture);
+        public static string MainWindow_Yesterday => ResourceManager.GetString("MainWindow_Yesterday", resourceCulture);
+        public static string MainWindow_UntitledCapture => ResourceManager.GetString("MainWindow_UntitledCapture", resourceCulture);
     }
 }

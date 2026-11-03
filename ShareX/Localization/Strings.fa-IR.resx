@@ -1643,65 +1643,11 @@ Please select a different hotkey or quit the conflicting application and reبا�
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>گردش‌کارها</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>اضافه کردن افکت های عکس...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>همیشه در بالا</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>تحلیل تصویر</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>زیباسازی تصویر</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>پاک کردن نمای تصاویر بندانگشتی</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>ترکیب تصاویر</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>ترکیب تصاویر...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>کپی</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>حذف مورد از راه دور...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>آیا واقعاً می‌خواهید این مورد را از راه دور حذف کنید؟</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>حذف فایل انتخاب‌شده...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>حذف مورد انتخاب‌شده</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>URL حذف</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>دانلود URL انتخاب‌شده</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>ویرایش تصویر</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>ویرایش در ویرایشگر عکس...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>فایل</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>نام فایل</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>نام فایل با پسوند</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>مسیر فایل</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>فایل‌های رهاشده در اینجا توسط ShareX بارگذاری می‌شوند.</value>
@@ -1709,83 +1655,20 @@ Please select a different hotkey or quit the conflicting application and reبا�
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>پوشه</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>تصویر انجمن</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>پیوند انجمن</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>تصویر پیوندشده انجمن</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>افقی</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>افقی</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>برای ضبط یا بارگذاری از کلید میانبر استفاده کنید. نتایج به‌صورت تصویر بندانگشتی در اینجا نمایش داده می‌شوند.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>تصویر HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>پیوند HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>تصویر پیوندشده HTML</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>عکس</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>ابعاد تصویر</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>تصویر Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>پیوند Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>تصویر پیوندشده Markdown</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>به حداکثر رساندن یا بازیابی</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>به حداقل رساندن</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>تصویر OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>باز کردن</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>سنجاق به صفحه</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>برای بارگذاری فایل‌ها رها کنید</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>برای بارگذاری متن رها کنید</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>حذف مورد از راه دور ناموفق بود.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>مورد از راه دور حذف شد.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>حذف از راه دور</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>تغییر اندازه تصویر...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>اجرای عملیات</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>جستجو با جستجوی تصویری Bing...</value>
@@ -1796,59 +1679,17 @@ Please select a different hotkey or quit the conflicting application and reبا�
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>اشتراک‌گذاری URL انتخاب‌شده</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>کلیدهای میانبر ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>کوتاه کردن URL انتخاب‌شده</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>URL کوتاه‌شده</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>نمایش خطاها...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>نمایش کد QR...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>نمایش پاسخ...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>توقف بارگذاری</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>متن</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>متن رهاشده در اینجا توسط ShareX بارگذاری می‌شود.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>فایل تصویر بندانگشتی</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>تصویر بندانگشتی</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>بندانگشتی URL</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>برش GIF متحرک...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>برش ویدئو...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>بارگذاری فایل انتخاب‌شده</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>عمودی</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>عمودی</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>هایلایتر موس</value>
@@ -3019,9 +2860,6 @@ Do you want to abort the active ضبط صفحه?</value>
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>This feature will not work when "Disableبارگذاری" option is enabled!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>وظیفه بدون عنوان</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>انصراف</value>

@@ -64,9 +64,9 @@ namespace ShareX
 {
     public static class TaskHelpers
     {
-        public static async Task ExecuteJob(HotkeyType job, string filePath = null)
+        public static async Task ExecuteJob(HotkeyType job, string filePath = null, bool autoHideMainWindow = false)
         {
-            await ExecuteJob(ApplicationState.DefaultTaskSettings, job, filePath);
+            await ExecuteJob(ApplicationState.DefaultTaskSettings, job, filePath, autoHideMainWindow);
         }
 
         public static async Task ExecuteJob(TaskSettings taskSettings)
@@ -74,7 +74,8 @@ namespace ShareX
             await ExecuteJob(taskSettings, taskSettings.Job);
         }
 
-        public static async Task ExecuteJob(TaskSettings taskSettings, HotkeyType job, string filePath = null)
+        /// <param name="autoHideMainWindow">Hides the main window while a screen capture runs, so the capture does not show the main window.</param>
+        public static async Task ExecuteJob(TaskSettings taskSettings, HotkeyType job, string filePath = null, bool autoHideMainWindow = false)
         {
             if (job == HotkeyType.None) return;
 
@@ -121,25 +122,25 @@ namespace ShareX
                     break;
                 // Screen capture
                 case HotkeyType.PrintScreen:
-                    new CaptureFullscreen().Capture(safeTaskSettings);
+                    new CaptureFullscreen().Capture(safeTaskSettings, autoHideMainWindow);
                     break;
                 case HotkeyType.ActiveWindow:
-                    new CaptureActiveWindow().Capture(safeTaskSettings);
+                    new CaptureActiveWindow().Capture(safeTaskSettings, autoHideMainWindow);
                     break;
                 case HotkeyType.ActiveMonitor:
-                    new CaptureActiveMonitor().Capture(safeTaskSettings);
+                    new CaptureActiveMonitor().Capture(safeTaskSettings, autoHideMainWindow);
                     break;
                 case HotkeyType.RectangleRegion:
-                    new CaptureRegion().Capture(safeTaskSettings);
+                    new CaptureRegion().Capture(safeTaskSettings, autoHideMainWindow);
                     break;
                 case HotkeyType.CustomRegion:
-                    new CaptureCustomRegion().Capture(safeTaskSettings);
+                    new CaptureCustomRegion().Capture(safeTaskSettings, autoHideMainWindow);
                     break;
                 case HotkeyType.CustomWindow:
-                    new CaptureCustomWindow().Capture(safeTaskSettings);
+                    new CaptureCustomWindow().Capture(safeTaskSettings, autoHideMainWindow);
                     break;
                 case HotkeyType.LastRegion:
-                    new CaptureLastRegion().Capture(safeTaskSettings);
+                    new CaptureLastRegion().Capture(safeTaskSettings, autoHideMainWindow);
                     break;
                 case HotkeyType.ScrollingCapture:
                     await OpenScrollingCapture(safeTaskSettings);
@@ -1464,7 +1465,7 @@ namespace ShareX
             // The editor shows the Share button only when the image upload destination is usable.
             SettingManager.WaitUploadersConfig();
 
-            if (!SystemOptions.DisableUpload && UploadersConfigValidator.Validate(taskSettings.ImageFileDestination, ApplicationState.UploadersConfig))
+            if (IsShareAvailable(taskSettings.ImageFileDestination))
             {
                 events.UploadImageRequested = (skBitmap) =>
                 {
@@ -1506,6 +1507,16 @@ namespace ShareX
             }
 
             return bmpResult;
+        }
+
+        /// <summary>
+        /// True when uploads are enabled and the destination has valid settings.
+        /// The editor and the capture library show Share only when this is true.
+        /// </summary>
+        public static bool IsShareAvailable(FileDestination destination)
+        {
+            UploadersConfig config = ApplicationState.UploadersConfigOrNull;
+            return !SystemOptions.DisableUpload && config != null && UploadersConfigValidator.Validate(destination, config);
         }
 
         // Give the editor an independent copy of the captured pixels.

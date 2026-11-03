@@ -1643,65 +1643,11 @@ Vui lòng chọn phím tắt khác hoặc thoát ứng dụng đang gây lỗi v
   <data name="MainMenuBuilder_Workflows" xml:space="preserve">
     <value>Quy trình làm việc</value>
   </data>
-  <data name="MainWindow_AddImageEffects" xml:space="preserve">
-    <value>Thêm hiệu ứng ảnh...</value>
-  </data>
   <data name="MainWindow_AlwaysOnTop" xml:space="preserve">
     <value>Luôn ở trên cùng</value>
   </data>
-  <data name="MainWindow_AnalyzeImage" xml:space="preserve">
-    <value>Phân tích ảnh</value>
-  </data>
-  <data name="MainWindow_BeautifyImage" xml:space="preserve">
-    <value>Làm đẹp ảnh</value>
-  </data>
-  <data name="MainWindow_ClearThumbnailView" xml:space="preserve">
-    <value>Xóa chế độ xem hình thu nhỏ</value>
-  </data>
-  <data name="MainWindow_CombineImages" xml:space="preserve">
-    <value>Kết hợp hình ảnh</value>
-  </data>
-  <data name="MainWindow_CombineImagesDialog" xml:space="preserve">
-    <value>Kết hợp hình ảnh...</value>
-  </data>
   <data name="MainWindow_Copy" xml:space="preserve">
     <value>Sao chép</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotely" xml:space="preserve">
-    <value>Xóa mục từ xa...</value>
-  </data>
-  <data name="MainWindow_DeleteItemRemotelyConfirmation" xml:space="preserve">
-    <value>Bạn có thực sự muốn xóa mục này từ xa không?</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedFile" xml:space="preserve">
-    <value>Xóa tệp đã chọn...</value>
-  </data>
-  <data name="MainWindow_DeleteSelectedItem" xml:space="preserve">
-    <value>Xóa mục đã chọn</value>
-  </data>
-  <data name="MainWindow_DeletionUrl" xml:space="preserve">
-    <value>URL xóa</value>
-  </data>
-  <data name="MainWindow_DownloadSelectedUrl" xml:space="preserve">
-    <value>Tải xuống URL đã chọn</value>
-  </data>
-  <data name="MainWindow_EditImage" xml:space="preserve">
-    <value>Chỉnh sửa hình ảnh</value>
-  </data>
-  <data name="MainWindow_EditImageInPhotoEditor" xml:space="preserve">
-    <value>Chỉnh sửa trong trình chỉnh sửa ảnh...</value>
-  </data>
-  <data name="MainWindow_File" xml:space="preserve">
-    <value>Tệp</value>
-  </data>
-  <data name="MainWindow_FileName" xml:space="preserve">
-    <value>Tên tệp</value>
-  </data>
-  <data name="MainWindow_FileNameWithExtension" xml:space="preserve">
-    <value>Tên tệp có phần mở rộng</value>
-  </data>
-  <data name="MainWindow_FilePath" xml:space="preserve">
-    <value>Đường dẫn tệp</value>
   </data>
   <data name="MainWindow_FilesDroppedUploadDescription" xml:space="preserve">
     <value>Các tệp được thả vào đây sẽ được ShareX tải lên.</value>
@@ -1709,83 +1655,20 @@ Vui lòng chọn phím tắt khác hoặc thoát ứng dụng đang gây lỗi v
   <data name="MainWindow_Folder" xml:space="preserve">
     <value>Thư mục</value>
   </data>
-  <data name="MainWindow_ForumImage" xml:space="preserve">
-    <value>Hình ảnh diễn đàn</value>
-  </data>
-  <data name="MainWindow_ForumLink" xml:space="preserve">
-    <value>Liên kết diễn đàn</value>
-  </data>
-  <data name="MainWindow_ForumLinkedImage" xml:space="preserve">
-    <value>Hình ảnh diễn đàn có liên kết</value>
-  </data>
-  <data name="MainWindow_Horizontal" xml:space="preserve">
-    <value>Chiều ngang</value>
-  </data>
-  <data name="MainWindow_Horizontally" xml:space="preserve">
-    <value>Theo chiều ngang</value>
-  </data>
-  <data name="MainWindow_HotkeyHint" xml:space="preserve">
-    <value>Dùng phím tắt để chụp hoặc tải lên. Kết quả sẽ xuất hiện ở đây dưới dạng hình thu nhỏ.</value>
-  </data>
-  <data name="MainWindow_HtmlImage" xml:space="preserve">
-    <value>Hình ảnh HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLink" xml:space="preserve">
-    <value>Liên kết HTML</value>
-  </data>
-  <data name="MainWindow_HtmlLinkedImage" xml:space="preserve">
-    <value>Hình ảnh HTML có liên kết</value>
-  </data>
-  <data name="MainWindow_Image" xml:space="preserve">
-    <value>Ảnh</value>
-  </data>
-  <data name="MainWindow_ImageDimensions" xml:space="preserve">
-    <value>Kích thước hình ảnh</value>
-  </data>
-  <data name="MainWindow_MarkdownImage" xml:space="preserve">
-    <value>Hình ảnh Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLink" xml:space="preserve">
-    <value>Liên kết Markdown</value>
-  </data>
-  <data name="MainWindow_MarkdownLinkedImage" xml:space="preserve">
-    <value>Hình ảnh Markdown có liên kết</value>
-  </data>
   <data name="MainWindow_MaximizeOrRestore" xml:space="preserve">
     <value>Tối đa hóa hoặc khôi phục</value>
   </data>
   <data name="MainWindow_Minimize" xml:space="preserve">
     <value>Giảm thiểu</value>
   </data>
-  <data name="MainWindow_OCRImage" xml:space="preserve">
-    <value>Hình ảnh OCR...</value>
-  </data>
   <data name="MainWindow_Open" xml:space="preserve">
     <value>Mở</value>
-  </data>
-  <data name="MainWindow_PinToScreen" xml:space="preserve">
-    <value>Ghim vào màn hình</value>
   </data>
   <data name="MainWindow_ReleaseToUploadFiles" xml:space="preserve">
     <value>Thả để tải tệp lên</value>
   </data>
   <data name="MainWindow_ReleaseToUploadText" xml:space="preserve">
     <value>Thả để tải văn bản lên</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteFailed" xml:space="preserve">
-    <value>Không thể xóa mục từ xa.</value>
-  </data>
-  <data name="MainWindow_RemoteDeleteSucceeded" xml:space="preserve">
-    <value>Mục đã được xóa từ xa.</value>
-  </data>
-  <data name="MainWindow_RemoteDeletion" xml:space="preserve">
-    <value>Xóa từ xa</value>
-  </data>
-  <data name="MainWindow_ResizeImage" xml:space="preserve">
-    <value>Đổi kích thước ảnh...</value>
-  </data>
-  <data name="MainWindow_RunAction" xml:space="preserve">
-    <value>Chạy hành động</value>
   </data>
   <data name="MainWindow_SearchWithBingVisualSearch" xml:space="preserve">
     <value>Tìm kiếm bằng Tìm kiếm trực quan Bing...</value>
@@ -1796,59 +1679,17 @@ Vui lòng chọn phím tắt khác hoặc thoát ứng dụng đang gây lỗi v
   <data name="MainWindow_ShareSelectedUrl" xml:space="preserve">
     <value>Chia sẻ URL đã chọn</value>
   </data>
-  <data name="MainWindow_ShareXHotkeys" xml:space="preserve">
-    <value>Phím tắt ShareX</value>
-  </data>
   <data name="MainWindow_ShortenSelectedUrl" xml:space="preserve">
     <value>Rút gọn URL đã chọn</value>
-  </data>
-  <data name="MainWindow_ShortenedUrl" xml:space="preserve">
-    <value>URL rút gọn</value>
   </data>
   <data name="MainWindow_ShowErrors" xml:space="preserve">
     <value>Hiển thị lỗi...</value>
   </data>
-  <data name="MainWindow_ShowQRCode" xml:space="preserve">
-    <value>Hiển thị mã QR...</value>
-  </data>
-  <data name="MainWindow_ShowResponse" xml:space="preserve">
-    <value>Hiển thị phản hồi...</value>
-  </data>
   <data name="MainWindow_StopUpload" xml:space="preserve">
     <value>Dừng tải lên</value>
   </data>
-  <data name="MainWindow_Text" xml:space="preserve">
-    <value>Chữ</value>
-  </data>
   <data name="MainWindow_TextDroppedUploadDescription" xml:space="preserve">
     <value>Văn bản được thả vào đây sẽ được ShareX tải lên.</value>
-  </data>
-  <data name="MainWindow_ThumbnailFile" xml:space="preserve">
-    <value>Tệp hình thu nhỏ</value>
-  </data>
-  <data name="MainWindow_ThumbnailImage" xml:space="preserve">
-    <value>Hình thu nhỏ</value>
-  </data>
-  <data name="MainWindow_ThumbnailUrl" xml:space="preserve">
-    <value>URL hình thu nhỏ</value>
-  </data>
-  <data name="MainWindow_TrimAnimatedGif" xml:space="preserve">
-    <value>Cắt GIF động...</value>
-  </data>
-  <data name="MainWindow_TrimVideo" xml:space="preserve">
-    <value>Cắt video...</value>
-  </data>
-  <data name="MainWindow_UploadSelectedFile" xml:space="preserve">
-    <value>Tải tệp đã chọn lên</value>
-  </data>
-  <data name="MainWindow_Url" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="MainWindow_Vertical" xml:space="preserve">
-    <value>Chiều dọc</value>
-  </data>
-  <data name="MainWindow_Vertically" xml:space="preserve">
-    <value>Theo chiều dọc</value>
   </data>
   <data name="MouseHighlighter" xml:space="preserve">
     <value>Bút đánh dấu chuột</value>
@@ -3019,9 +2860,6 @@ Bạn có muốn hủy phiên quay màn hình đang hoạt động không?</valu
   </data>
   <data name="ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled" xml:space="preserve">
     <value>Tính năng này sẽ không hoạt động khi tùy chọn "DisableUpload" được kích hoạt!</value>
-  </data>
-  <data name="ThumbnailItemViewModel_UntitledTask" xml:space="preserve">
-    <value>Tác vụ không có tiêu đề</value>
   </data>
   <data name="URLUploadWindow_Cancel" xml:space="preserve">
     <value>Hủy</value>
