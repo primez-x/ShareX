@@ -39,6 +39,7 @@ public static class MainWindowIntegration
 {
     private static MainWindow? _window;
     private static ITrayIconService? _trayIconService;
+    private static MainMenuPresenter? _menuPresenter;
     private static bool _isVisible;
 
     public static bool IsInitialized => _window != null;
@@ -46,6 +47,8 @@ public static class MainWindowIntegration
     internal static IntPtr WindowHandle => _window?.TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
     internal static MainWindow? Instance => _window;
     internal static ITrayIconService TrayIconService => _trayIconService ??
+        throw new InvalidOperationException("The main window integration is not initialized.");
+    internal static MainMenuPresenter MenuPresenter => _menuPresenter ??
         throw new InvalidOperationException("The main window integration is not initialized.");
 
     internal static void Initialize(ITrayIconService trayIconService, bool show)
@@ -55,8 +58,11 @@ public static class MainWindowIntegration
             if (_window == null)
             {
                 _trayIconService = trayIconService;
-                MainWindow window = new MainWindow(trayIconService);
+                MainMenuPresenter menuPresenter = new(trayIconService);
+                _menuPresenter = menuPresenter;
+                MainWindow window = new MainWindow(trayIconService, menuPresenter);
                 _window = window;
+                Dispatcher.UIThread.Post(menuPresenter.WarmUpTrayMenu, DispatcherPriority.Background);
 
                 if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
@@ -71,6 +77,8 @@ public static class MainWindowIntegration
                         lifetime.MainWindow = null;
                     }
 
+                    menuPresenter.Dispose();
+                    _menuPresenter = null;
                     _window = null;
                     _isVisible = false;
                 };
@@ -124,7 +132,7 @@ public static class MainWindowIntegration
 
     public static void SetTrayIcon(byte[] iconBytes) => RunOnUiThread(() => _trayIconService?.SetIcon(iconBytes));
 
-    public static void ShowTrayMenu() => RunOnUiThread(() => _window?.ShowTrayMenu());
+    public static void ShowTrayMenu() => RunOnUiThread(() => _menuPresenter?.ShowTrayMenu());
 
     public static void RefreshMenus() => RunOnUiThread(() => _window?.RefreshMenus());
 
