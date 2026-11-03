@@ -1379,9 +1379,6 @@
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>アニメーションGIFトリマー...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>アプリケーション設定...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>自動キャプチャー</value>
   </data>
@@ -1408,9 +1405,6 @@
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>デバッグ</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>アップロード先設定...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>アップロード先</value>
@@ -1450,9 +1444,6 @@
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>履歴</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>ホットキー設定...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>アイコン変換...</value>
@@ -1582,9 +1573,6 @@
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>統計...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>タスクの設定</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>ファイルのアップロードをテスト</value>

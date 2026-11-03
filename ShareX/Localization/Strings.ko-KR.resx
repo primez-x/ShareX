@@ -1379,9 +1379,6 @@
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>애니메이션 GIF 자르기...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>응용 프로그램 설정...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>자동 촬영</value>
   </data>
@@ -1408,9 +1405,6 @@
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>디버그</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>대상 설정...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>대상</value>
@@ -1450,9 +1444,6 @@
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>히스토리</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>단축키 설정...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>아이콘 변환기...</value>
@@ -1582,9 +1573,6 @@
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>통계...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>작업 설정</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>파일 업로드 테스트</value>

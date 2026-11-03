@@ -33,6 +33,7 @@ namespace ShareX;
 public static class TaskSettingsIntegration
 {
     private static TaskSettingsWindow? _window;
+    private static TaskSettings? _settings;
 
     public static void Show(TaskSettings settings, bool isDefault, Action? closed = null)
     {
@@ -40,8 +41,14 @@ public static class TaskSettingsIntegration
         {
             if (_window != null)
             {
-                _window.Activate();
-                return;
+                if (ReferenceEquals(_settings, settings))
+                {
+                    _window.Activate();
+                    return;
+                }
+
+                // A request for other settings replaces the open window. The old window still runs the close callback and saves.
+                _window.Close();
             }
 
             if (!isDefault)
@@ -49,13 +56,20 @@ public static class TaskSettingsIntegration
                 settings.SetDefaultSettings();
             }
 
-            _window = new TaskSettingsWindow(settings, isDefault);
-            _window.Closed += (_, _) =>
+            TaskSettingsWindow window = new(settings, isDefault);
+            _window = window;
+            _settings = settings;
+            window.Closed += (_, _) =>
             {
-                _window = null;
+                if (ReferenceEquals(_window, window))
+                {
+                    _window = null;
+                    _settings = null;
+                }
+
                 closed?.Invoke();
             };
-            _window.Show();
+            window.Show();
         });
     }
 }

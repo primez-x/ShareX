@@ -1379,9 +1379,6 @@ Kérlek, válassz egy másik gyorsbillentyűt vagy zárd be a problémát okozó
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>Animált GIF-vágó...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>Alkalmazásbeállítások...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>Auto képlopás</value>
   </data>
@@ -1408,9 +1405,6 @@ Kérlek, válassz egy másik gyorsbillentyűt vagy zárd be a problémát okozó
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>Hibakeresés</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>Célhely beállításai...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>Célhelyek</value>
@@ -1450,9 +1444,6 @@ Kérlek, válassz egy másik gyorsbillentyűt vagy zárd be a problémát okozó
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>Előzmények</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>Gyorsbillentyű-beállítások...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>Ikonkonvertáló...</value>
@@ -1582,9 +1573,6 @@ Kérlek, válassz egy másik gyorsbillentyűt vagy zárd be a problémát okozó
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>Statisztika...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>Feladat beállítások</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>Fájlfeltöltés tesztelése</value>

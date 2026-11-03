@@ -1379,9 +1379,6 @@ Vui lòng chọn phím tắt khác hoặc thoát ứng dụng đang gây lỗi v
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>Công cụ cắt GIF động...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>Cài đặt ứng dụng...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>Tự động chụp</value>
   </data>
@@ -1408,9 +1405,6 @@ Vui lòng chọn phím tắt khác hoặc thoát ứng dụng đang gây lỗi v
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>Gỡ lỗi</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>Cài đặt đích...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>Đích</value>
@@ -1450,9 +1444,6 @@ Vui lòng chọn phím tắt khác hoặc thoát ứng dụng đang gây lỗi v
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>Lịch sử</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>Cài đặt phím tắt...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>Trình chuyển đổi biểu tượng...</value>
@@ -1582,9 +1573,6 @@ Vui lòng chọn phím tắt khác hoặc thoát ứng dụng đang gây lỗi v
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>Thống kê...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>Thiết lập tác vụ</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>Kiểm tra tải tệp lên</value>

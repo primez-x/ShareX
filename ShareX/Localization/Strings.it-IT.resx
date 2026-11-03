@@ -1379,9 +1379,6 @@ Selezione una scorciatoia diversa o chiudi l'applicazione che crea conflitto e r
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>Strumento di taglio per GIF animate...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>Impostazioni applicazione...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>Cattura Automatica</value>
   </data>
@@ -1408,9 +1405,6 @@ Selezione una scorciatoia diversa o chiudi l'applicazione che crea conflitto e r
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>Debug</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>Impostazioni destinazione...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>Destinazioni</value>
@@ -1450,9 +1444,6 @@ Selezione una scorciatoia diversa o chiudi l'applicazione che crea conflitto e r
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>Cronologia</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>Impostazioni tasti di scelta rapida...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>Convertitore di icone...</value>
@@ -1582,9 +1573,6 @@ Selezione una scorciatoia diversa o chiudi l'applicazione che crea conflitto e r
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>Statistiche...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>Impostazioni Operazione</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>Prova caricamento file</value>

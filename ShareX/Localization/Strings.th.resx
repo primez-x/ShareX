@@ -1379,9 +1379,6 @@
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>เครื่องมือตัด GIF แบบเคลื่อนไหว...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>การตั้งค่าแอปพลิเคชัน...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>จับภาพอัตโนมัติ...</value>
   </data>
@@ -1408,9 +1405,6 @@
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>ดีบัก</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>การตั้งค่าปลายทาง...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>ปลายทาง</value>
@@ -1450,9 +1444,6 @@
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>ประวัติ...</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>การตั้งค่าปุ่มลัด...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>ไอคอน ตัวแปลง...</value>
@@ -1582,9 +1573,6 @@
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>สถิติ...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>การตั้งค่างาน...</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>ทดสอบ การอัปโหลดไฟล์</value>

@@ -1379,9 +1379,6 @@
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>एनिमेटेड GIF ट्रिमर...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>अनुप्रयोग सेटिंग...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>स्वचालित कैप्चर...</value>
   </data>
@@ -1408,9 +1405,6 @@
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>डीबग</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>गंतव्य सेटिंग...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>गंतव्य</value>
@@ -1450,9 +1444,6 @@
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>इतिहास...</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>हॉटकी सेटिंग...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>आइकन रूपांतरक...</value>
@@ -1582,9 +1573,6 @@
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>आँकड़े...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>कार्य सेटिंग...</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>फ़ाइल अपलोड जाँचें</value>

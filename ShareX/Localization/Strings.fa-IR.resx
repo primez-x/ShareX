@@ -1379,9 +1379,6 @@ Please select a different hotkey or quit the conflicting application and reبا�
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>برش‌دهندهٔ GIF متحرک...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>تنظیمات برنامه...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>ضبط خودکار</value>
   </data>
@@ -1408,9 +1405,6 @@ Please select a different hotkey or quit the conflicting application and reبا�
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>اشکال‌زدایی</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>تنظیمات مقصد...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>مقصدها</value>
@@ -1450,9 +1444,6 @@ Please select a different hotkey or quit the conflicting application and reبا�
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>تاریخچه</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>تنظیمات کلید میانبر...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>مبدل نماد...</value>
@@ -1582,9 +1573,6 @@ Please select a different hotkey or quit the conflicting application and reبا�
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>آمار...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>تنظیمات وظیفه</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>آزمایش بارگذاری فایل</value>

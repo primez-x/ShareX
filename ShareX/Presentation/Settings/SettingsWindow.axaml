@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="using:ShareX.Localization"
+        xmlns:controls="using:ShareX.AvaloniaUI.Controls"
+        mc:Ignorable="d"
+        d:DesignWidth="860"
+        d:DesignHeight="640"
+        x:Class="ShareX.SettingsWindow"
+        Title="{x:Static res:Strings.SettingsWindow_WindowTitle}"
+        Width="860"
+        Height="640"
+        MinWidth="760"
+        MinHeight="520"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Styles>
+        <StyleInclude Source="avares://ShareX.Avalonia/Theming/SettingsStyles.axaml"/>
+    </Window.Styles>
+
+    <ThemeVariantScope>
+        <Grid Background="{DynamicResource ShareX.Brush.Background.Main}"
+              ColumnDefinitions="220,*">
+            <Border Grid.Column="0"
+                    Padding="8"
+                    Background="{DynamicResource ShareX.Brush.Background.Toolbar}"
+                    BorderBrush="{DynamicResource ShareX.Brush.Border}"
+                    BorderThickness="0,0,1,0">
+                <controls:SettingsNavigation x:Name="Navigation"/>
+            </Border>
+
+            <Grid x:Name="SettingsPages" Grid.Column="1"/>
+        </Grid>
+    </ThemeVariantScope>
+</Window>

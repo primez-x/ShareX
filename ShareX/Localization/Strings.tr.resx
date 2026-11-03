@@ -1379,9 +1379,6 @@ Lütfen başka bir kısayol seçin veya çakışan uygulamayı kapatın ve Share
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>Animasyonlu GIF kırpıcı...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>Uygulama ayarları...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>Otomatik yakalama...</value>
   </data>
@@ -1408,9 +1405,6 @@ Lütfen başka bir kısayol seçin veya çakışan uygulamayı kapatın ve Share
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>Hata ayıklama</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>Hedef ayarları...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>Hedefler</value>
@@ -1450,9 +1444,6 @@ Lütfen başka bir kısayol seçin veya çakışan uygulamayı kapatın ve Share
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>Geçmiş...</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>Kısayol ayarları...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>Simge dönüştürücü...</value>
@@ -1582,9 +1573,6 @@ Lütfen başka bir kısayol seçin veya çakışan uygulamayı kapatın ve Share
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>İstatistikler...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>Görev ayarları...</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>Dosya yükleme testi</value>

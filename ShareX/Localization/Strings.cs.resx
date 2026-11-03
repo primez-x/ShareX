@@ -1379,9 +1379,6 @@ Vyberte jinou klávesovou zkratku nebo ukončete konfliktní aplikaci a znovu ot
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>Ořezávač animovaných GIFů...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>Nastavení aplikace...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>Automatické zachytávání...</value>
   </data>
@@ -1408,9 +1405,6 @@ Vyberte jinou klávesovou zkratku nebo ukončete konfliktní aplikaci a znovu ot
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>Ladění</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>Nastavení cílů...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>Cíle</value>
@@ -1450,9 +1444,6 @@ Vyberte jinou klávesovou zkratku nebo ukončete konfliktní aplikaci a znovu ot
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>Historie...</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>Nastavení klávesových zkratek...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>Převodník ikon...</value>
@@ -1582,9 +1573,6 @@ Vyberte jinou klávesovou zkratku nebo ukončete konfliktní aplikaci a znovu ot
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>Statistiky...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>Nastavení úloh...</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>Otestovat nahrávání souboru</value>

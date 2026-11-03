@@ -187,7 +187,7 @@ public partial class ActionsToolbarWindow : Window
 
     private void OnLibraryClick(object? sender, RoutedEventArgs e) => MainWindowIntegration.Activate();
 
-    private void OnSettingsClick(object? sender, RoutedEventArgs e) => ApplicationSettingsIntegration.Show();
+    private void OnSettingsClick(object? sender, RoutedEventArgs e) => SettingsIntegration.Show();
 
     private void OnCloseClick(object? sender, RoutedEventArgs e) => Close();
 

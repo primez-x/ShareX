@@ -27,10 +27,9 @@ namespace ShareX;
 
 internal enum MainFormCommand
 {
-    ApplicationSettings,
+    Settings,
     TaskSettings,
     HotkeySettings,
-    DestinationSettings,
     ScreenshotsFolder,
     History,
     ImageHistory,

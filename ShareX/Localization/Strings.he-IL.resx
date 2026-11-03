@@ -1379,9 +1379,6 @@
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>כלי חיתוך GIF מונפש...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>הגדרות יישום...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>צילום מסך אוטומטי</value>
   </data>
@@ -1408,9 +1405,6 @@
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>איתור באגים</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>הגדרות יעד...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>יעדים</value>
@@ -1450,9 +1444,6 @@
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>היסטוריה</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>הגדרות מקשי קיצור...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>ממיר סמלים...</value>
@@ -1582,9 +1573,6 @@
   </data>
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>סטטיסטיקה...</value>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>הגדרות למטלות</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>בדוק העלאת קובץ</value>

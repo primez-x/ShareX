@@ -333,25 +333,31 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private void BuildNavigation()
     {
         NavigationPanel.Children.Clear();
-        int index = 0;
 
-        foreach (MainNavigationSection section in _navigationMenuBuilder.BuildNavigation().Where(x => x.IsVisible))
+        foreach (IReadOnlyList<MainNavigationSection> group in _navigationMenuBuilder.BuildNavigation())
         {
-            if (index is 4 or 7 or 12 or 16)
+            MainNavigationSection[] sections = group.Where(x => x.IsVisible).ToArray();
+            if (sections.Length == 0)
+            {
+                continue;
+            }
+
+            if (NavigationPanel.Children.Count > 0)
             {
                 NavigationPanel.Children.Add(new Separator { Margin = new Thickness(5, 2) });
             }
 
-            MainNavigationSection current = section;
-            Button button = new()
+            foreach (MainNavigationSection section in sections)
             {
-                Classes = { "nav-button" },
-                Content = CreateNavigationContent(current),
-                Tag = current
-            };
-            button.Click += OnNavigationClick;
-            NavigationPanel.Children.Add(button);
-            index++;
+                Button button = new()
+                {
+                    Classes = { "nav-button" },
+                    Content = CreateNavigationContent(section),
+                    Tag = section
+                };
+                button.Click += OnNavigationClick;
+                NavigationPanel.Children.Add(button);
+            }
         }
     }
 

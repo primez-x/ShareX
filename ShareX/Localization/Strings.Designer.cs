@@ -141,15 +141,6 @@ namespace ShareX.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application settings....
-        /// </summary>
-        public static string MainMenuBuilder_ApplicationSettings {
-            get {
-                return ResourceManager.GetString("MainMenuBuilder_ApplicationSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Auto capture....
         /// </summary>
         public static string MainMenuBuilder_AutoCapture {
@@ -236,15 +227,6 @@ namespace ShareX.Localization {
         public static string MainMenuBuilder_Destinations {
             get {
                 return ResourceManager.GetString("MainMenuBuilder_Destinations", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Destination settings....
-        /// </summary>
-        public static string MainMenuBuilder_DestinationSettings {
-            get {
-                return ResourceManager.GetString("MainMenuBuilder_DestinationSettings", resourceCulture);
             }
         }
         
@@ -360,15 +342,6 @@ namespace ShareX.Localization {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Hotkey settings....
-        /// </summary>
-        public static string MainMenuBuilder_HotkeySettings {
-            get {
-                return ResourceManager.GetString("MainMenuBuilder_HotkeySettings", resourceCulture);
-            }
-        }
-
         /// <summary>
         ///   Looks up a localized string similar to Animated GIF maker....
         /// </summary>
@@ -691,6 +664,11 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("MainMenuBuilder_ScreenshotsFolder", resourceCulture);
             }
         }
+        public static string MainMenuBuilder_Settings {
+            get {
+                return ResourceManager.GetString("MainMenuBuilder_Settings", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Scrolling capture....
@@ -734,15 +712,6 @@ namespace ShareX.Localization {
         public static string MainMenuBuilder_ShowShareX {
             get {
                 return ResourceManager.GetString("MainMenuBuilder_ShowShareX", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Task settings....
-        /// </summary>
-        public static string MainMenuBuilder_TaskSettings {
-            get {
-                return ResourceManager.GetString("MainMenuBuilder_TaskSettings", resourceCulture);
             }
         }
         
@@ -5174,6 +5143,191 @@ namespace ShareX.Localization {
         public static string SettingManager_ImportBackupError {
             get {
                 return ResourceManager.GetString("SettingManager_ImportBackupError", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_Advanced {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Advanced", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_AdvancedHint {
+            get {
+                return ResourceManager.GetString("SettingsWindow_AdvancedHint", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_AfterCapture {
+            get {
+                return ResourceManager.GetString("SettingsWindow_AfterCapture", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_AllApplicationSettings {
+            get {
+                return ResourceManager.GetString("SettingsWindow_AllApplicationSettings", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_AllShortcutSettings {
+            get {
+                return ResourceManager.GetString("SettingsWindow_AllShortcutSettings", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_AllTaskSettings {
+            get {
+                return ResourceManager.GetString("SettingsWindow_AllTaskSettings", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_Appearance {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Appearance", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_Capture {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Capture", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_CopyImageToClipboard {
+            get {
+                return ResourceManager.GetString("SettingsWindow_CopyImageToClipboard", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_CustomScreenshotsFolder {
+            get {
+                return ResourceManager.GetString("SettingsWindow_CustomScreenshotsFolder", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_DestinationSettings {
+            get {
+                return ResourceManager.GetString("SettingsWindow_DestinationSettings", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_DetailedSettings {
+            get {
+                return ResourceManager.GetString("SettingsWindow_DetailedSettings", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_General {
+            get {
+                return ResourceManager.GetString("SettingsWindow_General", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ImageFile {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ImageFile", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ImageFileFormatHint {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ImageFileFormatHint", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ImageFileFormatLabel {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ImageFileFormatLabel", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_OpenEditorAfterCapture {
+            get {
+                return ResourceManager.GetString("SettingsWindow_OpenEditorAfterCapture", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_OpenFolder {
+            get {
+                return ResourceManager.GetString("SettingsWindow_OpenFolder", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_PlaySoundAfterCapture {
+            get {
+                return ResourceManager.GetString("SettingsWindow_PlaySoundAfterCapture", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_SaveImageToFile {
+            get {
+                return ResourceManager.GetString("SettingsWindow_SaveImageToFile", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ScreenshotsFolder {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ScreenshotsFolder", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ScreenshotsFolderHint {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ScreenshotsFolderHint", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_SetUpUploads {
+            get {
+                return ResourceManager.GetString("SettingsWindow_SetUpUploads", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_Sharing {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Sharing", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_Shortcuts {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Shortcuts", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ShortcutsHint {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ShortcutsHint", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ShowCapturePanelAtStartup {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ShowCapturePanelAtStartup", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ShowCursor {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ShowCursor", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ShowTrayIcon {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ShowTrayIcon", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ShowTrayIconHint {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ShowTrayIconHint", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_Startup {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Startup", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_Upload {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Upload", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_UploadAfterCapture {
+            get {
+                return ResourceManager.GetString("SettingsWindow_UploadAfterCapture", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_UploadHint {
+            get {
+                return ResourceManager.GetString("SettingsWindow_UploadHint", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_UseCustomScreenshotsFolder {
+            get {
+                return ResourceManager.GetString("SettingsWindow_UseCustomScreenshotsFolder", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_UseSystemTheme {
+            get {
+                return ResourceManager.GetString("SettingsWindow_UseSystemTheme", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_WindowTitle {
+            get {
+                return ResourceManager.GetString("SettingsWindow_WindowTitle", resourceCulture);
             }
         }
         public static string SettingManager_ErrorTitle {

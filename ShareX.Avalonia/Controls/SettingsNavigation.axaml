@@ -19,6 +19,7 @@
         <Style Selector="TreeViewItem">
             <Setter Property="IsVisible" Value="{ReflectionBinding IsVisible}"/>
             <Setter Property="IsExpanded" Value="{ReflectionBinding IsExpanded, Mode=TwoWay}"/>
+            <Setter Property="AutomationProperties.Name" Value="{ReflectionBinding Title}"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Margin" Value="0,1"/>
             <Setter Property="CornerRadius" Value="4"/>
@@ -43,6 +44,11 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ShareX.Brush.Accent}"/>
             <Setter Property="Foreground" Value="{DynamicResource ShareX.Brush.Accent.Foreground}"/>
         </Style>
+        <!-- The Fluent template paints the selected row from its own light selection brush, so set the template part to the ShareX accent. -->
+        <Style Selector="TreeViewItem:selected /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Accent}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ShareX.Brush.Accent}"/>
+        </Style>
     </UserControl.Styles>
 
     <Grid RowDefinitions="Auto,*" RowSpacing="10">
@@ -57,6 +63,7 @@
             <TextBox Grid.ColumnSpan="2"
                      Padding="30,8,8,8"
                      PlaceholderText="{x:Static localization:Strings.SettingsNavigation_Search_settings}"
+                     AutomationProperties.Name="{x:Static localization:Strings.SettingsNavigation_Search_settings}"
                      Text="{Binding SearchText, ElementName=Root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 

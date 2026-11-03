@@ -32,14 +32,15 @@ namespace ShareX;
 public static class HotkeySettingsIntegration
 {
     private static HotkeySettingsWindow? _window;
+    private static HotkeySettingsViewModel? _viewModel;
+    private static int _viewModelUsers;
 
-    public static void Show(IHotkeySettingsService service)
+    public static void Show()
     {
         Dispatcher.UIThread.Post(() =>
         {
             if (_window != null)
             {
-                service.Dispose();
                 if (!_window.IsVisible)
                 {
                     _window.Show();
@@ -48,9 +49,62 @@ public static class HotkeySettingsIntegration
                 return;
             }
 
-            _window = new HotkeySettingsWindow(service);
-            _window.Closed += (_, _) => _window = null;
+            HotkeySettingsViewModel? viewModel = AcquireViewModel();
+            if (viewModel == null)
+            {
+                return;
+            }
+
+            _window = new HotkeySettingsWindow(viewModel);
+            _window.Closed += (_, _) =>
+            {
+                _window = null;
+                ReleaseViewModel();
+            };
             _window.Show();
         });
+    }
+
+    /// <summary>
+    /// Every open hotkey editor shares one view model, so the editors show the same list and only one
+    /// service registers hotkeys. Call <see cref="ReleaseViewModel"/> when the editor closes.
+    /// Returns null before the hotkey manager starts.
+    /// </summary>
+    internal static HotkeySettingsViewModel? AcquireViewModel()
+    {
+        if (_viewModel == null)
+        {
+            if (ApplicationState.HotkeyManager == null)
+            {
+                return null;
+            }
+
+            _viewModel = new HotkeySettingsViewModel(new HotkeySettingsAvaloniaService(ApplicationState.HotkeyManager, OnEditorsClosed));
+        }
+
+        _viewModelUsers++;
+        return _viewModel;
+    }
+
+    internal static void ReleaseViewModel()
+    {
+        if (_viewModel == null || --_viewModelUsers > 0)
+        {
+            return;
+        }
+
+        HotkeySettingsViewModel viewModel = _viewModel;
+        _viewModel = null;
+        viewModel.Dispose();
+    }
+
+    private static void OnEditorsClosed()
+    {
+        if (!ApplicationLifecycle.IsClosing)
+        {
+            MainWindowIntegration.RefreshMenus();
+            ActionsToolbarWindowIntegration.Refresh();
+            SettingManager.SaveHotkeysConfigAsync();
+        }
     }
 }

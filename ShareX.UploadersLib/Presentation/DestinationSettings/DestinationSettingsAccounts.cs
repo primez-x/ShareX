@@ -26,6 +26,7 @@
 #nullable enable
 
 using Avalonia.Controls;
+using ShareX.AvaloniaUI.Controls;
 using ShareX.HelpersLib;
 using ShareX.UploadersLib.FileUploaders;
 using ShareX.UploadersLib.ImageUploaders;
@@ -80,7 +81,7 @@ internal sealed class DestinationSettingsAccounts
         "photobucket" => PhotobucketOAuth(),
         "imageshack" => ImageShackAccount(),
         "pastebin" => PastebinAccount(),
-        "paste-ee" => DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account,
+        "paste-ee" => SettingsControls.Card(Localization.Strings.DestinationSettings_Account,
             DestinationSettingsPageBuilder.ButtonRow(DestinationSettingsPageBuilder.Button(Localization.Strings.DestinationSettings_Get_user_key, () =>
                 URLHelpers.OpenURL(UploaderConfigurationClient.GetPasteEeAuthorizationURL())))),
         "puush" => UserPasswordLogin("puush", () => _config.PuushAPIKey,
@@ -141,7 +142,7 @@ internal sealed class DestinationSettingsAccounts
                     session = await mega.LoginAsync(code);
                 }
 
-                ((DestinationValue<string>)password.DataContext!).Value = string.Empty;
+                ((BoundValue<string>)password.DataContext!).Value = string.Empty;
                 _config.MegaSessionID = session.SessionID;
                 _config.MegaMasterKey = session.MasterKey;
                 SetStatus(status, Localization.Strings.DestinationSettings_Connected, true);
@@ -154,11 +155,11 @@ internal sealed class DestinationSettingsAccounts
         });
         Button disconnect = DestinationSettingsPageBuilder.Button(Localization.Strings.DestinationSettings_Disconnect, Disconnect);
 
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account,
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Field_Email, email),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Field_Password, password),
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account,
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Field_Email, email),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Field_Password, password),
             DestinationSettingsPageBuilder.ButtonRow(login, disconnect),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status));
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status));
     }
 
     private Control ImageShackAccount()
@@ -190,8 +191,8 @@ internal sealed class DestinationSettingsAccounts
         });
         Button images = DestinationSettingsPageBuilder.Button(Localization.Strings.DestinationSettings_My_images,
             () => URLHelpers.OpenURL("https://imageshack.com/my/images"));
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account,
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status),
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account,
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status),
             DestinationSettingsPageBuilder.ButtonRow(login, profile, images));
     }
 
@@ -219,8 +220,8 @@ internal sealed class DestinationSettingsAccounts
         });
         Button register = DestinationSettingsPageBuilder.Button(Localization.Strings.DestinationSettings_Register,
             () => URLHelpers.OpenURL("https://pastebin.com/signup"));
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account,
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status),
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account,
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status),
             DestinationSettingsPageBuilder.ButtonRow(login, register));
     }
 
@@ -239,7 +240,7 @@ internal sealed class DestinationSettingsAccounts
                 string? key = await login(username.Text ?? string.Empty, password.Text ?? string.Empty);
                 if (!string.IsNullOrWhiteSpace(key))
                 {
-                    ((DestinationValue<string>)apiKey.DataContext!).Value = key;
+                    ((BoundValue<string>)apiKey.DataContext!).Value = key;
                     SetStatus(status, Localization.Strings.DestinationSettings_API_key_retrieved, true);
                     password.Text = string.Empty;
                 }
@@ -254,12 +255,12 @@ internal sealed class DestinationSettingsAccounts
                 SetStatus(status, exception.Message, false);
             }
         });
-        return DestinationSettingsPageBuilder.Card(string.Format(Localization.Strings.DestinationSettings_Service_account, serviceName),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Email_or_username, username),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Password, password),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_API_key, apiKey),
+        return SettingsControls.Card(string.Format(Localization.Strings.DestinationSettings_Service_account, serviceName),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Email_or_username, username),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Password, password),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_API_key, apiKey),
             DestinationSettingsPageBuilder.ButtonRow(connect),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status));
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status));
     }
 
     private Control PushbulletAccount()
@@ -270,7 +271,7 @@ internal sealed class DestinationSettingsAccounts
         apiKey.PasswordChar = '●';
         ComboBox device = new() { ItemsSource = devices };
         device.Classes.Add("form-control");
-        TextBlock status = DestinationSettingsPageBuilder.Hint(string.Empty);
+        TextBlock status = SettingsControls.Hint(string.Empty);
 
         void Reload()
         {
@@ -306,11 +307,11 @@ internal sealed class DestinationSettingsAccounts
             }
         });
         Reload();
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account_and_devices,
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_API_key, apiKey),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Device, device),
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account_and_devices,
+            SettingsControls.Row(Localization.Strings.DestinationSettings_API_key, apiKey),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Device, device),
             DestinationSettingsPageBuilder.ButtonRow(refresh),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status));
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status));
     }
 
     private Control BasicOAuth2(
@@ -320,7 +321,7 @@ internal sealed class DestinationSettingsAccounts
         Func<OAuth2Info> createInfo,
         params Control[] extras)
     {
-        TextBlock status = DestinationSettingsPageBuilder.Hint(string.Empty);
+        TextBlock status = SettingsControls.Hint(string.Empty);
         TextBox code = DestinationSettingsPageBuilder.Text(() => string.Empty, _ => { });
 
         void UpdateStatus(string? message = null, bool? connected = null)
@@ -393,13 +394,13 @@ internal sealed class DestinationSettingsAccounts
 
         List<Control> controls =
         [
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Authorization_code, code),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Authorization_code, code),
             DestinationSettingsPageBuilder.ButtonRow(open, complete, refresh, clear)
         ];
         controls.AddRange(extras);
         UpdateStatus();
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account, controls.ToArray());
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account, controls.ToArray());
     }
 
     private Control LoopbackOAuth(
@@ -408,7 +409,7 @@ internal sealed class DestinationSettingsAccounts
         Action<OAuth2Info?, OAuthUserInfo?> setAccount,
         Func<OAuth2Info, IOAuth2Loopback> createOAuth)
     {
-        TextBlock status = DestinationSettingsPageBuilder.Hint(string.Empty);
+        TextBlock status = SettingsControls.Hint(string.Empty);
         void UpdateStatus()
         {
             bool isConnected = OAuth2Info.CheckOAuth(getInfo());
@@ -438,14 +439,14 @@ internal sealed class DestinationSettingsAccounts
         Button disconnect = DestinationSettingsPageBuilder.Button(Localization.Strings.DestinationSettings_Disconnect,
             () => { setAccount(null, null); UpdateStatus(); });
         UpdateStatus();
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account,
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status),
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account,
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status),
             DestinationSettingsPageBuilder.ButtonRow(connect, disconnect));
     }
 
     private Control FlickrOAuth()
     {
-        TextBlock status = DestinationSettingsPageBuilder.Hint(string.Empty);
+        TextBlock status = SettingsControls.Hint(string.Empty);
         TextBox code = DestinationSettingsPageBuilder.Text(() => string.Empty, _ => { });
         void UpdateStatus(string? text = null, bool? connected = null)
         {
@@ -489,15 +490,15 @@ internal sealed class DestinationSettingsAccounts
         Button clear = DestinationSettingsPageBuilder.Button(Localization.Strings.DestinationSettings_Disconnect,
             () => { _config.FlickrOAuthInfo = null; UpdateStatus(); });
         UpdateStatus();
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account,
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Verification_code, code),
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account,
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Verification_code, code),
             DestinationSettingsPageBuilder.ButtonRow(open, complete, clear));
     }
 
     private Control PhotobucketOAuth()
     {
-        TextBlock status = DestinationSettingsPageBuilder.Hint(string.Empty);
+        TextBlock status = SettingsControls.Hint(string.Empty);
         TextBox code = DestinationSettingsPageBuilder.Text(() => string.Empty, _ => { });
         void UpdateStatus(string? text = null, bool? connected = null)
         {
@@ -545,9 +546,9 @@ internal sealed class DestinationSettingsAccounts
             _config.PhotobucketOAuthInfo = null; _config.PhotobucketAccountInfo = null; UpdateStatus();
         });
         UpdateStatus();
-        return DestinationSettingsPageBuilder.Card(Localization.Strings.DestinationSettings_Account,
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Status, status),
-            DestinationSettingsPageBuilder.Row(Localization.Strings.DestinationSettings_Verification_code, code),
+        return SettingsControls.Card(Localization.Strings.DestinationSettings_Account,
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Status, status),
+            SettingsControls.Row(Localization.Strings.DestinationSettings_Verification_code, code),
             DestinationSettingsPageBuilder.ButtonRow(open, complete, clear));
     }
 
@@ -558,7 +559,7 @@ internal sealed class DestinationSettingsAccounts
 
     private static TextBlock Status(string text, bool? connected = null)
     {
-        TextBlock status = DestinationSettingsPageBuilder.Hint(text);
+        TextBlock status = SettingsControls.Hint(text);
         SetStatus(status, text, connected);
         return status;
     }

@@ -43,6 +43,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using static ShareX.AvaloniaUI.Controls.SettingsControls;
 
 namespace ShareX.UploadersLib;
 
@@ -187,7 +188,7 @@ internal sealed class DestinationSettingsPageBuilder
             cards.Add(actions);
         }
 
-        return Page(definition.Id, definition.Title, icon, cards.ToArray());
+        return Page(definition.Id, definition.Title, icon, 780, cards.ToArray());
     }
 
     private IEnumerable<Control> BuildAmazonS3Cards(Action? settingsChanged)
@@ -235,8 +236,8 @@ internal sealed class DestinationSettingsPageBuilder
         {
             if (endpoints.SelectedItem is AmazonS3Endpoint selected)
             {
-                ((DestinationValue<string>)endpoint.DataContext!).Value = selected.Endpoint;
-                ((DestinationValue<string>)region.DataContext!).Value = selected.Region;
+                ((BoundValue<string>)endpoint.DataContext!).Value = selected.Endpoint;
+                ((BoundValue<string>)region.DataContext!).Value = selected.Region;
             }
         };
 
@@ -417,7 +418,7 @@ internal sealed class DestinationSettingsPageBuilder
                 return;
             }
 
-            ((DestinationValue<string>)albumPath.DataContext!).Value = _config.PhotobucketAccountInfo.AlbumID ?? string.Empty;
+            ((BoundValue<string>)albumPath.DataContext!).Value = _config.PhotobucketAccountInfo.AlbumID ?? string.Empty;
             foreach (string item in _config.PhotobucketAccountInfo.AlbumList) albums.Add(item);
             list.SelectedIndex = _config.PhotobucketAccountInfo.ActiveAlbumID.BetweenOrDefault(0, Math.Max(0, albums.Count - 1));
             status.Text = albums.Count == 0
@@ -772,10 +773,10 @@ internal sealed class DestinationSettingsPageBuilder
         IEnumerable displayedItems = ReferenceEquals(items, _config.FTPAccountList) || ReferenceEquals(items, _config.LocalhostAccountList)
             ? GetObservableList(items)
             : items;
-        DestinationValue<int> value = new(selectedIndex, index => member.SetValue(owner, index));
+        BoundValue<int> value = new(selectedIndex, index => member.SetValue(owner, index));
         editor = new ComboBox { ItemsSource = displayedItems, DataContext = value };
         editor.Classes.Add("form-control");
-        editor.Bind(SelectingItemsControl.SelectedIndexProperty, new Binding(nameof(DestinationValue<int>.Value))
+        editor.Bind(SelectingItemsControl.SelectedIndexProperty, new Binding(nameof(BoundValue<int>.Value))
         { Source = value, Mode = BindingMode.TwoWay });
         return true;
     }
@@ -991,44 +992,6 @@ internal sealed class DestinationSettingsPageBuilder
         return Localization.Strings.ResourceManager.GetString(resourceName) ?? result;
     }
 
-    private ScrollViewer Page(string id, string title, string icon, params Control[] controls)
-    {
-        StackPanel content = new()
-        {
-            Margin = new Thickness(28, 24, 28, 32),
-            MaxWidth = 780,
-            HorizontalAlignment = HorizontalAlignment.Left
-        };
-        Grid header = new() { ColumnDefinitions = new ColumnDefinitions("Auto,*"), ColumnSpacing = 9 };
-        header.Classes.Add("page-title");
-        SettingsSearch.SetIsPageTitle(header, true);
-        TextBlock iconBlock = new() { Text = icon };
-        iconBlock.Classes.Add("icon"); iconBlock.Classes.Add("page-title-icon");
-        TextBlock titleBlock = new() { Text = title };
-        titleBlock.Classes.Add("page-title-text"); Grid.SetColumn(titleBlock, 1);
-        header.Children.Add(iconBlock); header.Children.Add(titleBlock); content.Children.Add(header);
-        foreach (Control control in controls) content.Children.Add(control);
-        ScrollViewer page = new() { Content = content, IsVisible = false };
-        SettingsSearch.SetPageId(page, id);
-        return page;
-    }
-
-    internal static Border Card(string title, params Control[] controls)
-    {
-        StackPanel panel = new() { Spacing = 4 };
-        TextBlock heading = new() { Text = title }; heading.Classes.Add("section-title"); panel.Children.Add(heading);
-        foreach (Control control in controls) panel.Children.Add(control);
-        Border card = new() { Child = panel }; card.Classes.Add("section-card"); SettingsSearch.SetIsPanel(card, true);
-        return card;
-    }
-
-    internal static Grid Row(string label, Control editor)
-    {
-        Grid row = new() { ColumnDefinitions = new ColumnDefinitions("210,*"), ColumnSpacing = 8 };
-        row.Children.Add(new TextBlock { Text = label, FontWeight = FontWeight.Normal, VerticalAlignment = VerticalAlignment.Center });
-        Grid.SetColumn(editor, 1); row.Children.Add(editor); return row;
-    }
-
     private static Grid PreviewRow(TextBlock preview)
     {
         Grid row = Row(FormatLabel("URLPreview") + ":", preview);
@@ -1052,26 +1015,18 @@ internal sealed class DestinationSettingsPageBuilder
         return panel;
     }
 
-    internal static CheckBox Check(string text, Func<bool> getter, Action<bool> setter)
-    {
-        DestinationValue<bool> value = new(getter(), setter);
-        CheckBox check = new() { Content = text, DataContext = value }; check.Classes.Add("setting");
-        check.Bind(ToggleButton.IsCheckedProperty, new Binding(nameof(DestinationValue<bool>.Value)) { Source = value, Mode = BindingMode.TwoWay });
-        return check;
-    }
-
     internal static TextBox Text(Func<string> getter, Action<string> setter)
     {
-        DestinationValue<string> value = new(getter(), setter);
+        BoundValue<string> value = new(getter(), setter);
         TextBox text = new() { DataContext = value }; text.Classes.Add("form-control");
-        text.Bind(TextBox.TextProperty, new Binding(nameof(DestinationValue<string>.Value))
+        text.Bind(TextBox.TextProperty, new Binding(nameof(BoundValue<string>.Value))
         { Source = value, Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
         return text;
     }
 
     private static NumericUpDown Number(decimal current, Action<decimal> setter, Type type)
     {
-        DestinationValue<decimal?> value = new(current, x => setter(x ?? 0));
+        BoundValue<decimal?> value = new(current, x => setter(x ?? 0));
         decimal min = type == typeof(sbyte) ? sbyte.MinValue : type == typeof(byte) ? byte.MinValue :
             type == typeof(short) ? short.MinValue : type == typeof(ushort) ? ushort.MinValue :
             type == typeof(int) ? int.MinValue : type == typeof(uint) ? uint.MinValue :
@@ -1082,7 +1037,7 @@ internal sealed class DestinationSettingsPageBuilder
             type == typeof(long) ? long.MaxValue : type == typeof(ulong) ? ulong.MaxValue : 1_000_000_000;
         NumericUpDown number = new() { DataContext = value, Minimum = min, Maximum = max };
         number.Classes.Add("form-control");
-        number.Bind(NumericUpDown.ValueProperty, new Binding(nameof(DestinationValue<decimal?>.Value)) { Source = value, Mode = BindingMode.TwoWay });
+        number.Bind(NumericUpDown.ValueProperty, new Binding(nameof(BoundValue<decimal?>.Value)) { Source = value, Mode = BindingMode.TwoWay });
         return number;
     }
 
@@ -1092,9 +1047,9 @@ internal sealed class DestinationSettingsPageBuilder
             .Select(value => new DestinationChoice(value,
                 value.GetLocalizedDescription(Localization.Strings.ResourceManager))).ToArray();
         DestinationChoice selected = choices.FirstOrDefault(x => Equals(x.Value, current)) ?? choices[0];
-        DestinationValue<DestinationChoice> binding = new(selected, value => setter(value.Value));
+        BoundValue<DestinationChoice> binding = new(selected, value => setter(value.Value));
         ComboBox combo = new() { ItemsSource = choices, DataContext = binding }; combo.Classes.Add("form-control");
-        combo.Bind(SelectingItemsControl.SelectedItemProperty, new Binding(nameof(DestinationValue<DestinationChoice>.Value))
+        combo.Bind(SelectingItemsControl.SelectedItemProperty, new Binding(nameof(BoundValue<DestinationChoice>.Value))
         { Source = binding, Mode = BindingMode.TwoWay });
         return combo;
     }
@@ -1117,28 +1072,6 @@ internal sealed class DestinationSettingsPageBuilder
         StackPanel panel = new() { Orientation = Orientation.Horizontal, Spacing = 6 };
         foreach (Button button in buttons) panel.Children.Add(button); return panel;
     }
-
-    internal static TextBlock Hint(string text)
-    {
-        TextBlock hint = new() { Text = text }; hint.Classes.Add("hint"); return hint;
-    }
-}
-
-internal sealed class DestinationValue<T> : INotifyPropertyChanged
-{
-    private T _value;
-    private readonly Action<T> _setter;
-    public T Value
-    {
-        get => _value;
-        set
-        {
-            if (EqualityComparer<T>.Default.Equals(_value, value)) return;
-            _value = value; _setter(value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
-        }
-    }
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public DestinationValue(T value, Action<T> setter) { _value = value; _setter = setter; }
 }
 
 internal sealed record DestinationChoice(object Value, string Title)

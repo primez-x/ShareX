@@ -51,6 +51,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using DrawingRectangle = System.Drawing.Rectangle;
 using DrawingSize = System.Drawing.Size;
+using static ShareX.AvaloniaUI.Controls.SettingsControls;
 
 namespace ShareX;
 
@@ -1212,70 +1213,6 @@ internal sealed class TaskSettingsPageBuilder
     private Control ParentPage(string id, string title, string icon, BoundValue<bool> overrideValue, string overrideText) =>
         Page(id, title, icon, OverrideCard(overrideValue, overrideText));
 
-    private ScrollViewer Page(string id, string title, string icon, params Control[] controls)
-    {
-        StackPanel content = new()
-        {
-            Margin = new Thickness(28, 24, 28, 32),
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            Spacing = 0
-        };
-
-        Grid header = new()
-        {
-            ColumnDefinitions = new ColumnDefinitions("Auto,*"),
-            ColumnSpacing = 9
-        };
-        header.Classes.Add("page-title");
-        SettingsSearch.SetIsPageTitle(header, true);
-
-        TextBlock iconBlock = new() { Text = icon };
-        iconBlock.Classes.Add("icon");
-        iconBlock.Classes.Add("page-title-icon");
-        TextBlock titleBlock = new() { Text = title };
-        titleBlock.Classes.Add("page-title-text");
-        Grid.SetColumn(titleBlock, 1);
-        header.Children.Add(iconBlock);
-        header.Children.Add(titleBlock);
-        content.Children.Add(header);
-
-        foreach (Control control in controls)
-        {
-            content.Children.Add(control);
-        }
-
-        ScrollViewer page = new()
-        {
-            Content = content,
-            IsVisible = false,
-            HorizontalContentAlignment = HorizontalAlignment.Stretch,
-            HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled
-        };
-        SettingsSearch.SetPageId(page, id);
-        return page;
-    }
-
-    private Border Card(string title, params Control[] controls)
-    {
-        StackPanel panel = new() { Spacing = 4 };
-        if (!string.IsNullOrWhiteSpace(title))
-        {
-            TextBlock heading = new() { Text = title };
-            heading.Classes.Add("section-title");
-            panel.Children.Add(heading);
-        }
-
-        foreach (Control control in controls)
-        {
-            panel.Children.Add(control);
-        }
-
-        Border card = new() { Child = panel };
-        card.Classes.Add("section-card");
-        SettingsSearch.SetIsPanel(card, true);
-        return card;
-    }
-
     private Border EnabledCard(BoundValue<bool> enabled, string title, params Control[] controls)
     {
         Border card = Card(title, controls);
@@ -1299,54 +1236,6 @@ internal sealed class TaskSettingsPageBuilder
         };
         SettingsSearch.SetIsAvailabilityContainer(availability, true);
         return availability;
-    }
-
-    private static Grid Row(string label, Control editor, string? tooltip = null)
-    {
-        Grid row = new()
-        {
-            ColumnDefinitions = new ColumnDefinitions("210,*"),
-            ColumnSpacing = 8
-        };
-        TextBlock rowLabel = Label(label);
-        if (tooltip != null)
-        {
-            ToolTip.SetTip(rowLabel, tooltip);
-            ToolTip.SetTip(editor, tooltip);
-        }
-        row.Children.Add(rowLabel);
-        Grid.SetColumn(editor, 1);
-        row.Children.Add(editor);
-        return row;
-    }
-
-    private static TextBlock Label(string text) => new()
-    {
-        Text = text,
-        FontWeight = FontWeight.Normal,
-        VerticalAlignment = VerticalAlignment.Center
-    };
-
-    private static TextBlock Hint(string text)
-    {
-        TextBlock hint = new() { Text = text };
-        hint.Classes.Add("hint");
-        return hint;
-    }
-
-    private static CheckBox Check(string text, Func<bool> getter, Action<bool> setter) =>
-        Check(text, new BoundValue<bool>(getter(), setter));
-
-    private static CheckBox Check(string text, BoundValue<bool> value)
-    {
-        CheckBox checkBox = new() { Content = text, DataContext = value };
-        checkBox.Classes.Add("setting");
-        checkBox.Bind(ToggleButton.IsCheckedProperty, new Binding(nameof(BoundValue<bool>.Value))
-        {
-            Source = value,
-            Mode = BindingMode.TwoWay
-        });
-        return checkBox;
     }
 
     private static TextBox Text(Func<string> getter, Action<string> setter) => Text(new BoundValue<string>(getter(), setter));
@@ -1959,36 +1848,6 @@ internal sealed class TaskSettingsPageBuilder
 
         string result = System.Text.RegularExpressions.Regex.Replace(value, "([A-Z]+)([A-Z][a-z])", "$1 $2");
         return System.Text.RegularExpressions.Regex.Replace(result, "([a-z0-9])([A-Z])", "$1 $2");
-    }
-}
-
-internal sealed class BoundValue<T> : INotifyPropertyChanged
-{
-    private T _value;
-    private readonly Action<T> _setter;
-
-    public T Value
-    {
-        get => _value;
-        set
-        {
-            if (EqualityComparer<T>.Default.Equals(_value, value))
-            {
-                return;
-            }
-
-            _value = value;
-            _setter(value);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
-        }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    public BoundValue(T value, Action<T> setter)
-    {
-        _value = value;
-        _setter = setter;
     }
 }
 

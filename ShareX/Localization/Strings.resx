@@ -1418,9 +1418,6 @@ Please select a different hotkey or quit the conflicting application and reopen 
   <data name="MainMenuBuilder_AnimatedGifTrimmer" xml:space="preserve">
     <value>Animated GIF trimmer...</value>
   </data>
-  <data name="MainMenuBuilder_ApplicationSettings" xml:space="preserve">
-    <value>Application settings...</value>
-  </data>
   <data name="MainMenuBuilder_AutoCapture" xml:space="preserve">
     <value>Auto capture...</value>
   </data>
@@ -1447,9 +1444,6 @@ Please select a different hotkey or quit the conflicting application and reopen 
   </data>
   <data name="MainMenuBuilder_Debug" xml:space="preserve">
     <value>Debug</value>
-  </data>
-  <data name="MainMenuBuilder_DestinationSettings" xml:space="preserve">
-    <value>Destination settings...</value>
   </data>
   <data name="MainMenuBuilder_Destinations" xml:space="preserve">
     <value>Destinations</value>
@@ -1489,9 +1483,6 @@ Please select a different hotkey or quit the conflicting application and reopen 
   </data>
   <data name="MainMenuBuilder_History" xml:space="preserve">
     <value>History...</value>
-  </data>
-  <data name="MainMenuBuilder_HotkeySettings" xml:space="preserve">
-    <value>Hotkey settings...</value>
   </data>
   <data name="MainMenuBuilder_IconConverter" xml:space="preserve">
     <value>Icon converter...</value>
@@ -1607,6 +1598,9 @@ Please select a different hotkey or quit the conflicting application and reopen 
   <data name="MainMenuBuilder_ScrollingCapture" xml:space="preserve">
     <value>Scrolling capture...</value>
   </data>
+  <data name="MainMenuBuilder_Settings" xml:space="preserve">
+    <value>Settings...</value>
+  </data>
   <data name="MainMenuBuilder_ShortenUrl" xml:space="preserve">
     <value>Shorten URL...</value>
   </data>
@@ -1622,9 +1616,6 @@ Please select a different hotkey or quit the conflicting application and reopen 
   <data name="MainMenuBuilder_Stats" xml:space="preserve">
     <value>Stats...</value>
     <comment>Main window sidebar item that opens statistics about the history.</comment>
-  </data>
-  <data name="MainMenuBuilder_TaskSettings" xml:space="preserve">
-    <value>Task settings...</value>
   </data>
   <data name="MainMenuBuilder_TestFileUpload" xml:space="preserve">
     <value>Test file upload</value>
@@ -2095,6 +2086,117 @@ Please run ShareX as administrator to change personal folder path.</value>
   <data name="SettingManager_ImportBackupError" xml:space="preserve">
     <value>Error while importing backup:
 {0}</value>
+  </data>
+  <data name="SettingsWindow_Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="SettingsWindow_AdvancedHint" xml:space="preserve">
+    <value>These windows show every ShareX option. Most people do not need them.</value>
+  </data>
+  <data name="SettingsWindow_AfterCapture" xml:space="preserve">
+    <value>After capture</value>
+  </data>
+  <data name="SettingsWindow_AllApplicationSettings" xml:space="preserve">
+    <value>All application settings...</value>
+  </data>
+  <data name="SettingsWindow_AllShortcutSettings" xml:space="preserve">
+    <value>All shortcut settings...</value>
+  </data>
+  <data name="SettingsWindow_AllTaskSettings" xml:space="preserve">
+    <value>All capture and task settings...</value>
+  </data>
+  <data name="SettingsWindow_Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SettingsWindow_Capture" xml:space="preserve">
+    <value>Capture</value>
+  </data>
+  <data name="SettingsWindow_CopyImageToClipboard" xml:space="preserve">
+    <value>Copy the image to the clipboard</value>
+  </data>
+  <data name="SettingsWindow_CustomScreenshotsFolder" xml:space="preserve">
+    <value>Custom screenshots folder</value>
+  </data>
+  <data name="SettingsWindow_DestinationSettings" xml:space="preserve">
+    <value>Destination settings...</value>
+  </data>
+  <data name="SettingsWindow_DetailedSettings" xml:space="preserve">
+    <value>Detailed settings</value>
+  </data>
+  <data name="SettingsWindow_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SettingsWindow_ImageFile" xml:space="preserve">
+    <value>Image file</value>
+  </data>
+  <data name="SettingsWindow_ImageFileFormatHint" xml:space="preserve">
+    <value>PNG keeps full quality. JPG makes smaller files.</value>
+  </data>
+  <data name="SettingsWindow_ImageFileFormatLabel" xml:space="preserve">
+    <value>Image file format:</value>
+  </data>
+  <data name="SettingsWindow_OpenEditorAfterCapture" xml:space="preserve">
+    <value>Open the editor after capture</value>
+  </data>
+  <data name="SettingsWindow_OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
+  <data name="SettingsWindow_PlaySoundAfterCapture" xml:space="preserve">
+    <value>Play a sound after capture</value>
+  </data>
+  <data name="SettingsWindow_SaveImageToFile" xml:space="preserve">
+    <value>Save the image to the screenshots folder</value>
+  </data>
+  <data name="SettingsWindow_ScreenshotsFolder" xml:space="preserve">
+    <value>Screenshots folder</value>
+  </data>
+  <data name="SettingsWindow_ScreenshotsFolderHint" xml:space="preserve">
+    <value>If you do not choose a folder, ShareX uses the Screenshots folder in the ShareX personal folder.</value>
+  </data>
+  <data name="SettingsWindow_SetUpUploads" xml:space="preserve">
+    <value>Set up a shared folder or OneDrive...</value>
+  </data>
+  <data name="SettingsWindow_Sharing" xml:space="preserve">
+    <value>Sharing</value>
+  </data>
+  <data name="SettingsWindow_Shortcuts" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="SettingsWindow_ShortcutsHint" xml:space="preserve">
+    <value>Click a shortcut, then press the new key combination. Press Esc to remove the shortcut.</value>
+  </data>
+  <data name="SettingsWindow_ShowCapturePanelAtStartup" xml:space="preserve">
+    <value>Show the capture panel when ShareX starts</value>
+  </data>
+  <data name="SettingsWindow_ShowCursor" xml:space="preserve">
+    <value>Show the mouse cursor in captures</value>
+  </data>
+  <data name="SettingsWindow_ShowTrayIcon" xml:space="preserve">
+    <value>Show the ShareX icon in the system tray</value>
+  </data>
+  <data name="SettingsWindow_ShowTrayIconHint" xml:space="preserve">
+    <value>If you hide the icon, open ShareX from the Start menu.</value>
+  </data>
+  <data name="SettingsWindow_Startup" xml:space="preserve">
+    <value>Startup</value>
+  </data>
+  <data name="SettingsWindow_Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="SettingsWindow_UploadAfterCapture" xml:space="preserve">
+    <value>Upload after capture</value>
+  </data>
+  <data name="SettingsWindow_UploadHint" xml:space="preserve">
+    <value>ShareX uploads only to OneDrive or a shared folder. ShareX never uploads to a public website.</value>
+  </data>
+  <data name="SettingsWindow_UseCustomScreenshotsFolder" xml:space="preserve">
+    <value>Save screenshots to a folder I choose</value>
+  </data>
+  <data name="SettingsWindow_UseSystemTheme" xml:space="preserve">
+    <value>Use system theme</value>
+  </data>
+  <data name="SettingsWindow_WindowTitle" xml:space="preserve">
+    <value>ShareX - Settings</value>
   </data>
   <data name="ShareXCannotBeClosedWhileScreenRecordingIsActive" xml:space="preserve">
     <value>ShareX cannot be closed while screen recording is active.

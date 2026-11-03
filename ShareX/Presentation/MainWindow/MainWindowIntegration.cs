@@ -138,8 +138,8 @@ public static class MainWindowIntegration
     {
         switch (command)
         {
-            case MainFormCommand.ApplicationSettings:
-                ApplicationSettingsIntegration.Show();
+            case MainFormCommand.Settings:
+                SettingsIntegration.Show();
                 break;
             case MainFormCommand.TaskSettings:
                 TaskSettingsIntegration.Show(ApplicationState.DefaultTaskSettings, true, () =>
@@ -152,10 +152,7 @@ public static class MainWindowIntegration
                 });
                 break;
             case MainFormCommand.HotkeySettings:
-                OpenHotkeySettings();
-                break;
-            case MainFormCommand.DestinationSettings:
-                TaskHelpers.OpenUploadersConfigWindow();
+                HotkeySettingsIntegration.Show();
                 break;
             case MainFormCommand.ScreenshotsFolder:
                 TaskHelpers.OpenScreenshotsFolder();
@@ -199,26 +196,6 @@ public static class MainWindowIntegration
                 break;
         }
     });
-
-    private static void OpenHotkeySettings()
-    {
-        if (ApplicationState.HotkeyManager == null)
-        {
-            return;
-        }
-
-        HotkeySettingsIntegration.Show(new HotkeySettingsAvaloniaService(
-            ApplicationState.HotkeyManager,
-            () =>
-            {
-                if (!ApplicationLifecycle.IsClosing)
-                {
-                    RefreshMenus();
-                    ActionsToolbarWindowIntegration.Refresh();
-                    SettingManager.SaveHotkeysConfigAsync();
-                }
-            }));
-    }
 
     internal static void ReportVisibility(bool visible) => _isVisible = visible;
 
