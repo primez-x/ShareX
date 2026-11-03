@@ -838,7 +838,7 @@ Do you still want to run it?</value>
     <value>Strip metadata</value>
   </data>
   <data name="HotkeyType_ToggleActionsToolbar" xml:space="preserve">
-    <value>Toggle actions toolbar</value>
+    <value>Toggle capture panel</value>
   </data>
   <data name="HotkeyType_ToggleTrayMenu" xml:space="preserve">
     <value>Toggle tray menu</value>

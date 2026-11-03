@@ -153,7 +153,7 @@ internal static class Program
         DebugHelper.WriteLine("Startup time: {0} ms", _startTimer.ElapsedMilliseconds);
         await ApplicationCommandLine.ExecuteInitialAsync();
 
-        if (ApplicationState.Settings.ActionsToolbarRunAtStartup)
+        if (ApplicationState.Settings.CapturePanelRunAtStartup)
         {
             TaskHelpers.OpenActionsToolbar();
         }

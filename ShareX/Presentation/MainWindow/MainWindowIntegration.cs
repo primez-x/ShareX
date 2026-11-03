@@ -214,6 +214,7 @@ public static class MainWindowIntegration
                 if (!ApplicationLifecycle.IsClosing)
                 {
                     RefreshMenus();
+                    ActionsToolbarWindowIntegration.Refresh();
                     SettingManager.SaveHotkeysConfigAsync();
                 }
             }));

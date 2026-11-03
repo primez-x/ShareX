@@ -55,8 +55,8 @@ public partial class ActionsToolbarEditorWindow : Window
         RequestedThemeVariant = ThemeManager.GetCurrentTheme();
         _toolbarChanged = toolbarChanged;
 
-        ApplicationState.Settings.ActionsToolbarList ??= [];
-        foreach (HotkeyType action in ApplicationState.Settings.ActionsToolbarList)
+        ApplicationState.Settings.CapturePanelActions ??= [];
+        foreach (HotkeyType action in ApplicationState.Settings.CapturePanelActions)
         {
             _items.Add(new ActionsToolbarItem(action));
         }
@@ -130,7 +130,7 @@ public partial class ActionsToolbarEditorWindow : Window
     private void AddAction(HotkeyType action)
     {
         ActionsToolbarItem item = new(action);
-        ApplicationState.Settings.ActionsToolbarList.Add(action);
+        ApplicationState.Settings.CapturePanelActions.Add(action);
         _items.Add(item);
         ActionList.SelectedItem = item;
         NotifyChanged();
@@ -144,7 +144,7 @@ public partial class ActionsToolbarEditorWindow : Window
         }
 
         int index = _items.IndexOf(item);
-        ApplicationState.Settings.ActionsToolbarList.RemoveAt(index);
+        ApplicationState.Settings.CapturePanelActions.RemoveAt(index);
         _items.RemoveAt(index);
         ActionList.SelectedItem = _items.Count == 0 ? null : _items[Math.Min(index, _items.Count - 1)];
         NotifyChanged();
@@ -169,9 +169,9 @@ public partial class ActionsToolbarEditorWindow : Window
         }
 
         _items.Move(oldIndex, newIndex);
-        HotkeyType model = ApplicationState.Settings.ActionsToolbarList[oldIndex];
-        ApplicationState.Settings.ActionsToolbarList.RemoveAt(oldIndex);
-        ApplicationState.Settings.ActionsToolbarList.Insert(newIndex, model);
+        HotkeyType model = ApplicationState.Settings.CapturePanelActions[oldIndex];
+        ApplicationState.Settings.CapturePanelActions.RemoveAt(oldIndex);
+        ApplicationState.Settings.CapturePanelActions.Insert(newIndex, model);
         ActionList.SelectedItem = item;
         NotifyChanged();
     }

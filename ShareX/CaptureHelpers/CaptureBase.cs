@@ -97,6 +97,11 @@ namespace ShareX
                 wait = true;
             }
 
+            if (await ActionsToolbarWindowIntegration.HideForCaptureAsync())
+            {
+                wait = true;
+            }
+
             if (wait)
             {
                 await Task.Delay(250);
@@ -125,6 +130,7 @@ namespace ShareX
                     MainWindowIntegration.Activate();
                 }
 
+                ActionsToolbarWindowIntegration.RestoreAfterCapture();
                 AfterCapture(metadata, taskSettings);
             }
         }

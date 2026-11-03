@@ -26,12 +26,14 @@
 #nullable enable
 
 using Avalonia.Threading;
+using System.Threading.Tasks;
 
 namespace ShareX;
 
 public static class ActionsToolbarWindowIntegration
 {
     private static ActionsToolbarWindow? _window;
+    private static int _captureDepth;
 
     public static void Show()
     {
@@ -73,4 +75,31 @@ public static class ActionsToolbarWindowIntegration
             }
         });
     }
+
+    public static void Refresh() => Dispatcher.UIThread.Post(() => _window?.RefreshToolbar());
+
+    // Keeps the panel out of screenshots, recordings, and capture overlays.
+    // Every call must be paired with RestoreAfterCapture. Returns true when a visible panel was hidden.
+    public static Task<bool> HideForCaptureAsync() => Dispatcher.UIThread.CheckAccess()
+        ? Task.FromResult(HideForCapture())
+        : Dispatcher.UIThread.InvokeAsync(HideForCapture).GetTask();
+
+    private static bool HideForCapture()
+    {
+        bool hide = _captureDepth++ == 0 && _window?.IsVisible == true;
+        if (hide)
+        {
+            _window!.Hide();
+        }
+
+        return hide;
+    }
+
+    public static void RestoreAfterCapture() => Dispatcher.UIThread.Post(() =>
+    {
+        if (--_captureDepth == 0)
+        {
+            _window?.Show();
+        }
+    });
 }

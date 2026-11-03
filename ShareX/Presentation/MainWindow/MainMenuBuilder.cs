@@ -300,7 +300,10 @@ internal sealed class MainMenuBuilder
         ])
     ];
 
-    private IReadOnlyList<MainMenuEntry> BuildWorkflowsMenu()
+    internal IReadOnlyList<MainMenuEntry> BuildWorkflowsMenu() => BuildWorkflowsMenu(false);
+
+    // onlyEdited lists only workflows with their own settings, which the capture panel shows as presets.
+    internal IReadOnlyList<MainMenuEntry> BuildWorkflowsMenu(bool onlyEdited)
     {
         List<MainMenuEntry> items = new();
 
@@ -309,7 +312,7 @@ internal sealed class MainMenuBuilder
             foreach (HotkeySettings hotkey in ApplicationState.HotkeysConfig.Hotkeys)
             {
                 if (hotkey.TaskSettings.Job == HotkeyType.None ||
-                    (ApplicationState.Settings.WorkflowsOnlyShowEdited && hotkey.TaskSettings.IsUsingDefaultSettings))
+                    ((onlyEdited || ApplicationState.Settings.WorkflowsOnlyShowEdited) && hotkey.TaskSettings.IsUsingDefaultSettings))
                 {
                     continue;
                 }

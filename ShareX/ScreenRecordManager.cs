@@ -41,7 +41,27 @@ namespace ShareX
 {
     public static class ScreenRecordManager
     {
-        public static bool IsRecording { get; private set; }
+        // The capture panel stays hidden for the whole recording, so the panel never appears in the video.
+        public static bool IsRecording
+        {
+            get => isRecording;
+            private set
+            {
+                if (isRecording == value) return;
+
+                isRecording = value;
+                if (value)
+                {
+                    _ = ActionsToolbarWindowIntegration.HideForCaptureAsync();
+                }
+                else
+                {
+                    ActionsToolbarWindowIntegration.RestoreAfterCapture();
+                }
+            }
+        }
+
+        private static bool isRecording;
 
         private static ScreenRecorder screenRecorder;
         private static NativeScreenRecorder nativeRecorder;
@@ -63,7 +83,20 @@ namespace ShareX
             }
             else
             {
-                await StartRecording(outputType, taskSettings, startMethod);
+                // The region selection shows a frozen screenshot, so hide the capture panel before the selection.
+                if (await ActionsToolbarWindowIntegration.HideForCaptureAsync())
+                {
+                    await Task.Delay(250);
+                }
+
+                try
+                {
+                    await StartRecording(outputType, taskSettings, startMethod);
+                }
+                finally
+                {
+                    ActionsToolbarWindowIntegration.RestoreAfterCapture();
+                }
             }
         }
 

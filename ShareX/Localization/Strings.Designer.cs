@@ -96,7 +96,7 @@ namespace ShareX.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actions toolbar.
+        ///   Looks up a localized string similar to Capture panel.
         /// </summary>
         public static string MainMenuBuilder_ActionsToolbar {
             get {
@@ -4166,9 +4166,69 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("ActionsToolbarWindow_Title", resourceCulture);
             }
         }
-        public static string ActionsToolbarWindow_DropToUpload {
+        public static string ActionsToolbarWindow_ActionColor {
             get {
-                return ResourceManager.GetString("ActionsToolbarWindow_DropToUpload", resourceCulture);
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionColor", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionFullScreen {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionFullScreen", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionGIF {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionGIF", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionMonitor {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionMonitor", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionOCR {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionOCR", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionRegion {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionRegion", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionScrolling {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionScrolling", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionVideo {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionVideo", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_ActionWindow {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_ActionWindow", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_DropToEdit {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_DropToEdit", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_Library {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_Library", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_Presets {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_Presets", resourceCulture);
+            }
+        }
+        public static string ActionsToolbarWindow_Settings {
+            get {
+                return ResourceManager.GetString("ActionsToolbarWindow_Settings", resourceCulture);
             }
         }
         public static string ActionsToolbarWindow_Tip {

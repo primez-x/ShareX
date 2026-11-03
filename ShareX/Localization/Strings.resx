@@ -128,22 +128,58 @@
     <value>Separator</value>
   </data>
   <data name="ActionsToolbarEditorWindow_Title" xml:space="preserve">
-    <value>ShareX - Edit actions toolbar</value>
+    <value>ShareX - Edit capture panel</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionColor" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionFullScreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionGIF" xml:space="preserve">
+    <value>GIF</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionMonitor" xml:space="preserve">
+    <value>Monitor</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionOCR" xml:space="preserve">
+    <value>Text (OCR)</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionRegion" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionScrolling" xml:space="preserve">
+    <value>Scrolling</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionVideo" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="ActionsToolbarWindow_ActionWindow" xml:space="preserve">
+    <value>Window</value>
   </data>
   <data name="ActionsToolbarWindow_Close" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="ActionsToolbarWindow_DropToUpload" xml:space="preserve">
-    <value>Drop to upload</value>
+  <data name="ActionsToolbarWindow_DropToEdit" xml:space="preserve">
+    <value>Drop images to edit</value>
   </data>
   <data name="ActionsToolbarWindow_Edit" xml:space="preserve">
     <value>Edit...</value>
+  </data>
+  <data name="ActionsToolbarWindow_Library" xml:space="preserve">
+    <value>Library</value>
   </data>
   <data name="ActionsToolbarWindow_LockPosition" xml:space="preserve">
     <value>Lock position</value>
   </data>
   <data name="ActionsToolbarWindow_OpenAtStartup" xml:space="preserve">
     <value>Open at ShareX startup</value>
+  </data>
+  <data name="ActionsToolbarWindow_Presets" xml:space="preserve">
+    <value>Presets</value>
+  </data>
+  <data name="ActionsToolbarWindow_Settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="ActionsToolbarWindow_StayOnTop" xml:space="preserve">
     <value>Stay on top</value>
@@ -152,7 +188,7 @@
     <value>Drag to move; right-click for menu</value>
   </data>
   <data name="ActionsToolbarWindow_Title" xml:space="preserve">
-    <value>ShareX - Actions toolbar</value>
+    <value>ShareX - Capture panel</value>
   </data>
   <data name="AfterCaptureWindow_AfterUpload" xml:space="preserve">
     <value>After upload</value>
@@ -1362,7 +1398,7 @@ Please select a different hotkey or quit the conflicting application and reopen 
     <value>About...</value>
   </data>
   <data name="MainMenuBuilder_ActionsToolbar" xml:space="preserve">
-    <value>Actions toolbar</value>
+    <value>Capture panel</value>
   </data>
   <data name="MainMenuBuilder_AddWorkflowsFromHotkeySettings" xml:space="preserve">
     <value>Add workflows from Hotkey settings...</value>

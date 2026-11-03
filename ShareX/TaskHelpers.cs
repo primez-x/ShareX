@@ -842,9 +842,31 @@ namespace ShareX
                 taskSettings.AfterCaptureJob = taskSettings.AfterCaptureJob.Add(AfterCaptureTasks.AnnotateImage);
             }
 
-            await ScrollingCaptureWindowIntegration.StartStopAsync(taskSettings.CaptureSettingsReference.ScrollingCaptureOptions,
-                img => UploadManager.RunImageTask(img, taskSettings),
-                () => PlayNotificationSoundAsync(NotificationSound.ActionCompleted, taskSettings));
+            // The capture panel stays hidden while the scrolling capture window is open.
+            Action closed = null;
+            if (!ScrollingCaptureWindowIntegration.IsOpen)
+            {
+                if (await ActionsToolbarWindowIntegration.HideForCaptureAsync())
+                {
+                    await Task.Delay(250);
+                }
+
+                closed = ActionsToolbarWindowIntegration.RestoreAfterCapture;
+            }
+
+            try
+            {
+                await ScrollingCaptureWindowIntegration.StartStopAsync(taskSettings.CaptureSettingsReference.ScrollingCaptureOptions,
+                    img => UploadManager.RunImageTask(img, taskSettings),
+                    () => PlayNotificationSoundAsync(NotificationSound.ActionCompleted, taskSettings),
+                    closed);
+            }
+            catch when (closed != null && !ScrollingCaptureWindowIntegration.IsOpen)
+            {
+                // No window opened, so no close event restores the panel.
+                closed();
+                throw;
+            }
         }
 
         public static void OpenAutoCapture(TaskSettings taskSettings = null)
@@ -1453,16 +1475,26 @@ namespace ShareX
 
             SKBitmap skBitmapResult = null;
 
-            if (bmp != null)
+            // The capture panel stays hidden while the editor is open, so the panel does not cover the editor toolbar.
+            ActionsToolbarWindowIntegration.HideForCaptureAsync().GetAwaiter().GetResult();
+
+            try
             {
-                using SKBitmap skBitmap = CopyBitmapForEditor(bmp);
-                skBitmapResult = ImageEditorIntegration.ShowEditorDialog(skBitmap, taskSettings.ToolsSettingsReference.ImageEditorOptions,
-                    events, taskMode, filePath, openBackgroundPanel);
+                if (bmp != null)
+                {
+                    using SKBitmap skBitmap = CopyBitmapForEditor(bmp);
+                    skBitmapResult = ImageEditorIntegration.ShowEditorDialog(skBitmap, taskSettings.ToolsSettingsReference.ImageEditorOptions,
+                        events, taskMode, filePath, openBackgroundPanel);
+                }
+                else
+                {
+                    skBitmapResult = ImageEditorIntegration.ShowEditorDialog(taskSettings.ToolsSettingsReference.ImageEditorOptions,
+                        events, taskMode, filePath, openBackgroundPanel);
+                }
             }
-            else
+            finally
             {
-                skBitmapResult = ImageEditorIntegration.ShowEditorDialog(taskSettings.ToolsSettingsReference.ImageEditorOptions,
-                    events, taskMode, filePath, openBackgroundPanel);
+                ActionsToolbarWindowIntegration.RestoreAfterCapture();
             }
 
             if (skBitmapResult != null)

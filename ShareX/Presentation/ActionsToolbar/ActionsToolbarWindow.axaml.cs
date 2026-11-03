@@ -26,12 +26,14 @@
 #nullable enable
 
 using Avalonia;
+using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Layout;
 using Avalonia.Platform;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using ShareX.AvaloniaUI.Theming;
 using ShareX.HelpersLib;
 using ShareX.Localization;
@@ -43,6 +45,8 @@ namespace ShareX;
 
 public partial class ActionsToolbarWindow : Window
 {
+    private const int DefaultTopMargin = 8;
+
     private bool _positionReady;
     private bool _adjustingPosition;
     private bool _closing;
@@ -52,15 +56,11 @@ public partial class ActionsToolbarWindow : Window
         InitializeComponent();
         RequestedThemeVariant = ThemeManager.GetCurrentTheme();
         Topmost = ApplicationState.Settings.ActionsToolbarStayTopMost;
-        ApplicationState.Settings.ActionsToolbarList ??= [];
+        ApplicationState.Settings.CapturePanelActions ??= [];
 
-        ToolTip.SetTip(TitleHandle, Strings.ActionsToolbarWindow_Tip);
-        ToolTip.SetPlacement(TitleHandle, PlacementMode.Top);
-        ToolTip.SetVerticalOffset(TitleHandle, -4);
-        ToolTip.SetShowDelay(TitleHandle, 400);
-        ToolTip.SetBetweenShowDelay(TitleHandle, 100);
-        TitleHandle.ContextMenu = CreateToolbarMenu();
-        UpdateTitleCursor();
+        ToolTip.SetTip(Grip, Strings.ActionsToolbarWindow_Tip);
+        ToolbarFrame.ContextMenu = CreateToolbarMenu();
+        UpdateGripCursor();
         RefreshToolbar();
 
         Opened += OnOpened;
@@ -70,79 +70,126 @@ public partial class ActionsToolbarWindow : Window
 
     internal void RefreshToolbar()
     {
-        while (ToolbarItems.Children.Count > 1)
-        {
-            ToolbarItems.Children.RemoveAt(1);
-        }
+        ActionItems.Children.Clear();
+        bool primaryAssigned = false;
 
-        foreach (HotkeyType action in ApplicationState.Settings.ActionsToolbarList)
+        foreach (HotkeyType action in ApplicationState.Settings.CapturePanelActions)
         {
             if (action == HotkeyType.None)
             {
-                ToolbarItems.Children.Add(new Border
-                {
-                    Width = 1,
-                    Height = 22,
-                    Margin = new Thickness(3, 0),
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Background = this.FindResource("ShareX.Brush.Border") as Avalonia.Media.IBrush
-                });
+                Border separator = new();
+                separator.Classes.Add("panel-separator");
+                ActionItems.Children.Add(separator);
                 continue;
             }
 
-            TextBlock icon = new()
-            {
-                Text = TaskHelpers.FindMenuLucideIcon(action),
-                FontSize = 17,
-                TextAlignment = Avalonia.Media.TextAlignment.Center,
-                Foreground = this.FindResource("ShareX.Brush.Accent") as Avalonia.Media.IBrush,
-                IsHitTestVisible = false
-            };
+            TextBlock icon = new() { Text = TaskHelpers.FindMenuLucideIcon(action) };
             icon.Classes.Add("icon");
+            icon.Classes.Add("panel-icon");
+
+            string label = GetShortLabel(action);
+            TextBlock text = new() { Text = label };
+            text.Classes.Add("panel-label");
 
             Button button = new()
             {
-                Content = icon,
+                Content = new StackPanel { Spacing = 2, Children = { icon, text } },
                 Tag = action
             };
-            button.Classes.Add("toolbar-action");
-            ToolTip.SetTip(button, action.GetLocalizedDescription());
-            ToolTip.SetPlacement(button, PlacementMode.Top);
-            ToolTip.SetVerticalOffset(button, -4);
-            ToolTip.SetShowDelay(button, 400);
-            ToolTip.SetBetweenShowDelay(button, 100);
+            button.Classes.Add("panel-button");
+            if (!primaryAssigned)
+            {
+                button.Classes.Add("primary");
+                primaryAssigned = true;
+            }
+
+            AutomationProperties.SetName(button, label);
+            ToolTip.SetTip(button, GetActionTip(action));
             button.Click += OnActionClick;
-            ToolbarItems.Children.Add(button);
+            ActionItems.Children.Add(button);
         }
+
+        bool hasPresets = new MainMenuBuilder(trayMenu: true).BuildWorkflowsMenu(onlyEdited: true).Count > 0;
+        PresetsSeparator.IsVisible = hasPresets;
+        PresetsButton.IsVisible = hasPresets;
 
         Dispatcher.UIThread.Post(ClampAndSavePosition, DispatcherPriority.Loaded);
     }
 
+    private static string GetShortLabel(HotkeyType action) => action switch
+    {
+        HotkeyType.RectangleRegion => Strings.ActionsToolbarWindow_ActionRegion,
+        HotkeyType.PrintScreen => Strings.ActionsToolbarWindow_ActionFullScreen,
+        HotkeyType.ScrollingCapture => Strings.ActionsToolbarWindow_ActionScrolling,
+        HotkeyType.ScreenRecorder => Strings.ActionsToolbarWindow_ActionVideo,
+        HotkeyType.ScreenRecorderGIF => Strings.ActionsToolbarWindow_ActionGIF,
+        HotkeyType.ActiveWindow => Strings.ActionsToolbarWindow_ActionWindow,
+        HotkeyType.ActiveMonitor => Strings.ActionsToolbarWindow_ActionMonitor,
+        HotkeyType.OCR => Strings.ActionsToolbarWindow_ActionOCR,
+        HotkeyType.ScreenColorPicker => Strings.ActionsToolbarWindow_ActionColor,
+        _ => action.GetLocalizedDescription()
+    };
+
+    private static string GetActionTip(HotkeyType action)
+    {
+        string description = action.GetLocalizedDescription();
+        HotkeySettings? hotkey = ApplicationState.HotkeysConfigOrNull?.Hotkeys?
+            .FirstOrDefault(x => x.TaskSettings?.Job == action && x.HotkeyInfo.IsValidHotkey);
+
+        return hotkey == null ? description : $"{description} ({hotkey.HotkeyInfo})";
+    }
+
     private async void OnActionClick(object? sender, RoutedEventArgs e)
     {
-        if (sender is not Button { Tag: HotkeyType action })
-        {
-            return;
-        }
-
-        bool restoreTopmost = ApplicationState.Settings.ActionsToolbarStayTopMost;
-        if (restoreTopmost)
-        {
-            Topmost = false;
-        }
-
-        try
+        if (sender is Button { Tag: HotkeyType action })
         {
             await TaskHelpers.ExecuteJob(action);
         }
-        finally
-        {
-            if (!_closing)
-            {
-                Topmost = ApplicationState.Settings.ActionsToolbarStayTopMost;
-            }
-        }
     }
+
+    private void OnPresetsClick(object? sender, RoutedEventArgs e)
+    {
+        ContextMenu menu = new() { Placement = PlacementMode.BottomEdgeAlignedLeft };
+
+        foreach (MainMenuEntry entry in new MainMenuBuilder(trayMenu: true).BuildWorkflowsMenu(onlyEdited: true))
+        {
+            TextBlock icon = new() { Text = entry.Icon, FontSize = 16 };
+            icon.Classes.Add("icon");
+            icon.Classes.Add("accent-menu-icon");
+
+            MenuItem item = new() { Header = entry.Header, Icon = icon };
+            item.Classes.Add("compact-menu-item");
+            item.Click += (_, _) =>
+            {
+                // Capture overlays cannot open while the popup still handles the click.
+                // Close the menu first, then run the preset on the next dispatcher turn.
+                menu.Close();
+                Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        if (entry.ExecuteAsync != null)
+                        {
+                            await entry.ExecuteAsync();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugHelper.WriteException(ex);
+                    }
+                }, DispatcherPriority.Background);
+            };
+            menu.Items.Add(item);
+        }
+
+        menu.Open(PresetsButton);
+    }
+
+    private void OnLibraryClick(object? sender, RoutedEventArgs e) => MainWindowIntegration.Activate();
+
+    private void OnSettingsClick(object? sender, RoutedEventArgs e) => ApplicationSettingsIntegration.Show();
+
+    private void OnCloseClick(object? sender, RoutedEventArgs e) => Close();
 
     private ContextMenu CreateToolbarMenu()
     {
@@ -165,7 +212,7 @@ public partial class ActionsToolbarWindow : Window
         lockPosition.Click += (_, _) =>
         {
             ApplicationState.Settings.ActionsToolbarLockPosition = lockPosition.IsChecked;
-            UpdateTitleCursor();
+            UpdateGripCursor();
             SaveSettings();
         };
         menu.Items.Add(lockPosition);
@@ -188,11 +235,11 @@ public partial class ActionsToolbarWindow : Window
         {
             Header = Strings.ActionsToolbarWindow_OpenAtStartup,
             ToggleType = MenuItemToggleType.CheckBox,
-            IsChecked = ApplicationState.Settings.ActionsToolbarRunAtStartup
+            IsChecked = ApplicationState.Settings.CapturePanelRunAtStartup
         };
         runAtStartup.Click += (_, _) =>
         {
-            ApplicationState.Settings.ActionsToolbarRunAtStartup = runAtStartup.IsChecked;
+            ApplicationState.Settings.CapturePanelRunAtStartup = runAtStartup.IsChecked;
             SaveSettings();
         };
         menu.Items.Add(runAtStartup);
@@ -225,9 +272,15 @@ public partial class ActionsToolbarWindow : Window
         }
     }
 
-    private void OnTitlePointerPressed(object? sender, PointerPressedEventArgs e)
+    // The whole panel background drags the panel. Buttons keep their own clicks.
+    private void OnPanelPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        PointerUpdateKind kind = e.GetCurrentPoint(TitleHandle).Properties.PointerUpdateKind;
+        if ((e.Source as Visual)?.FindAncestorOfType<Button>(includeSelf: true) != null)
+        {
+            return;
+        }
+
+        PointerUpdateKind kind = e.GetCurrentPoint(ToolbarFrame).Properties.PointerUpdateKind;
         if (kind == PointerUpdateKind.LeftButtonPressed && !ApplicationState.Settings.ActionsToolbarLockPosition)
         {
             BeginMoveDrag(e);
@@ -240,15 +293,21 @@ public partial class ActionsToolbarWindow : Window
         }
     }
 
-    private void UpdateTitleCursor()
+    private void UpdateGripCursor()
     {
-        TitleHandle.Cursor = new Cursor(ApplicationState.Settings.ActionsToolbarLockPosition
+        Grip.Cursor = new Cursor(ApplicationState.Settings.ActionsToolbarLockPosition
             ? StandardCursorType.Arrow
             : StandardCursorType.SizeAll);
     }
 
     private void OnOpened(object? sender, EventArgs e)
     {
+        // A capture hides the panel and then shows the panel again. Only the first show places and activates the panel.
+        if (_positionReady)
+        {
+            return;
+        }
+
         RestorePosition();
         _positionReady = true;
         ClampAndSavePosition();
@@ -268,8 +327,7 @@ public partial class ActionsToolbarWindow : Window
             }
         }
 
-        DrawingPoint cursor = CaptureHelpers.GetCursorPosition();
-        Screen? screen = Screens.ScreenFromPoint(new PixelPoint(cursor.X, cursor.Y)) ?? Screens.Primary;
+        Screen? screen = Screens.Primary;
         if (screen == null)
         {
             return;
@@ -277,7 +335,9 @@ public partial class ActionsToolbarWindow : Window
 
         PixelRect area = screen.WorkingArea;
         PixelSize size = PixelSize.FromSize(ClientSize, screen.Scaling);
-        Position = new PixelPoint(area.Right - size.Width, area.Bottom - size.Height);
+        Position = new PixelPoint(
+            area.X + (area.Width - size.Width) / 2,
+            area.Y + (int)Math.Round(DefaultTopMargin * screen.Scaling));
     }
 
     private void OnPositionChanged(object? sender, PixelPointEventArgs e)
@@ -319,14 +379,20 @@ public partial class ActionsToolbarWindow : Window
         ApplicationState.Settings.ActionsToolbarPosition = new DrawingPoint(adjusted.X, adjusted.Y);
     }
 
+    private static string[] GetImageFiles(DragEventArgs e) =>
+        e.DataTransfer.TryGetFiles()?
+            .Select(x => x.TryGetLocalPath())
+            .OfType<string>()
+            .Where(FileHelpers.IsImageFile)
+            .ToArray() ?? [];
+
     private void OnDragEnter(object? sender, DragEventArgs e) => UpdateDragState(e);
 
     private void OnDragOver(object? sender, DragEventArgs e) => UpdateDragState(e);
 
     private void UpdateDragState(DragEventArgs e)
     {
-        bool supported = e.DataTransfer.TryGetFiles()?.Any() == true ||
-            !string.IsNullOrEmpty(e.DataTransfer.TryGetText());
+        bool supported = GetImageFiles(e).Length > 0;
         e.DragEffects = supported ? DragDropEffects.Copy : DragDropEffects.None;
         DropOverlay.IsVisible = supported;
         e.Handled = true;
@@ -342,9 +408,18 @@ public partial class ActionsToolbarWindow : Window
     {
         DropOverlay.IsVisible = false;
 
-        UploadManager.DragDropUpload(e.DataTransfer);
-        e.DragEffects = DragDropEffects.Copy;
+        string[] files = GetImageFiles(e);
+        e.DragEffects = files.Length > 0 ? DragDropEffects.Copy : DragDropEffects.None;
         e.Handled = true;
+
+        // Open the editors after the drop returns, so the drag source does not wait for the editors.
+        Dispatcher.UIThread.Post(() =>
+        {
+            foreach (string file in files)
+            {
+                TaskHelpers.AnnotateImageFromFile(file);
+            }
+        });
     }
 
     private static void SaveSettings() => SettingManager.SaveApplicationConfigAsync();

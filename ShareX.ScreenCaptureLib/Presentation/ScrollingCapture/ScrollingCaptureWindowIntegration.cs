@@ -37,10 +37,14 @@ public static class ScrollingCaptureWindowIntegration
 {
     private static ScrollingCaptureWindow? _window;
 
+    public static bool IsOpen => _window != null;
+
+    // closed runs once when the scrolling capture window that this call opens is closed.
     public static Task StartStopAsync(
         ScrollingCaptureOptions options,
         Action<Bitmap>? uploadRequested = null,
-        Action? playNotificationSound = null)
+        Action? playNotificationSound = null,
+        Action? closed = null)
     {
         AvaloniaBootstrapper.EnsureInitialized();
         TaskCompletionSource completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -52,7 +56,11 @@ public static class ScrollingCaptureWindowIntegration
                 if (_window == null)
                 {
                     _window = new ScrollingCaptureWindow(options, uploadRequested, playNotificationSound);
-                    _window.Closed += (_, _) => _window = null;
+                    _window.Closed += (_, _) =>
+                    {
+                        _window = null;
+                        closed?.Invoke();
+                    };
                     _window.Show();
                 }
                 else

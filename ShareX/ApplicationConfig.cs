@@ -275,12 +275,12 @@ namespace ShareX
 
         #endregion ScreenRecord Form
 
-        #region Actions toolbar
+        #region Capture panel
 
-        public List<HotkeyType> ActionsToolbarList = new List<HotkeyType>() { HotkeyType.RectangleRegion, HotkeyType.PrintScreen, HotkeyType.ScreenRecorder,
-            HotkeyType.None, HotkeyType.FileUpload, HotkeyType.ClipboardUploadWithContentViewer };
+        public List<HotkeyType> CapturePanelActions = new List<HotkeyType>() { HotkeyType.RectangleRegion, HotkeyType.PrintScreen, HotkeyType.ScrollingCapture,
+            HotkeyType.ScreenRecorder, HotkeyType.ScreenRecorderGIF };
 
-        public bool ActionsToolbarRunAtStartup = false;
+        public bool CapturePanelRunAtStartup = true;
 
         public Point ActionsToolbarPosition = Point.Empty;
 
@@ -288,7 +288,7 @@ namespace ShareX
 
         public bool ActionsToolbarStayTopMost = true;
 
-        #endregion Actions toolbar
+        #endregion Capture panel
 
         #region Color Picker Form
 

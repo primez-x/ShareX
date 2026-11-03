@@ -5,13 +5,14 @@
         xmlns:res="using:ShareX.Localization"
         xmlns:theming="using:ShareX.AvaloniaUI.Theming"
         mc:Ignorable="d"
-        d:DesignWidth="320"
-        d:DesignHeight="40"
+        d:DesignWidth="520"
+        d:DesignHeight="64"
         x:Class="ShareX.ActionsToolbarWindow"
         Title="{x:Static res:Strings.ActionsToolbarWindow_Title}"
         WindowDecorations="None"
         CanResize="False"
         ShowInTaskbar="False"
+        ShowActivated="False"
         SizeToContent="WidthAndHeight"
         Background="{DynamicResource ShareX.Brush.Background.Toolbar}"
         DragDrop.AllowDrop="True"
@@ -22,77 +23,166 @@
         WindowStartupLocation="Manual">
 
     <Window.Styles>
-        <Style Selector="Button.toolbar-action">
-            <Setter Property="Width" Value="34"/>
-            <Setter Property="MinWidth" Value="34"/>
-            <Setter Property="Height" Value="34"/>
+        <Style Selector="Button.panel-button">
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="MinWidth" Value="56"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.panel-button.icon-only">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="MinWidth" Value="32"/>
+            <Setter Property="Height" Value="32"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        <Style Selector="Button.panel-button /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
-        <Style Selector="Button.toolbar-action /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-        <Style Selector="Button.toolbar-action:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Style Selector="Button.panel-button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Control.Background.Hover}"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
-        <Style Selector="Button.toolbar-action:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Style Selector="Button.panel-button:pressed /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Control.Background}"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
-        <Style Selector="Border.toolbar-title">
-            <Setter Property="Height" Value="34"/>
-            <Setter Property="Padding" Value="8,0"/>
+        <Style Selector="Button.panel-button TextBlock.panel-icon">
+            <Setter Property="Foreground" Value="{DynamicResource ShareX.Brush.Accent}"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.panel-button.icon-only TextBlock.panel-icon">
+            <Setter Property="Foreground" Value="{DynamicResource ShareX.Brush.Text.Secondary}"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style Selector="Button.panel-button TextBlock.panel-label">
+            <Setter Property="Foreground" Value="{DynamicResource ShareX.Brush.Text}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="MaxWidth" Value="76"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.panel-button.primary /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Accent}"/>
+        </Style>
+        <Style Selector="Button.panel-button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Accent}"/>
+            <Setter Property="Opacity" Value="0.9"/>
+        </Style>
+        <Style Selector="Button.panel-button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Accent}"/>
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+        <Style Selector="Button.panel-button.primary TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource ShareX.Brush.Accent.Foreground}"/>
+        </Style>
+        <Style Selector="Border.panel-separator">
+            <Setter Property="Width" Value="1"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Margin" Value="4,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Border}"/>
+        </Style>
+        <Style Selector="Border#Grip">
+            <Setter Property="Width" Value="16"/>
             <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
-        <Style Selector="Border.toolbar-title:pointerover">
+        <Style Selector="Border#Grip:pointerover">
             <Setter Property="Background" Value="{DynamicResource ShareX.Brush.Control.Background.Hover}"/>
         </Style>
     </Window.Styles>
 
     <ThemeVariantScope>
         <Border x:Name="ToolbarFrame"
-                Padding="2"
+                Padding="4"
                 Background="{DynamicResource ShareX.Brush.Background.Toolbar}"
                 BorderBrush="{DynamicResource ShareX.Brush.Border}"
                 BorderThickness="1"
-                CornerRadius="5">
+                CornerRadius="8"
+                PointerPressed="OnPanelPointerPressed">
             <Grid>
-                <StackPanel x:Name="ToolbarItems"
-                            Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                             Spacing="2">
-                    <Border x:Name="TitleHandle"
-                            Classes="toolbar-title"
-                            PointerPressed="OnTitlePointerPressed">
-                        <TextBlock Text="ShareX"
-                                   FontSize="13"
-                                   FontWeight="SemiBold"
-                                   IsHitTestVisible="False"
-                                   VerticalAlignment="Center"/>
+                    <Border x:Name="Grip">
+                        <TextBlock Classes="icon"
+                                   Text="{x:Static theming:LucideIcons.grip_vertical}"
+                                   FontSize="14"
+                                   HorizontalAlignment="Center"
+                                   IsHitTestVisible="False"/>
                     </Border>
+
+                    <StackPanel x:Name="ActionItems"
+                                Orientation="Horizontal"
+                                Spacing="2"/>
+
+                    <Border x:Name="PresetsSeparator"
+                            Classes="panel-separator"/>
+                    <Button x:Name="PresetsButton"
+                            Classes="panel-button"
+                            AutomationProperties.Name="{x:Static res:Strings.ActionsToolbarWindow_Presets}"
+                            ToolTip.Tip="{x:Static res:Strings.ActionsToolbarWindow_Presets}"
+                            Click="OnPresetsClick">
+                        <StackPanel Spacing="2">
+                            <TextBlock Classes="icon panel-icon"
+                                       Text="{x:Static theming:LucideIcons.list_checks}"/>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="2"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Classes="panel-label"
+                                           Text="{x:Static res:Strings.ActionsToolbarWindow_Presets}"/>
+                                <TextBlock Classes="icon"
+                                           Text="{x:Static theming:LucideIcons.chevron_down}"
+                                           FontSize="10"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button>
+
+                    <Border Classes="panel-separator"/>
+                    <Button Classes="panel-button icon-only"
+                            AutomationProperties.Name="{x:Static res:Strings.ActionsToolbarWindow_Library}"
+                            ToolTip.Tip="{x:Static res:Strings.ActionsToolbarWindow_Library}"
+                            Click="OnLibraryClick">
+                        <TextBlock Classes="icon panel-icon"
+                                   Text="{x:Static theming:LucideIcons.library}"/>
+                    </Button>
+                    <Button Classes="panel-button icon-only"
+                            AutomationProperties.Name="{x:Static res:Strings.ActionsToolbarWindow_Settings}"
+                            ToolTip.Tip="{x:Static res:Strings.ActionsToolbarWindow_Settings}"
+                            Click="OnSettingsClick">
+                        <TextBlock Classes="icon panel-icon"
+                                   Text="{x:Static theming:LucideIcons.settings}"/>
+                    </Button>
+                    <Button Classes="panel-button icon-only"
+                            AutomationProperties.Name="{x:Static res:Strings.ActionsToolbarWindow_Close}"
+                            ToolTip.Tip="{x:Static res:Strings.ActionsToolbarWindow_Close}"
+                            Click="OnCloseClick">
+                        <TextBlock Classes="icon panel-icon"
+                                   Text="{x:Static theming:LucideIcons.x}"/>
+                    </Button>
                 </StackPanel>
 
                 <Border x:Name="DropOverlay"
                         IsVisible="False"
                         Background="{DynamicResource ShareX.Brush.Overlay.Modal}"
-                        CornerRadius="4">
+                        CornerRadius="6">
                     <StackPanel Orientation="Horizontal"
                                 Spacing="7"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                         <TextBlock Classes="icon"
-                                   Text="{x:Static theming:LucideIcons.upload}"
+                                   Text="{x:Static theming:LucideIcons.square_pen}"
                                    Foreground="{DynamicResource ShareX.Brush.Accent}"
                                    FontSize="16"/>
-                        <TextBlock Text="{x:Static res:Strings.ActionsToolbarWindow_DropToUpload}"
+                        <TextBlock Text="{x:Static res:Strings.ActionsToolbarWindow_DropToEdit}"
                                    FontWeight="Normal"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
