@@ -99,7 +99,7 @@ public partial class NotificationWindow : Window
             return;
         }
 
-        if (config.Image == null)
+        if (config.Image == null && !string.IsNullOrEmpty(config.FilePath))
         {
             config.Image = SkiaImageHelpers.LoadImage(config.FilePath);
         }
