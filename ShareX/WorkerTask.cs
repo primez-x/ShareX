@@ -576,13 +576,40 @@ namespace ShareX
                 }
             }
 
+            ImageData imageData = null;
+
             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.AnnotateImage))
             {
-                Image = TaskHelpers.AnnotateImage(Image, null, Info.TaskSettings, true);
-
-                if (Image == null)
+                // Save the capture before the editor opens, so closing the editor never loses the capture.
+                if (Info.TaskSettings.AfterCaptureJob.HasFlagAny(AfterCaptureTasks.SaveImageToFile, AfterCaptureTasks.AnalyzeImage))
                 {
-                    return false;
+                    imageData = PrepareImageData();
+                    SaveImageToScreenshotsFolder(imageData);
+                }
+
+                // The editor saves to the capture file path. A null result means the editor closed without edits: keep the original image.
+                Bitmap editedImage = TaskHelpers.AnnotateImage(Image, Info.FilePath, Info.TaskSettings, true);
+
+                if (editedImage != null)
+                {
+                    Image = editedImage;
+
+                    if (imageData != null)
+                    {
+                        // Write the edits back to the same file, in the same format as the first save.
+                        EImageFormat imageFormat = imageData.ImageFormat;
+                        imageData.Dispose();
+                        imageData = new ImageData
+                        {
+                            ImageStream = TaskHelpers.SaveImageAsStream(Image, imageFormat, Info.TaskSettings),
+                            ImageFormat = imageFormat
+                        };
+
+                        if (!string.IsNullOrEmpty(Info.FilePath) && imageData.Write(Info.FilePath))
+                        {
+                            DebugHelper.WriteLine("Edited image saved to file: " + Info.FilePath);
+                        }
+                    }
                 }
             }
 
@@ -608,21 +635,14 @@ namespace ShareX
             if (Info.TaskSettings.AfterCaptureJob.HasFlagAny(AfterCaptureTasks.SaveImageToFile, AfterCaptureTasks.SaveImageToFileWithDialog, AfterCaptureTasks.DoOCR,
                 AfterCaptureTasks.UploadImageToHost, AfterCaptureTasks.AnalyzeImage))
             {
-                ImageData imageData = TaskHelpers.PrepareImage(Image, Info.TaskSettings);
+                // A save before the editor already prepared and wrote the image.
+                bool imageSavedBeforeEditor = imageData != null;
+                imageData ??= PrepareImageData();
                 Data = imageData.ImageStream;
-                Info.FileName = Path.ChangeExtension(Info.FileName, imageData.ImageFormat.GetDescription());
 
-                if (Info.TaskSettings.AfterCaptureJob.HasFlagAny(AfterCaptureTasks.SaveImageToFile, AfterCaptureTasks.AnalyzeImage))
+                if (!imageSavedBeforeEditor && Info.TaskSettings.AfterCaptureJob.HasFlagAny(AfterCaptureTasks.SaveImageToFile, AfterCaptureTasks.AnalyzeImage))
                 {
-                    string screenshotsFolder = TaskHelpers.GetScreenshotsFolder(Info.TaskSettings, Info.Metadata);
-                    string filePath = TaskHelpers.HandleExistsFile(screenshotsFolder, Info.FileName, Info.TaskSettings);
-
-                    if (!string.IsNullOrEmpty(filePath))
-                    {
-                        Info.FilePath = filePath;
-                        imageData.Write(Info.FilePath);
-                        DebugHelper.WriteLine("Image saved to file: " + Info.FilePath);
-                    }
+                    SaveImageToScreenshotsFolder(imageData);
                 }
 
                 if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.SaveImageToFileWithDialog))
@@ -669,6 +689,26 @@ namespace ShareX
             }
 
             return true;
+        }
+
+        private ImageData PrepareImageData()
+        {
+            ImageData imageData = TaskHelpers.PrepareImage(Image, Info.TaskSettings);
+            Info.FileName = Path.ChangeExtension(Info.FileName, imageData.ImageFormat.GetDescription());
+            return imageData;
+        }
+
+        private void SaveImageToScreenshotsFolder(ImageData imageData)
+        {
+            string screenshotsFolder = TaskHelpers.GetScreenshotsFolder(Info.TaskSettings, Info.Metadata);
+            string filePath = TaskHelpers.HandleExistsFile(screenshotsFolder, Info.FileName, Info.TaskSettings);
+
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                Info.FilePath = filePath;
+                imageData.Write(Info.FilePath);
+                DebugHelper.WriteLine("Image saved to file: " + Info.FilePath);
+            }
         }
 
         private bool DoFileJobs()

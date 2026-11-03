@@ -378,16 +378,10 @@ namespace ShareX
         {
             if (bmp != null)
             {
-                if (taskSettings == null)
-                {
-                    taskSettings = TaskSettings.GetDefaultTaskSettings();
-                }
-
-                if (taskSettings.IsSafeTaskSettings)
-                {
-                    taskSettings.UseDefaultAfterCaptureJob = false;
-                    taskSettings.AfterCaptureJob = AfterCaptureTasks.UploadImageToHost;
-                }
+                // Work on a copy, so a caller that still holds the task settings (for example a capture task that waits for the editor) is unaffected.
+                taskSettings = taskSettings == null ? TaskSettings.GetDefaultTaskSettings() : TaskSettings.GetSafeTaskSettings(taskSettings);
+                taskSettings.UseDefaultAfterCaptureJob = false;
+                taskSettings.AfterCaptureJob = AfterCaptureTasks.UploadImageToHost;
 
                 RunImageTask(bmp, taskSettings);
             }
@@ -397,19 +391,12 @@ namespace ShareX
         {
             if (bmp != null)
             {
-                if (taskSettings == null)
-                {
-                    taskSettings = TaskSettings.GetDefaultTaskSettings();
-                }
-
-                if (taskSettings.IsSafeTaskSettings)
-                {
-                    taskSettings.UseDefaultAfterCaptureJob = false;
-                    taskSettings.AfterCaptureJob = AfterCaptureTasks.UploadImageToHost;
-                    taskSettings.UseDefaultDestinations = false;
-                    taskSettings.ImageDestination = imageDestination;
-                    taskSettings.ImageFileDestination = imageFileDestination;
-                }
+                taskSettings = taskSettings == null ? TaskSettings.GetDefaultTaskSettings() : TaskSettings.GetSafeTaskSettings(taskSettings);
+                taskSettings.UseDefaultAfterCaptureJob = false;
+                taskSettings.AfterCaptureJob = AfterCaptureTasks.UploadImageToHost;
+                taskSettings.UseDefaultDestinations = false;
+                taskSettings.ImageDestination = imageDestination;
+                taskSettings.ImageFileDestination = imageFileDestination;
 
                 RunImageTask(bmp, taskSettings);
             }

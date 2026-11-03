@@ -54,6 +54,7 @@ namespace ShareX
 
         public bool UseDefaultAfterCaptureJob = true;
         public AfterCaptureTasks AfterCaptureJob = AfterCaptureTasks.CopyImageToClipboard | AfterCaptureTasks.SaveImageToFile;
+        public bool OpenEditorAfterCapture = true;
 
         public bool UseDefaultAfterUploadJob = true;
         public AfterUploadTasks AfterUploadJob = AfterUploadTasks.CopyURLToClipboard;
@@ -194,6 +195,7 @@ namespace ShareX
                 if (UseDefaultAfterCaptureJob)
                 {
                     AfterCaptureJob = defaultTaskSettings.AfterCaptureJob;
+                    OpenEditorAfterCapture = defaultTaskSettings.OpenEditorAfterCapture;
                 }
 
                 if (UseDefaultAfterUploadJob)
@@ -536,7 +538,7 @@ namespace ShareX
         [Category("General"), DefaultValue(false), Description("If task contains upload job then this setting will clear clipboard when task start.")]
         public bool AutoClearClipboard { get; set; }
 
-        [Category("Capture"), DefaultValue(false), Description("Disable annotation support in region capture.")]
+        [Category("Capture"), DefaultValue(false), Description("Disable annotation support in region capture. Annotation in region capture is always off when the editor opens after capture.")]
         public bool RegionCaptureDisableAnnotation { get; set; }
 
         [Category("Upload"), Description("Files with these file extensions will be uploaded using image uploader.")]

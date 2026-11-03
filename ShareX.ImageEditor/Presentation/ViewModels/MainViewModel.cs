@@ -60,7 +60,6 @@ namespace ShareX.ImageEditor.Presentation.ViewModels
         {
             None,
             Continue,
-            ContinueNoSave,
             Cancel
         }
 
@@ -89,6 +88,7 @@ namespace ShareX.ImageEditor.Presentation.ViewModels
         private bool _showTaskButtons = true;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ShowUploadButton))]
         private bool _showBottomToolbar = true;
 
         [ObservableProperty]
@@ -128,15 +128,9 @@ namespace ShareX.ImageEditor.Presentation.ViewModels
         public event EventHandler<string>? LoadFromUrlRequested;
         public event EventHandler<string>? LoadRecentFileRequested;
 
+        // Task mode: the host task waits for the editor. Continue returns the edited image; Cancel keeps the original capture.
         [ObservableProperty]
         private bool _useContinueWorkflow;
-
-        public string ContinueButtonTooltip => UseContinueWorkflow ? Strings.MainViewModel_ContinueEnter : Strings.MainViewModel_RunAfterCaptureTasksEnter;
-
-        partial void OnUseContinueWorkflowChanged(bool value)
-        {
-            OnPropertyChanged(nameof(ContinueButtonTooltip));
-        }
 
         [ObservableProperty]
         private EditorTaskResult _taskResult = EditorTaskResult.None;
@@ -188,7 +182,8 @@ namespace ShareX.ImageEditor.Presentation.ViewModels
         {
             if (Options.AutoCloseEditorOnTask)
             {
-                TaskResult = EditorTaskResult.Cancel;
+                // In task mode, a task action (copy, save, share) keeps the edited image for the waiting task.
+                TaskResult = UseContinueWorkflow ? EditorTaskResult.Continue : EditorTaskResult.Cancel;
                 CloseRequested?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -229,6 +224,14 @@ namespace ShareX.ImageEditor.Presentation.ViewModels
 
         private async Task SaveAndCloseAfterConfirmationAsync()
         {
+            if (UseContinueWorkflow)
+            {
+                // The waiting task writes the edited image back to the capture file.
+                CloseModal();
+                Continue();
+                return;
+            }
+
             await RequestSaveAsync();
             CloseModal();
             CloseRequested?.Invoke(this, EventArgs.Empty);
@@ -281,10 +284,13 @@ namespace ShareX.ImageEditor.Presentation.ViewModels
         private Action? _uploadRequested;
         public event Action? UploadRequested
         {
-            add { _uploadRequested += value; UploadCommand.NotifyCanExecuteChanged(); }
-            remove { _uploadRequested -= value; UploadCommand.NotifyCanExecuteChanged(); }
+            add { _uploadRequested += value; UploadCommand.NotifyCanExecuteChanged(); OnPropertyChanged(nameof(ShowUploadButton)); }
+            remove { _uploadRequested -= value; UploadCommand.NotifyCanExecuteChanged(); OnPropertyChanged(nameof(ShowUploadButton)); }
         }
         public bool CanUpload() => _uploadRequested != null && HasPreviewImage;
+
+        // The host registers an upload handler only when an upload destination is usable.
+        public bool ShowUploadButton => ShowBottomToolbar && _uploadRequested != null;
 
         private Bitmap? _previewImage;
         public Bitmap? PreviewImage

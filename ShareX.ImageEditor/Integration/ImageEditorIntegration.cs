@@ -123,20 +123,10 @@ namespace ShareX.ImageEditor.Integration
 
                 window.Closed += (s, a) =>
                 {
-                    SKBitmap? result = null;
-
-                    if (window.DataContext is MainViewModel vm)
-                    {
-                        switch (vm.TaskResult)
-                        {
-                            case MainViewModel.EditorTaskResult.Continue:
-                                result = window.GetResultBitmap();
-                                break;
-                            case MainViewModel.EditorTaskResult.ContinueNoSave:
-                                result = window.GetSourceBitmap();
-                                break;
-                        }
-                    }
+                    // A null result means the editor closed without edits; the caller keeps the original image.
+                    SKBitmap? result = window.DataContext is MainViewModel { TaskResult: MainViewModel.EditorTaskResult.Continue }
+                        ? window.GetResultBitmap()
+                        : null;
 
                     tcs.SetResult(result);
                 };

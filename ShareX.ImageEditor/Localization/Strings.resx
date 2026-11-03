@@ -286,6 +286,12 @@ Would you like to save the changes before closing the image editor?</value>
     <value>Failed to load image from clipboard.
 Clipboard does not contain an image.</value>
   </data>
+  <data name="EditorView_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="EditorView_CloseKeepsCaptureEsc" xml:space="preserve">
+    <value>Close without the edits. The original capture is kept. (Esc)</value>
+  </data>
   <data name="EditorView_Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -303,6 +309,9 @@ Clipboard does not contain an image.</value>
   </data>
   <data name="EditorView_Deleteall" xml:space="preserve">
     <value>Delete all</value>
+  </data>
+  <data name="EditorView_Done" xml:space="preserve">
+    <value>Done</value>
   </data>
   <data name="EditorView_Duplicate" xml:space="preserve">
     <value>Duplicate</value>
@@ -391,7 +400,7 @@ Clipboard does not contain an image.</value>
     <value>Undo</value>
   </data>
   <data name="EditorView_UploadimageCtrlU" xml:space="preserve">
-    <value>Upload image (Ctrl+U)</value>
+    <value>Share image (Ctrl+U)</value>
   </data>
   <data name="EditorView_UrlDoesNotPointToValidImage" xml:space="preserve">
     <value>The URL does not point to a valid image.</value>
@@ -1203,7 +1212,7 @@ Clipboard does not contain an image.</value>
     <value>Canvas resized.</value>
   </data>
   <data name="MainViewModel_ContinueEnter" xml:space="preserve">
-    <value>Continue (Enter)</value>
+    <value>Keep the edits and continue (Enter)</value>
   </data>
   <data name="MainViewModel_FilePathFormat" xml:space="preserve">
     <value>File path: {0}</value>

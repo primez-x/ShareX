@@ -115,6 +115,7 @@ public static class Win {
     [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h, out uint pid);
     [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr h);
     [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h, out RECT r);
+    [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
     [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h, IntPtr hdc, uint flags);
     [StructLayout(LayoutKind.Sequential)] public struct RECT { public int L, T, R, B; }
     public static List<IntPtr> For(uint pid) {
@@ -125,6 +126,7 @@ public static class Win {
 }
 '@
 
+[void][Win]::SetProcessDPIAware()
 $p = Start-Process -FilePath $exe -ArgumentList @("`"$png`"", '-portable', '-silent') -WorkingDirectory $app -PassThru
 Start-Sleep -Seconds 15
 $i = 0

@@ -85,7 +85,8 @@ namespace ShareX
                 ScreenBounds = screenBounds,
                 RegionCaptureOptions = taskSettings.CaptureSettingsReference.RegionCaptureOptions,
                 ImageEditorOptions = taskSettings.ToolsSettingsReference.ImageEditorOptions,
-                EnableAnnotations = !taskSettings.AdvancedSettings.RegionCaptureDisableAnnotation,
+                // The editor is the single annotation surface when the editor opens after capture.
+                EnableAnnotations = !taskSettings.OpenEditorAfterCapture && !taskSettings.AdvancedSettings.RegionCaptureDisableAnnotation,
                 CursorBitmap = cursorBitmap,
                 CursorPosition = cursorPosition
             };

@@ -135,9 +135,13 @@ namespace ShareX
             {
                 TaskHelpers.PlayNotificationSoundAsync(NotificationSound.Capture, taskSettings);
 
-                if (taskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.AnnotateImage) && !AllowAnnotation)
+                if (!AllowAnnotation)
                 {
                     taskSettings.AfterCaptureJob = taskSettings.AfterCaptureJob.Remove(AfterCaptureTasks.AnnotateImage);
+                }
+                else if (taskSettings.OpenEditorAfterCapture)
+                {
+                    taskSettings.AfterCaptureJob = taskSettings.AfterCaptureJob.Add(AfterCaptureTasks.AnnotateImage);
                 }
 
                 if (taskSettings.ImageSettings.ImageEffectOnlyRegionCapture &&

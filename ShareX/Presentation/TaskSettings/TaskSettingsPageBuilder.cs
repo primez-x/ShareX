@@ -184,6 +184,10 @@ internal sealed class TaskSettingsPageBuilder
             LucideIcons.image_up);
         BindEnabled(afterCapture, afterCaptureOverride);
 
+        CheckBox openEditorAfterCapture = Check(Strings.TaskSettingsWindow_OpenEditorAfterCapture,
+            () => _settings.OpenEditorAfterCapture, value => _settings.OpenEditorAfterCapture = value);
+        BindEnabled(openEditorAfterCapture, afterCaptureOverride);
+
         Control afterUpload = TaskFlagsMenu(
             () => _settings.AfterUploadJob,
             value => _settings.AfterUploadJob = value,
@@ -237,7 +241,8 @@ internal sealed class TaskSettingsPageBuilder
         return Page("task", Strings.TaskSettingsWindow_Task, LucideIcons.keyboard,
             Card(Strings.TaskSettingsWindow_Task, Row(Strings.TaskSettingsWindow_TaskLabel, TaskMenu(() => _settings.Job, value => _settings.Job = value)),
                 Row(Strings.TaskSettingsWindow_Description, Text(() => _settings.Description, value => _settings.Description = value))),
-            Card(Strings.TaskSettingsWindow_AfterCaptureTasks, Check(Strings.TaskSettingsWindow_OverrideAfterCaptureTasks, afterCaptureOverride), afterCapture),
+            Card(Strings.TaskSettingsWindow_AfterCaptureTasks, Check(Strings.TaskSettingsWindow_OverrideAfterCaptureTasks, afterCaptureOverride), afterCapture,
+                openEditorAfterCapture),
             Card(Strings.TaskSettingsWindow_AfterUploadTasks, Check(Strings.TaskSettingsWindow_OverrideAfterUploadTasks, afterUploadOverride), afterUpload),
             Card(Strings.TaskSettingsWindow_Destinations, Check(Strings.TaskSettingsWindow_OverrideDestinations, destinationsOverride), destinations),
             Card(Strings.TaskSettingsWindow_UploaderAccounts, accountControls.ToArray()),

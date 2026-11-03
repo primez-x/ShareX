@@ -45,54 +45,104 @@
                         Margin="4,0"
                         IsVisible="{Binding ShowBottomToolbar}"/>
 
-                <Grid Width="90"
-                      Height="40"
-                      Margin="4,0,10,0"
-                      ClipToBounds="False"
-                      VerticalAlignment="Bottom"
-                      IsVisible="{Binding ShowTaskButtons}">
-                    <Button Command="{Binding CancelCommand}"
-                            Classes="task-mode-button danger"
-                            BorderThickness="1"
-                            Height="40"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Right"
-                            Width="55"
-                            Padding="27,0,10,0"
-                            CornerRadius="0,4,4,0"
-                            ToolTip.Tip="{x:Static res:Strings.EditorView_CancelEsc}"
-                            ToolTip.Placement="Top"
-                            ToolTip.VerticalOffset="-5"
-                            ZIndex="0">
-                        <TextBlock Text="{x:Static editorTheming:EditorIcons.ActionCancel}"
-                                   FontFamily="{DynamicResource ShareX.FontFamily.Icon}"
-                                   FontSize="18"
-                                   FontWeight="Normal"
-                                   VerticalAlignment="Center"/>
-                    </Button>
+                <Panel Margin="4,0,10,0"
+                       VerticalAlignment="Bottom"
+                       ClipToBounds="False"
+                       IsVisible="{Binding ShowTaskButtons}">
+                    <!-- Task mode: labeled buttons, so the user knows that Close keeps the capture. -->
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="4"
+                                IsVisible="{Binding UseContinueWorkflow}">
+                        <Button Command="{Binding ContinueCommand}"
+                                Classes="task-mode-button success"
+                                Height="40"
+                                Padding="12,0"
+                                CornerRadius="4"
+                                BorderThickness="1"
+                                ToolTip.Tip="{x:Static res:Strings.MainViewModel_ContinueEnter}"
+                                ToolTip.Placement="Top"
+                                ToolTip.VerticalOffset="-5"
+                                AutomationProperties.Name="{x:Static res:Strings.EditorView_Done}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="{x:Static editorTheming:EditorIcons.ActionContinue}"
+                                           FontFamily="{DynamicResource ShareX.FontFamily.Icon}"
+                                           FontSize="18"
+                                           FontWeight="Normal"
+                                           Foreground="{DynamicResource ShareX.Brush.TaskMode.Foreground}"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Static res:Strings.EditorView_Done}"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource ShareX.Brush.TaskMode.Foreground}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                    <Button Command="{Binding ContinueCommand}"
-                            Classes="task-mode-button success"
-                            Width="56"
-                            Height="56"
-                            CornerRadius="28"
-                            BorderThickness="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
-                            Margin="0,0,0,-8"
-                            ToolTip.Tip="{Binding ContinueButtonTooltip}"
-                            ToolTip.Placement="Top"
-                            ToolTip.VerticalOffset="-5"
-                            ZIndex="20">
-                        <TextBlock Text="{x:Static editorTheming:EditorIcons.ActionContinue}"
-                                   FontFamily="{DynamicResource ShareX.FontFamily.Icon}"
-                                   FontSize="22"
-                                   FontWeight="Normal"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Margin="4,0,0,0"/>
-                    </Button>
-                </Grid>
+                        <Button Command="{Binding CancelCommand}"
+                                Height="40"
+                                Padding="12,0"
+                                ToolTip.Tip="{x:Static res:Strings.EditorView_CloseKeepsCaptureEsc}"
+                                ToolTip.Placement="Top"
+                                ToolTip.VerticalOffset="-5"
+                                AutomationProperties.Name="{x:Static res:Strings.EditorView_Close}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="{x:Static editorTheming:EditorIcons.ActionCancel}"
+                                           FontFamily="{DynamicResource ShareX.FontFamily.Icon}"
+                                           FontSize="18"
+                                           FontWeight="Normal"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Static res:Strings.EditorView_Close}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <Grid Width="90"
+                          Height="40"
+                          ClipToBounds="False"
+                          IsVisible="{Binding !UseContinueWorkflow}">
+                        <Button Command="{Binding CancelCommand}"
+                                Classes="task-mode-button danger"
+                                BorderThickness="1"
+                                Height="40"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Right"
+                                Width="55"
+                                Padding="27,0,10,0"
+                                CornerRadius="0,4,4,0"
+                                ToolTip.Tip="{x:Static res:Strings.EditorView_CancelEsc}"
+                                ToolTip.Placement="Top"
+                                ToolTip.VerticalOffset="-5"
+                                ZIndex="0">
+                            <TextBlock Text="{x:Static editorTheming:EditorIcons.ActionCancel}"
+                                       FontFamily="{DynamicResource ShareX.FontFamily.Icon}"
+                                       FontSize="18"
+                                       FontWeight="Normal"
+                                       VerticalAlignment="Center"/>
+                        </Button>
+
+                        <Button Command="{Binding ContinueCommand}"
+                                Classes="task-mode-button success"
+                                Width="56"
+                                Height="56"
+                                CornerRadius="28"
+                                BorderThickness="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Margin="0,0,0,-8"
+                                ToolTip.Tip="{x:Static res:Strings.MainViewModel_RunAfterCaptureTasksEnter}"
+                                ToolTip.Placement="Top"
+                                ToolTip.VerticalOffset="-5"
+                                ZIndex="20">
+                            <TextBlock Text="{x:Static editorTheming:EditorIcons.ActionContinue}"
+                                       FontFamily="{DynamicResource ShareX.FontFamily.Icon}"
+                                       FontSize="22"
+                                       FontWeight="Normal"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Margin="4,0,0,0"/>
+                        </Button>
+                    </Grid>
+                </Panel>
 
                 <Button Command="{Binding CopyCommand}"
                         Width="40"
@@ -165,7 +215,7 @@
                         IsEnabled="{Binding HasPreviewImage}"
                         Width="40"
                         Padding="0"
-                        IsVisible="{Binding ShowBottomToolbar}"
+                        IsVisible="{Binding ShowUploadButton}"
                         ToolTip.Tip="{x:Static res:Strings.EditorView_UploadimageCtrlU}"
                         ToolTip.Placement="Top"
                         ToolTip.VerticalOffset="-5">

@@ -2633,6 +2633,9 @@ Do you want to abort the active screen recording?</value>
   <data name="TaskSettingsWindow_OnlyApplyEffectsToRegionCapture" xml:space="preserve">
     <value>Only apply effects to region capture</value>
   </data>
+  <data name="TaskSettingsWindow_OpenEditorAfterCapture" xml:space="preserve">
+    <value>Open each capture in the image editor</value>
+  </data>
   <data name="TaskSettingsWindow_OpenURLFormat" xml:space="preserve">
     <value>Open URL format</value>
   </data>

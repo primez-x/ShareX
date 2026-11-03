@@ -2703,6 +2703,11 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("TaskSettingsWindow_OverrideAfterCaptureTasks", resourceCulture);
             }
         }
+        public static string TaskSettingsWindow_OpenEditorAfterCapture {
+            get {
+                return ResourceManager.GetString("TaskSettingsWindow_OpenEditorAfterCapture", resourceCulture);
+            }
+        }
         public static string TaskSettingsWindow_AfterUploadTasks {
             get {
                 return ResourceManager.GetString("TaskSettingsWindow_AfterUploadTasks", resourceCulture);

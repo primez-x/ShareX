@@ -480,6 +480,16 @@ namespace ShareX.ImageEditor.Localization {
                 return ResourceManager.GetString("EditorView_CancelEsc", resourceCulture);
             }
         }
+        public static string EditorView_Close {
+            get {
+                return ResourceManager.GetString("EditorView_Close", resourceCulture);
+            }
+        }
+        public static string EditorView_CloseKeepsCaptureEsc {
+            get {
+                return ResourceManager.GetString("EditorView_CloseKeepsCaptureEsc", resourceCulture);
+            }
+        }
         public static string EditorView_Copy {
             get {
                 return ResourceManager.GetString("EditorView_Copy", resourceCulture);
@@ -503,6 +513,11 @@ namespace ShareX.ImageEditor.Localization {
         public static string EditorView_Deleteall {
             get {
                 return ResourceManager.GetString("EditorView_Deleteall", resourceCulture);
+            }
+        }
+        public static string EditorView_Done {
+            get {
+                return ResourceManager.GetString("EditorView_Done", resourceCulture);
             }
         }
         public static string EditorView_Duplicate {

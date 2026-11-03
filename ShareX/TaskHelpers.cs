@@ -837,6 +837,11 @@ namespace ShareX
         {
             if (taskSettings == null) taskSettings = TaskSettings.GetDefaultTaskSettings();
 
+            if (taskSettings.OpenEditorAfterCapture)
+            {
+                taskSettings.AfterCaptureJob = taskSettings.AfterCaptureJob.Add(AfterCaptureTasks.AnnotateImage);
+            }
+
             await ScrollingCaptureWindowIntegration.StartStopAsync(taskSettings.CaptureSettingsReference.ScrollingCaptureOptions,
                 img => UploadManager.RunImageTask(img, taskSettings),
                 () => PlayNotificationSoundAsync(NotificationSound.ActionCompleted, taskSettings));
@@ -1431,13 +1436,20 @@ namespace ShareX
                 {
                     Bitmap bmp = skBitmap.Copy();
                     PinToScreen(bmp, taskSettings);
-                },
-                UploadImageRequested = (skBitmap) =>
+                }
+            };
+
+            // The editor shows the Share button only when the image upload destination is usable.
+            SettingManager.WaitUploadersConfig();
+
+            if (!SystemOptions.DisableUpload && UploadersConfigValidator.Validate(taskSettings.ImageFileDestination, ApplicationState.UploadersConfig))
+            {
+                events.UploadImageRequested = (skBitmap) =>
                 {
                     Bitmap bmp = skBitmap.Copy();
                     UploadImageOnUiThread(bmp, taskSettings);
-                }
-            };
+                };
+            }
 
             SKBitmap skBitmapResult = null;
 
