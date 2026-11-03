@@ -1,5 +1,5 @@
 # Runtime check: the one-time Print Screen question, the Settings > Shortcuts notice and the hotkey migration.
-# Answers "No", so the Windows Print Screen setting does not change. Needs Windows 11 with the Snipping Tool behavior on.
+# Turns the Windows Snipping Tool setting on for the test, answers "No", and restores the previous setting at the end. Needs Windows 11.
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'ShareXUi.psm1') -Force
 Get-Process ShareX -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*\Temp\sharex-e2e\app\*' } | ForEach-Object { Stop-Process -Id $_.Id -Force; $_.WaitForExit(10000) | Out-Null }
@@ -11,6 +11,9 @@ Reset-SxApp -ConfigJson '{"ShowStartScreen": false, "CapturePanelRunAtStartup": 
   {"HotkeyInfo": {"Hotkey": "PrintScreen, Control"}, "TaskSettings": {"Job": "RectangleRegion"}},
   {"HotkeyInfo": {"Hotkey": "PrintScreen"}, "TaskSettings": {"Job": "PrintScreen"}}]}')
 
+$original = (Get-ItemProperty 'HKCU:\Control Panel\Keyboard' -Name PrintScreenKeyForSnippingEnabled -ErrorAction SilentlyContinue).PrintScreenKeyForSnippingEnabled
+Set-ItemProperty 'HKCU:\Control Panel\Keyboard' -Name PrintScreenKeyForSnippingEnabled -Value 1 -Type DWord
+try {
 $before = (Get-ItemProperty 'HKCU:\Control Panel\Keyboard' -Name PrintScreenKeyForSnippingEnabled -ErrorAction SilentlyContinue).PrintScreenKeyForSnippingEnabled
 $p = Start-SxApp @('-portable', '-silent')
 $no = Wait-SxButton $p 'No' 30
@@ -42,3 +45,8 @@ $full = [array]::IndexOf($names, 'Capture entire screen')
 "Print Screen now selects a region: $($names[$region + 2] -eq 'Print Screen' -and $names[$full + 2] -eq 'Ctrl + Print Screen')"
 
 Stop-Process -Id $p.Id -Force; [void]$p.WaitForExit(15000)
+}
+finally {
+    if ($null -eq $original) { Remove-ItemProperty 'HKCU:\Control Panel\Keyboard' -Name PrintScreenKeyForSnippingEnabled -ErrorAction SilentlyContinue }
+    else { Set-ItemProperty 'HKCU:\Control Panel\Keyboard' -Name PrintScreenKeyForSnippingEnabled -Value $original -Type DWord }
+}

@@ -10,6 +10,7 @@
     <Grid>
         <!-- Dropdown Button -->
         <Button x:Name="DropdownButton"
+                AutomationProperties.Name="{Binding (AutomationProperties.Name), ElementName=ColorPickerDropdownRoot}"
                 Click="OnDropdownButtonClick"
                 Height="40"
                 MinWidth="60"

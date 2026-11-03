@@ -428,6 +428,9 @@ namespace ShareX
         public static void UsePrintScreenKeyForShareX()
         {
             RegistryHelpers.CreateRegistry(PrintScreenKeyPath, PrintScreenKeyForSnippingName, 0);
+
+            // Windows routes Print Screen by the setting at the time a hotkey registers, so register the hotkeys again.
+            ApplicationState.HotkeyManager?.RegisterAllHotkeys();
         }
 
         public static bool HasPrintScreenHotkey() =>

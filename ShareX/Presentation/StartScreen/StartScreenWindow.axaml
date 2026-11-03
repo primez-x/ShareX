@@ -164,6 +164,7 @@
                                 </StackPanel>
                                 <ComboBox Grid.Column="2"
                                           Classes="option-control"
+                                          AutomationProperties.Name="{Binding LanguageLabel}"
                                           ItemsSource="{Binding LanguageOptions}"
                                           SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
                                     <ComboBox.ItemTemplate>
@@ -200,6 +201,7 @@
                                 </StackPanel>
                                 <ToggleSwitch Grid.Column="2"
                                               VerticalAlignment="Center"
+                                              AutomationProperties.Name="{Binding StartWithWindowsText}"
                                               IsEnabled="{Binding StartWithWindowsEnabled}"
                                               IsChecked="{Binding StartWithWindows, Mode=TwoWay}"/>
                             </Grid>
@@ -220,6 +222,7 @@
                                 </StackPanel>
                                 <ToggleSwitch Grid.Column="2"
                                               VerticalAlignment="Center"
+                                              AutomationProperties.Name="{Binding FollowSystemThemeLabel}"
                                               IsChecked="{Binding UseSystemTheme, Mode=TwoWay}"/>
                             </Grid>
                         </Border>
@@ -240,6 +243,7 @@
                                 </StackPanel>
                                 <ComboBox Grid.Column="2"
                                           Classes="option-control"
+                                          AutomationProperties.Name="{Binding ThemeLabel}"
                                           IsEnabled="{Binding CanEditTheme}"
                                           ItemsSource="{Binding ThemeOptions}"
                                           SelectedItem="{Binding SelectedTheme, Mode=TwoWay}">
@@ -267,6 +271,7 @@
                                 </StackPanel>
                                 <ToggleSwitch Grid.Column="2"
                                               VerticalAlignment="Center"
+                                              AutomationProperties.Name="{Binding FollowSystemAccentColorLabel}"
                                               IsChecked="{Binding UseSystemAccentColor, Mode=TwoWay}"/>
                             </Grid>
                         </Border>
@@ -287,6 +292,7 @@
                                 </StackPanel>
                                 <imageEditorControls:ColorPickerDropdown Grid.Column="2"
                                                                                 Width="72"
+                                                                                AutomationProperties.Name="{Binding AccentColorLabel}"
                                                                                 IsEnabled="{Binding CanEditAccentColor}"
                                                                                 SelectedColorValue="{Binding AccentColor, Mode=TwoWay}"
                                                                                 HorizontalAlignment="Right"
@@ -308,6 +314,7 @@
                     <Button Grid.Column="1"
                             Classes="primary"
                             IsDefault="True"
+                            AutomationProperties.Name="{Binding GetStartedText}"
                             Click="OnGetStartedClick">
                         <StackPanel Orientation="Horizontal" Spacing="9">
                             <TextBlock Text="{Binding GetStartedText}" VerticalAlignment="Center"/>
