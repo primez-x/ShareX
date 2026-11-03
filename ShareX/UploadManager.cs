@@ -151,18 +151,6 @@ namespace ShareX
                         DownloadAndUploadFile(url, taskSettings);
                         return;
                     }
-
-                    if (taskSettings.UploadSettings.ClipboardUploadShortenURL)
-                    {
-                        ShortenURL(url, taskSettings);
-                        return;
-                    }
-
-                    if (taskSettings.UploadSettings.ClipboardUploadShareURL)
-                    {
-                        ShareURL(url, taskSettings);
-                        return;
-                    }
                 }
 
                 if (taskSettings.UploadSettings.ClipboardUploadAutoIndexFolder && text.Length <= 260 && Directory.Exists(text))
@@ -471,41 +459,6 @@ namespace ShareX
                 if (taskSettings == null) taskSettings = TaskSettings.GetDefaultTaskSettings();
 
                 WorkerTask task = WorkerTask.CreateURLShortenerTask(url, taskSettings);
-                TaskManager.Start(task);
-            }
-        }
-
-        public static void ShortenURL(string url, UrlShortenerType urlShortener)
-        {
-            if (!string.IsNullOrEmpty(url))
-            {
-                TaskSettings taskSettings = TaskSettings.GetDefaultTaskSettings();
-                taskSettings.URLShortenerDestination = urlShortener;
-
-                WorkerTask task = WorkerTask.CreateURLShortenerTask(url, taskSettings);
-                TaskManager.Start(task);
-            }
-        }
-
-        public static void ShareURL(string url, TaskSettings taskSettings = null)
-        {
-            if (!string.IsNullOrEmpty(url))
-            {
-                if (taskSettings == null) taskSettings = TaskSettings.GetDefaultTaskSettings();
-
-                WorkerTask task = WorkerTask.CreateShareURLTask(url, taskSettings);
-                TaskManager.Start(task);
-            }
-        }
-
-        public static void ShareURL(string url, URLSharingServices urlSharingService)
-        {
-            if (!string.IsNullOrEmpty(url))
-            {
-                TaskSettings taskSettings = TaskSettings.GetDefaultTaskSettings();
-                taskSettings.URLSharingServiceDestination = urlSharingService;
-
-                WorkerTask task = WorkerTask.CreateShareURLTask(url, taskSettings);
                 TaskManager.Start(task);
             }
         }

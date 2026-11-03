@@ -1687,6 +1687,7 @@ namespace ShareX
 
             UploadersConfig config = ApplicationState.UploadersConfig;
             List<IRemoteStorageProvider> providers = new List<IRemoteStorageProvider>();
+            bool allowFTPUpload = UploadPolicy.IsAllowed(FileDestination.FTP) && !SystemOptions.DisableUpload;
 
             if (UploadersConfigValidator.Validate(FileDestination.AmazonS3, config))
             {
@@ -1704,11 +1705,11 @@ namespace ShareX
 
                     if (account.Protocol is FTPProtocol.FTP or FTPProtocol.FTPS)
                     {
-                        providers.Add(new FTPRemoteStorageProvider(account, !SystemOptions.DisableUpload));
+                        providers.Add(new FTPRemoteStorageProvider(account, allowFTPUpload));
                     }
                     else
                     {
-                        providers.Add(new SFTPRemoteStorageProvider(account, !SystemOptions.DisableUpload));
+                        providers.Add(new SFTPRemoteStorageProvider(account, allowFTPUpload));
                     }
                 }
             }
@@ -1857,16 +1858,6 @@ namespace ShareX
             taskSettings ??= ApplicationState.DefaultTaskSettings;
             ToolsIntegration.ShowMouseHighlighterWindow(taskSettings.ToolsSettingsReference.MouseHighlighterOptions,
                 () => SettingManager.SaveApplicationConfigAsync());
-        }
-
-        public static Task<UploadResult> SearchImageUsingGoogleLensAsync(string url)
-        {
-            return new GoogleLensSharingService().CreateSharer(null, null).ShareURLAsync(url);
-        }
-
-        public static Task<UploadResult> SearchImageUsingBingAsync(string url)
-        {
-            return new BingVisualSearchSharingService().CreateSharer(null, null).ShareURLAsync(url);
         }
 
         public static void AnalyzeImage(TaskSettings taskSettings = null)
@@ -2285,11 +2276,6 @@ namespace ShareX
                 () => SettingManager.SaveUploadersConfigAsync(), OpenRemoteStorageBrowser);
         }
 
-        public static void OpenCustomUploaderSettingsWindow()
-        {
-            CustomUploaderSettingsIntegration.Show();
-        }
-
         public static string FindMenuLucideIcon(HotkeyType hotkeyType)
         {
             return hotkeyType switch
@@ -2411,99 +2397,9 @@ namespace ShareX
 
         public static void ImportCustomUploader(string filePath)
         {
-            if (ApplicationState.UploadersConfigOrNull != null)
-            {
-                try
-                {
-                    CustomUploaderItem cui = JsonHelpers.DeserializeFromFile<CustomUploaderItem>(filePath);
-
-                    if (cui != null)
-                    {
-                        bool activate = false;
-
-                        if (cui.DestinationType == CustomUploaderDestinationType.None)
-                        {
-                            MessageBoxResult result = MessageBox.Show(string.Format(Strings.TaskHelpers_AddCustomUploaderConfirmation, cui),
-                                Strings.TaskHelpers_CustomUploaderConfirmationTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-                            if (result == MessageBoxResult.No)
-                            {
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            List<string> destinations = new List<string>();
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.ImageUploader)) destinations.Add("images");
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.TextUploader)) destinations.Add("texts");
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.FileUploader)) destinations.Add("files");
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.URLShortener) ||
-                                cui.DestinationType.HasFlag(CustomUploaderDestinationType.URLSharingService)) destinations.Add("urls");
-
-                            string destinationsText = string.Join("/", destinations);
-
-                            MessageBoxResult result = MessageBox.Show(string.Format(Strings.TaskHelpers_SetActiveCustomUploaderConfirmation, cui, destinationsText),
-                                Strings.TaskHelpers_CustomUploaderConfirmationTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-                            if (result == MessageBoxResult.Yes)
-                            {
-                                activate = true;
-                            }
-                            else if (result == MessageBoxResult.Cancel)
-                            {
-                                return;
-                            }
-                        }
-
-                        cui.CheckBackwardCompatibility();
-                        ApplicationState.UploadersConfig.CustomUploadersList.Add(cui);
-
-                        if (activate)
-                        {
-                            int index = ApplicationState.UploadersConfig.CustomUploadersList.Count - 1;
-
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.ImageUploader))
-                            {
-                                ApplicationState.UploadersConfig.CustomImageUploaderSelected = index;
-                                ApplicationState.DefaultTaskSettings.ImageDestination = ImageDestination.CustomImageUploader;
-                            }
-
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.TextUploader))
-                            {
-                                ApplicationState.UploadersConfig.CustomTextUploaderSelected = index;
-                                ApplicationState.DefaultTaskSettings.TextDestination = TextDestination.CustomTextUploader;
-                            }
-
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.FileUploader))
-                            {
-                                ApplicationState.UploadersConfig.CustomFileUploaderSelected = index;
-                                ApplicationState.DefaultTaskSettings.FileDestination = FileDestination.CustomFileUploader;
-                            }
-
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.URLShortener))
-                            {
-                                ApplicationState.UploadersConfig.CustomURLShortenerSelected = index;
-                                ApplicationState.DefaultTaskSettings.URLShortenerDestination = UrlShortenerType.CustomURLShortener;
-                            }
-
-                            if (cui.DestinationType.HasFlag(CustomUploaderDestinationType.URLSharingService))
-                            {
-                                ApplicationState.UploadersConfig.CustomURLSharingServiceSelected = index;
-                                ApplicationState.DefaultTaskSettings.URLSharingServiceDestination = URLSharingServices.CustomURLSharingService;
-                            }
-
-                            MainWindowIntegration.RefreshMenus();
-                        }
-
-                        CustomUploaderSettingsIntegration.Refresh(true);
-                    }
-                }
-                catch (Exception e)
-                {
-                    DebugHelper.WriteException(e);
-                    e.ShowError(false);
-                }
-            }
+            // UploadPolicy blocks custom uploaders, so a custom uploader file is not imported.
+            MessageBox.Show(string.Format(Strings.WorkerTask_DestinationBlockedByUploadPolicy, Path.GetFileName(filePath)), "ShareX",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public static void ImportImageEffect(string filePath)

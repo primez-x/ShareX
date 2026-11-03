@@ -53,28 +53,28 @@ namespace ShareX.UploadersLib
         public static bool Validate(ImageDestination destination, UploadersConfig config)
         {
             if (destination == ImageDestination.FileUploader) return true;
-            return UploaderFactory.ImageUploaderServices[destination].CheckConfig(config);
+            return UploaderFactory.ImageUploaderServices.TryGetValue(destination, out ImageUploaderService service) && service.CheckConfig(config);
         }
 
         public static bool Validate(TextDestination destination, UploadersConfig config)
         {
             if (destination == TextDestination.FileUploader) return true;
-            return UploaderFactory.TextUploaderServices[destination].CheckConfig(config);
+            return UploaderFactory.TextUploaderServices.TryGetValue(destination, out TextUploaderService service) && service.CheckConfig(config);
         }
 
         public static bool Validate(FileDestination destination, UploadersConfig config)
         {
-            return UploaderFactory.FileUploaderServices[destination].CheckConfig(config);
+            return UploaderFactory.FileUploaderServices.TryGetValue(destination, out FileUploaderService service) && service.CheckConfig(config);
         }
 
         public static bool Validate(UrlShortenerType destination, UploadersConfig config)
         {
-            return UploaderFactory.URLShortenerServices[destination].CheckConfig(config);
+            return UploaderFactory.URLShortenerServices.TryGetValue(destination, out URLShortenerService service) && service.CheckConfig(config);
         }
 
         public static bool Validate(URLSharingServices destination, UploadersConfig config)
         {
-            return UploaderFactory.URLSharingServices[destination].CheckConfig(config);
+            return UploaderFactory.URLSharingServices.TryGetValue(destination, out URLSharingService service) && service.CheckConfig(config);
         }
 
         public static bool IsValidRemoteStorageAccount(FTPAccount account)

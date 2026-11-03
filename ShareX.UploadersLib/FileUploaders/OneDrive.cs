@@ -27,7 +27,6 @@ using Newtonsoft.Json;
 using ShareX.HelpersLib;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.IO;
 
 namespace ShareX.UploadersLib.FileUploaders
@@ -45,9 +44,7 @@ namespace ShareX.UploadersLib.FileUploaders
         {
             return new OneDrive(config.OneDriveV2OAuth2Info)
             {
-                FolderID = config.OneDriveV2SelectedFolder.id,
-                AutoCreateShareableLink = config.OneDriveAutoCreateShareableLink,
-                UseDirectLink = config.OneDriveUseDirectLink
+                FolderID = config.OneDriveV2SelectedFolder.id
             };
         }
     }
@@ -60,8 +57,6 @@ namespace ShareX.UploadersLib.FileUploaders
 
         public OAuth2Info AuthInfo { get; set; }
         public string FolderID { get; set; }
-        public bool AutoCreateShareableLink { get; set; }
-        public bool UseDirectLink { get; set; }
 
         public static OneDriveFileInfo RootFolder = new OneDriveFileInfo
         {
@@ -250,60 +245,12 @@ namespace ShareX.UploadersLib.FileUploaders
 
             if (result.IsSuccess)
             {
+                // Private link: only the signed-in owner can open the file. Share manually from OneDrive when needed.
                 OneDriveFileInfo uploadInfo = JsonConvert.DeserializeObject<OneDriveFileInfo>(result.Response);
-
-                if (AutoCreateShareableLink)
-                {
-                    AllowReportProgress = false;
-
-                    result.URL = await CreateShareableLinkAsync(uploadInfo.id,
-                        UseDirectLink ? OneDriveLinkType.Embed : OneDriveLinkType.Read, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    result.URL = uploadInfo.webUrl;
-                }
+                result.URL = uploadInfo.webUrl;
             }
 
             return result;
-        }
-
-        public async Task<string> CreateShareableLinkAsync(string id, OneDriveLinkType linkType = OneDriveLinkType.Read,
-            CancellationToken cancellationToken = default)
-        {
-            string linkTypeValue;
-
-            switch (linkType)
-            {
-                case OneDriveLinkType.Embed:
-                    linkTypeValue = "embed";
-                    break;
-                default:
-                case OneDriveLinkType.Read:
-                    linkTypeValue = "view";
-                    break;
-                case OneDriveLinkType.Edit:
-                    linkTypeValue = "edit";
-                    break;
-            }
-
-            string json = JsonConvert.SerializeObject(new
-            {
-                type = linkTypeValue,
-                scope = "anonymous"
-            });
-
-            string response = await SendRequestAsync(HttpMethod.POST, $"https://graph.microsoft.com/v1.0/me/drive/items/{id}/createLink", json,
-                RequestHelpers.ContentTypeJSON, headers: GetAuthHeaders(), cancellationToken: cancellationToken).ConfigureAwait(false);
-
-            OneDrivePermission permissionInfo = JsonConvert.DeserializeObject<OneDrivePermission>(response);
-
-            if (permissionInfo != null && permissionInfo.link != null)
-            {
-                return permissionInfo.link.webUrl;
-            }
-
-            return null;
         }
 
         public async Task<OneDriveFileList> GetPathInfoAsync(string id, CancellationToken cancellationToken = default)
@@ -336,17 +283,6 @@ namespace ShareX.UploadersLib.FileUploaders
         public string webUrl { get; set; }
     }
 
-    public class OneDrivePermission
-    {
-        public OneDriveShareableLink link { get; set; }
-    }
-
-    public class OneDriveShareableLink
-    {
-        public string webUrl { get; set; }
-        public string webHtml { get; set; }
-    }
-
     public class OneDriveFileList
     {
         public OneDriveFileInfo[] value { get; set; }
@@ -356,15 +292,5 @@ namespace ShareX.UploadersLib.FileUploaders
     {
         public string uploadUrl { get; set; }
         public string[] nextExpectedRanges { get; set; }
-    }
-
-    public enum OneDriveLinkType
-    {
-        [Description("An embedded link, which is an HTML code snippet that you can insert into a webpage to provide an interactive view of the corresponding file.")]
-        Embed,
-        [Description("A read-only link, which is a link to a read-only version of the folder or file.")]
-        Read,
-        [Description("A read-write link, which is a link to a read-write version of the folder or file.")]
-        Edit
     }
 }

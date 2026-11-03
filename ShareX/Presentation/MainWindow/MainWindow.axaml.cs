@@ -1537,16 +1537,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                 new KeyGesture(Key.Delete, KeyModifiers.Shift)),
             Item(Strings.MainWindow_DeleteItemRemotely, LucideIcons.cloud_off, DeleteSelectedItemRemotelyAsync,
                 canDeleteRemotely),
-            Submenu(Strings.MainWindow_ShortenSelectedUrl, LucideIcons.link_2, BuildUrlShortenerMenu,
-                !SystemOptions.DisableUpload && hasSelection && !isWorking && selected!.IsURLExist),
-            Submenu(Strings.MainWindow_ShareSelectedUrl, LucideIcons.share_2, BuildUrlSharingMenu,
-                !SystemOptions.DisableUpload && hasSelection && !isWorking && selected!.IsURLExist),
             Item(Strings.MainWindow_AnalyzeImage, LucideIcons.bot, _uploadInfoManager.AnalyzeImage,
                 hasSelection && !isWorking && selected!.IsImageFile),
-            Item(Strings.MainWindow_SearchWithGoogleLens, LucideIcons.search, _uploadInfoManager.SearchImageUsingGoogleLens,
-                hasSelection && !isWorking && selected!.IsURLExist),
-            Item(Strings.MainWindow_SearchWithBingVisualSearch, LucideIcons.scan_search, _uploadInfoManager.SearchImageUsingBing,
-                hasSelection && !isWorking && selected!.IsURLExist),
             Item(Strings.MainWindow_ShowQRCode, LucideIcons.qr_code, _uploadInfoManager.ShowQRCode,
                 hasSelection && !isWorking && selected!.IsURLExist),
             Item(Strings.MainWindow_OCRImage, LucideIcons.scan_text, async () => await _uploadInfoManager.OCRImage(),
@@ -1642,14 +1634,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             .Select(action => Item(action.Name.Truncate(50, "..."), LucideIcons.play,
                 async () => await action.RunAsync(filePath))).ToArray();
     }
-
-    private IReadOnlyList<MainMenuEntry> BuildUrlShortenerMenu() =>
-        Helpers.GetEnums<UrlShortenerType>().Select(value => Item(value.GetLocalizedDescription(), LucideIcons.link_2,
-            () => _uploadInfoManager.ShortenURL(value))).ToArray();
-
-    private IReadOnlyList<MainMenuEntry> BuildUrlSharingMenu() =>
-        Helpers.GetEnums<URLSharingServices>().Select(value => Item(value.GetLocalizedDescription(), LucideIcons.share_2,
-            () => _uploadInfoManager.ShareURL(value))).ToArray();
 
     private IReadOnlyList<MainMenuEntry> BuildCombineImagesMenu() => new List<MainMenuEntry>
     {

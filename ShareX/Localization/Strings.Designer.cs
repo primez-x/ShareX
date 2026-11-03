@@ -5256,6 +5256,11 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("TaskHelpers_OpenQuickScreenColorPicker_Copied_to_clipboard___0_", resourceCulture);
             }
         }
+        public static string WorkerTask_DestinationBlockedByUploadPolicy {
+            get {
+                return ResourceManager.GetString("WorkerTask_DestinationBlockedByUploadPolicy", resourceCulture);
+            }
+        }
         public static string WorkerTask_GetInvalidConfigResult__0__configuration_is_invalid_or_missing__Please_check__Destination_settings__window_to_configure_it_ {
             get {
                 return ResourceManager.GetString("WorkerTask_GetInvalidConfigResult__0__configuration_is_invalid_or_missing__Please_check__Destination_settings__window_to_configure_it_", resourceCulture);

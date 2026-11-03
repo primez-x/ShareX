@@ -38,40 +38,13 @@ public sealed class DestinationSettingsViewModel : INotifyPropertyChanged
 {
     private SettingsNavigationItem? _selectedNavigationItem;
 
+    // Only destinations that UploadPolicy allows have a settings page.
     internal static DestinationCategoryDefinition[] Categories { get; } =
     [
-        Category("image-uploaders", Localization.Strings.DestinationSettings_Category_Image_uploaders, LucideIcons.image,
-            Page("imgur", "Imgur", "Imgur"), Page("imageshack", "ImageShack", "ImageShack"),
-            Page("flickr", "Flickr", "Flickr"), Page("photobucket", "Photobucket", "Photobucket"),
-            Page("chevereto", "Chevereto", "Chevereto"), Page("vgyme", "vgy.me", "Vgyme", "vgyme")),
-        Category("text-uploaders", Localization.Strings.DestinationSettings_Category_Text_uploaders, LucideIcons.file_text,
-            Page("pastebin", "Pastebin", "Pastebin"), Page("paste-ee", "Paste.ee", "Paste_ee", "Pasteee"),
-            Page("gist", "GitHub Gist", "Gist", "GitHubGist"), Page("upaste", "uPaste", "Upaste"),
-            Page("hastebin", "Hastebin", "Hastebin"), Page("one-time-secret", "OneTimeSecret", "OneTimeSecret"),
-            Page("pastie", "Pastie", "Pastie"), Page("privatebin", "PrivateBin", "PrivateBin")),
         Category("file-uploaders", Localization.Strings.DestinationSettings_Category_File_uploaders, LucideIcons.file_up,
-            Page("ftp", "FTP / FTPS / SFTP", "FTP", "FTP", "FTPS", "SFTP"),
-            Page("dropbox", "Dropbox", "Dropbox"), Page("onedrive", "OneDrive", "OneDrive"),
-            Page("google-drive", "Google Drive", "GoogleDrive"), Page("puush", "puush", "Puush"),
-            Page("box", "Box", "Box"), Page("mega", "MEGA", "Mega"), Page("amazon-s3", "Amazon S3", "AmazonS3"),
-            Page("google-cloud-storage", "Google Cloud Storage", "GoogleCloudStorage"),
-            Page("azure-storage", "Azure Storage", "AzureStorage"), Page("backblaze-b2", "Backblaze B2", "B2", "BackblazeB2"),
-            Page("owncloud", "ownCloud / Nextcloud", "OwnCloud", "ownCloud", "Nextcloud"),
-            Page("immich", "Immich", "Immich"),
-            Page("mediafire", "MediaFire", "MediaFire"), Page("pushbullet", "Pushbullet", "Pushbullet"),
-            Page("sendspace", "SendSpace", "SendSpace"), Page("hostr", "Hostr", "Localhostr", "Hostr"),
-            Page("lambda", "Lambda", "Lambda"), Page("img-fish", "img.fish", "ImgFish", "imgfish"),
-            Page("lobfile", "LobFile", "Lithiio", "LobFile"),
-            Page("pomf", "Pomf", "Pomf"), Page("seafile", "Seafile", "Seafile"), Page("sul", "s-ul", "Sul", "sul"),
-            Page("streamable", "Streamable", "Streamable"), Page("plik", "Plik", "Plik"),
-            Page("youtube", "YouTube", "YouTube"),
+            Page("onedrive", "OneDrive", "OneDrive"),
             new DestinationPageDefinition("shared-folder", Localization.Strings.DestinationSettings_Page_Shared_folder,
-                ["LocalhostAccount", "LocalhostSelected"], "SharedFolder"),
-            Page("email", "Email", "Email")),
-        Category("url-shorteners", Localization.Strings.DestinationSettings_Category_URL_shorteners, LucideIcons.link_2,
-            Page("bitly", "bit.ly", "Bitly", "Bitly"), Page("yourls", "YOURLS", "Yourls"),
-            Page("polr", "Polr", "Polr"), Page("firebase", "Firebase Dynamic Links", "Firebase"),
-            Page("kutt", "Kutt", "Kutt"), Page("zero-width", "Zero Width Shortener", "ZeroWidthShortener"))
+                ["LocalhostAccount", "LocalhostSelected"], "SharedFolder"))
     ];
 
     public ObservableCollection<SettingsNavigationItem> NavigationItems { get; } = [];

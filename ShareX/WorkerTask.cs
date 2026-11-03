@@ -1,4 +1,4 @@
-#region License Information (GPL v3)
+﻿#region License Information (GPL v3)
 
 /*
     ShareX - A program that allows you to take screenshots and share any file type
@@ -167,16 +167,6 @@ namespace ShareX
             task.Info.Job = TaskJob.ShortenURL;
             task.Info.DataType = EDataType.URL;
             task.Info.FileName = string.Format(Strings.UploadTask_CreateURLShortenerTask_Shorten_URL___0__, taskSettings.URLShortenerDestination.GetLocalizedDescription());
-            task.Info.Result.URL = url;
-            return task;
-        }
-
-        public static WorkerTask CreateShareURLTask(string url, TaskSettings taskSettings)
-        {
-            WorkerTask task = new WorkerTask(taskSettings);
-            task.Info.Job = TaskJob.ShareURL;
-            task.Info.DataType = EDataType.URL;
-            task.Info.FileName = string.Format(Strings.UploadTask_CreateShareURLTask_Share_URL___0__, taskSettings.URLSharingServiceDestination.GetLocalizedDescription());
             task.Info.Result.URL = url;
             return task;
         }
@@ -800,8 +790,7 @@ namespace ShareX
                     Info.Result.ForceHTTPS();
                 }
 
-                if (Info.Job != TaskJob.ShareURL && (Info.TaskSettings.AfterUploadJob.HasFlag(AfterUploadTasks.UseURLShortener) || Info.Job == TaskJob.ShortenURL ||
-                    (Info.TaskSettings.AdvancedSettings.AutoShortenURLLength > 0 && Info.Result.URL.Length > Info.TaskSettings.AdvancedSettings.AutoShortenURLLength)))
+                if (Info.Job != TaskJob.ShareURL && (Info.TaskSettings.AfterUploadJob.HasFlag(AfterUploadTasks.UseURLShortener) || Info.Job == TaskJob.ShortenURL))
                 {
                     UploadResult result = ShortenURL(Info.Result.URL);
 
@@ -944,28 +933,48 @@ namespace ShareX
 
         public UploadResult UploadImage(Stream stream, string fileName)
         {
-            ImageUploaderService service = UploaderFactory.ImageUploaderServices[Info.TaskSettings.ImageDestination];
+            ImageDestination destination = Info.TaskSettings.ImageDestination;
+
+            if (!UploaderFactory.ImageUploaderServices.TryGetValue(destination, out ImageUploaderService service))
+            {
+                return GetBlockedDestinationResult(destination);
+            }
 
             return UploadData(service, stream, fileName);
         }
 
         public UploadResult UploadText(Stream stream, string fileName)
         {
-            TextUploaderService service = UploaderFactory.TextUploaderServices[Info.TaskSettings.TextDestination];
+            TextDestination destination = Info.TaskSettings.TextDestination;
+
+            if (!UploaderFactory.TextUploaderServices.TryGetValue(destination, out TextUploaderService service))
+            {
+                return GetBlockedDestinationResult(destination);
+            }
 
             return UploadData(service, stream, fileName);
         }
 
         public UploadResult UploadFile(Stream stream, string fileName)
         {
-            FileUploaderService service = UploaderFactory.FileUploaderServices[Info.TaskSettings.GetFileDestinationByDataType(Info.DataType)];
+            FileDestination destination = Info.TaskSettings.GetFileDestinationByDataType(Info.DataType);
+
+            if (!UploaderFactory.FileUploaderServices.TryGetValue(destination, out FileUploaderService service))
+            {
+                return GetBlockedDestinationResult(destination);
+            }
 
             return UploadData(service, stream, fileName);
         }
 
         public UploadResult ShortenURL(string url)
         {
-            URLShortenerService service = UploaderFactory.URLShortenerServices[Info.TaskSettings.URLShortenerDestination];
+            UrlShortenerType destination = Info.TaskSettings.URLShortenerDestination;
+
+            if (!UploaderFactory.URLShortenerServices.TryGetValue(destination, out URLShortenerService service))
+            {
+                return GetBlockedDestinationResult(destination);
+            }
 
             if (!service.CheckConfig(ApplicationState.UploadersConfig))
             {
@@ -986,7 +995,12 @@ namespace ShareX
         {
             if (!string.IsNullOrEmpty(url))
             {
-                URLSharingService service = UploaderFactory.URLSharingServices[Info.TaskSettings.URLSharingServiceDestination];
+                URLSharingServices destination = Info.TaskSettings.URLSharingServiceDestination;
+
+                if (!UploaderFactory.URLSharingServices.TryGetValue(destination, out URLSharingService service))
+                {
+                    return GetBlockedDestinationResult(destination);
+                }
 
                 if (!service.CheckConfig(ApplicationState.UploadersConfig))
                 {
@@ -1002,6 +1016,17 @@ namespace ShareX
             }
 
             return null;
+        }
+
+        private static UploadResult GetBlockedDestinationResult(Enum destination)
+        {
+            UploadResult ur = new UploadResult();
+
+            string message = string.Format(Strings.WorkerTask_DestinationBlockedByUploadPolicy, destination.GetLocalizedDescription());
+            DebugHelper.WriteLine(message);
+            ur.Errors.Add(message);
+
+            return ur;
         }
 
         private UploadResult GetInvalidConfigResult(IUploaderService uploaderService)

@@ -3120,6 +3120,9 @@ Do you want to abort the active screen recording?</value>
   <data name="WorkerTask_GetInvalidConfigResult__0__configuration_is_invalid_or_missing__Please_check__Destination_settings__window_to_configure_it_" xml:space="preserve">
     <value>{0} configuration is invalid or missing. Please check "Destination settings" window to configure it.</value>
   </data>
+  <data name="WorkerTask_DestinationBlockedByUploadPolicy" xml:space="preserve">
+    <value>{0} is blocked. This build uploads only to OneDrive or a shared folder.</value>
+  </data>
   <data name="WouldYouLikeToEnableImageEffects" xml:space="preserve">
     <value>Would you like to enable image effects?
 

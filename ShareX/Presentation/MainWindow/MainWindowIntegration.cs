@@ -157,9 +157,6 @@ public static class MainWindowIntegration
             case MainFormCommand.DestinationSettings:
                 TaskHelpers.OpenUploadersConfigWindow();
                 break;
-            case MainFormCommand.CustomUploaderSettings:
-                TaskHelpers.OpenCustomUploaderSettingsWindow();
-                break;
             case MainFormCommand.ScreenshotsFolder:
                 TaskHelpers.OpenScreenshotsFolder();
                 break;
@@ -183,12 +180,6 @@ public static class MainWindowIntegration
                 break;
             case MainFormCommand.TestFileUpload:
                 UploadManager.UploadImage(ShareXResources.Logo, ImageDestination.FileUploader, ApplicationState.DefaultTaskSettings.FileDestination);
-                break;
-            case MainFormCommand.TestUrlShortener:
-                UploadManager.ShortenURL(Links.Website);
-                break;
-            case MainFormCommand.TestUrlSharing:
-                UploadManager.ShareURL(Links.Website);
                 break;
             case MainFormCommand.Donate:
 #if STEAM

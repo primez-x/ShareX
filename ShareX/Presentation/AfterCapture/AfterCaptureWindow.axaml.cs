@@ -136,9 +136,8 @@ public partial class AfterCaptureWindow : Window
 
     private static IReadOnlyList<AfterCaptureTaskOption> CreateAfterUploadOptions(AfterUploadTasks selected)
     {
-        return Helpers.GetEnums<AfterUploadTasks>()
-            .Where(task => task != AfterUploadTasks.None)
-            .Select(task => new AfterCaptureTaskOption(task, task.GetLocalizedDescription(), selected.HasFlag(task)))
+        return MainMenuBuilder.GetAfterUploadTaskMenuOptions()
+            .Select(option => new AfterCaptureTaskOption(option.Task, option.Header, selected.HasFlag(option.Task)))
             .ToArray();
     }
 

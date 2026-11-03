@@ -68,7 +68,6 @@ internal sealed class MainMenuBuilder
             new(Strings.MainMenuBuilder_TaskSettings, LucideIcons.sliders_horizontal, () => Run(MainFormCommand.TaskSettings)),
             new(Strings.MainMenuBuilder_HotkeySettings, LucideIcons.keyboard, () => Run(MainFormCommand.HotkeySettings)),
             new(Strings.MainMenuBuilder_DestinationSettings, LucideIcons.cloud_cog, () => Run(MainFormCommand.DestinationSettings), uploadsEnabled),
-            new(Strings.MainMenuBuilder_CustomUploaderSettings, LucideIcons.cloud, () => Run(MainFormCommand.CustomUploaderSettings), uploadsEnabled),
             new(Strings.MainMenuBuilder_ScreenshotsFolder, LucideIcons.folder_open, () => Run(MainFormCommand.ScreenshotsFolder)),
             new(Strings.MainMenuBuilder_History, LucideIcons.history, () => Run(MainFormCommand.History)),
             new(Strings.MainMenuBuilder_ImageHistory, LucideIcons.images, () => Run(MainFormCommand.ImageHistory)),
@@ -102,7 +101,6 @@ internal sealed class MainMenuBuilder
                 ApplicationState.Settings.DisableHotkeys ? LucideIcons.keyboard : LucideIcons.keyboard_off,
                 () => TaskHelpers.ToggleHotkeys()),
             Item(Strings.MainMenuBuilder_DestinationSettings, LucideIcons.cloud_cog, () => Run(MainFormCommand.DestinationSettings), uploadsEnabled),
-            Item(Strings.MainMenuBuilder_CustomUploaderSettings, LucideIcons.cloud, () => Run(MainFormCommand.CustomUploaderSettings), uploadsEnabled),
             MainMenuEntry.Separator(),
             Item(Strings.MainMenuBuilder_ScreenshotsFolder, LucideIcons.folder_open, () => Run(MainFormCommand.ScreenshotsFolder)),
             Item(Strings.MainMenuBuilder_History, LucideIcons.history, () => Run(MainFormCommand.History)),
@@ -225,8 +223,7 @@ internal sealed class MainMenuBuilder
             Item(Strings.MainMenuBuilder_UploadClipboard, LucideIcons.clipboard, () => UploadManager.ClipboardUploadMainWindow()),
             Item(Strings.MainMenuBuilder_UploadText, LucideIcons.file_text, async () => await UploadManager.ShowTextUploadDialog()),
             Item(Strings.MainMenuBuilder_UploadUrl, LucideIcons.link, async () => await UploadManager.UploadURL()),
-            Item(Strings.MainMenuBuilder_DragAndDropUpload, LucideIcons.mouse_pointer_2, () => TaskHelpers.OpenDropWindow()),
-            Item(Strings.MainMenuBuilder_ShortenUrl, LucideIcons.link_2, async () => await UploadManager.ShowShortenURLDialog())
+            Item(Strings.MainMenuBuilder_DragAndDropUpload, LucideIcons.mouse_pointer_2, () => TaskHelpers.OpenDropWindow())
         };
     }
 
@@ -412,8 +409,10 @@ internal sealed class MainMenuBuilder
             boldWhenChecked: true)).ToArray();
     }
 
+    // URL shortening and URL sharing send the link to a public service, so UploadPolicy blocks them.
     internal static IReadOnlyList<(AfterUploadTasks Task, string Header, string Icon)> GetAfterUploadTaskMenuOptions() =>
         Helpers.GetEnums<AfterUploadTasks>().Skip(1)
+            .Where(task => task is not (AfterUploadTasks.UseURLShortener or AfterUploadTasks.ShareURL))
             .Select(task => (task, task.GetLocalizedDescription(), GetAfterUploadTaskIcon(task)))
             .ToArray();
 
@@ -447,8 +446,6 @@ internal sealed class MainMenuBuilder
     private static string GetAfterUploadTaskIcon(AfterUploadTasks task) => task switch
     {
         AfterUploadTasks.ShowAfterUploadWindow => LucideIcons.app_window,
-        AfterUploadTasks.UseURLShortener => LucideIcons.link_2,
-        AfterUploadTasks.ShareURL => LucideIcons.share_2,
         AfterUploadTasks.CopyURLToClipboard => LucideIcons.clipboard_copy,
         AfterUploadTasks.OpenURL => LucideIcons.external_link,
         AfterUploadTasks.ShowQRCode => LucideIcons.qr_code,
@@ -463,85 +460,35 @@ internal sealed class MainMenuBuilder
         return new List<MainMenuEntry>
         {
             Parent(Strings.TaskSettingsForm_UpdateUploaderMenuNames_Image_uploader___0_,
-                () => GetImageUploaderName(settings), LucideIcons.image, () => BuildImageDestinations(settings)),
+                () => settings.ImageFileDestination.GetLocalizedDescription(), LucideIcons.image, () => BuildFileDestinations(
+                settings.ImageFileDestination,
+                value =>
+                {
+                    settings.ImageDestination = ImageDestination.FileUploader;
+                    settings.ImageFileDestination = value;
+                })),
             Parent(Strings.TaskSettingsForm_UpdateUploaderMenuNames_Text_uploader___0_,
-                () => GetTextUploaderName(settings), LucideIcons.file_text, () => BuildTextDestinations(settings)),
+                () => settings.TextFileDestination.GetLocalizedDescription(), LucideIcons.file_text, () => BuildFileDestinations(
+                settings.TextFileDestination,
+                value =>
+                {
+                    settings.TextDestination = TextDestination.FileUploader;
+                    settings.TextFileDestination = value;
+                })),
             Parent(Strings.TaskSettingsForm_UpdateUploaderMenuNames_File_uploader___0_,
-                () => settings.FileDestination.GetLocalizedDescription(), LucideIcons.file_up, () => BuildEnumDestinations(
+                () => settings.FileDestination.GetLocalizedDescription(), LucideIcons.file_up, () => BuildFileDestinations(
                 settings.FileDestination,
-                value => settings.FileDestination = value)),
-            Parent(Strings.TaskSettingsForm_UpdateUploaderMenuNames_URL_shortener___0_,
-                () => settings.URLShortenerDestination.GetLocalizedDescription(), LucideIcons.link_2, () => BuildEnumDestinations(
-                settings.URLShortenerDestination,
-                value => settings.URLShortenerDestination = value)),
-            Parent(Strings.TaskSettingsForm_UpdateUploaderMenuNames_URL_sharing_service___0_,
-                () => settings.URLSharingServiceDestination.GetLocalizedDescription(), LucideIcons.share_2, () => BuildEnumDestinations(
-                settings.URLSharingServiceDestination,
-                value => settings.URLSharingServiceDestination = value))
+                value => settings.FileDestination = value))
         };
     }
 
-    private static string GetImageUploaderName(TaskSettings settings)
+    private static IReadOnlyList<MainMenuEntry> BuildFileDestinations(FileDestination selected, Action<FileDestination> setValue)
     {
-        return settings.ImageDestination == ImageDestination.FileUploader
-            ? settings.ImageFileDestination.GetLocalizedDescription()
-            : settings.ImageDestination.GetLocalizedDescription();
-    }
-
-    private static string GetTextUploaderName(TaskSettings settings)
-    {
-        return settings.TextDestination == TextDestination.FileUploader
-            ? settings.TextFileDestination.GetLocalizedDescription()
-            : settings.TextDestination.GetLocalizedDescription();
-    }
-
-    private static IReadOnlyList<MainMenuEntry> BuildImageDestinations(TaskSettings settings)
-    {
-        return Helpers.GetEnums<ImageDestination>().Select(value => new MainMenuEntry(
-            value.GetLocalizedDescription(),
-            string.Empty,
-            () => settings.ImageDestination = value,
-            createChildren: value == ImageDestination.FileUploader
-                ? () => BuildEnumDestinations(settings.ImageFileDestination,
-                    selected =>
-                    {
-                        settings.ImageDestination = ImageDestination.FileUploader;
-                        settings.ImageFileDestination = selected;
-                    })
-                : null,
-            isChecked: settings.ImageDestination == value,
-            toggleType: MainMenuToggleType.Radio,
-            staysOpenOnClick: true,
-            boldWhenChecked: true)).ToArray();
-    }
-
-    private static IReadOnlyList<MainMenuEntry> BuildTextDestinations(TaskSettings settings)
-    {
-        return Helpers.GetEnums<TextDestination>().Select(value => new MainMenuEntry(
-            value.GetLocalizedDescription(),
-            string.Empty,
-            () => settings.TextDestination = value,
-            createChildren: value == TextDestination.FileUploader
-                ? () => BuildEnumDestinations(settings.TextFileDestination,
-                    selected =>
-                    {
-                        settings.TextDestination = TextDestination.FileUploader;
-                        settings.TextFileDestination = selected;
-                    })
-                : null,
-            isChecked: settings.TextDestination == value,
-            toggleType: MainMenuToggleType.Radio,
-            staysOpenOnClick: true,
-            boldWhenChecked: true)).ToArray();
-    }
-
-    private static IReadOnlyList<MainMenuEntry> BuildEnumDestinations<T>(T selected, Action<T> setValue) where T : struct, Enum
-    {
-        return Helpers.GetEnums<T>().Select(value => new MainMenuEntry(
+        return UploadPolicy.GetAllowed<FileDestination>().Select(value => new MainMenuEntry(
             value.GetLocalizedDescription(),
             string.Empty,
             () => setValue(value),
-            isChecked: EqualityComparer<T>.Default.Equals(selected, value),
+            isChecked: selected == value,
             toggleType: MainMenuToggleType.Radio,
             staysOpenOnClick: true,
             boldWhenChecked: true)).ToArray();
@@ -555,9 +502,7 @@ internal sealed class MainMenuBuilder
             Item(Strings.MainMenuBuilder_ShowDebugLog, LucideIcons.file_text, () => Run(MainFormCommand.DebugLog)),
             Item(Strings.MainMenuBuilder_TestImageUpload, LucideIcons.image_up, () => Run(MainFormCommand.TestImageUpload), uploadsEnabled),
             Item(Strings.MainMenuBuilder_TestTextUpload, LucideIcons.file_up, () => Run(MainFormCommand.TestTextUpload), uploadsEnabled),
-            Item(Strings.MainMenuBuilder_TestFileUpload, LucideIcons.upload, () => Run(MainFormCommand.TestFileUpload), uploadsEnabled),
-            Item(Strings.MainMenuBuilder_TestUrlShortener, LucideIcons.link_2, () => Run(MainFormCommand.TestUrlShortener), uploadsEnabled),
-            Item(Strings.MainMenuBuilder_TestUrlSharing, LucideIcons.share_2, () => Run(MainFormCommand.TestUrlSharing), uploadsEnabled)
+            Item(Strings.MainMenuBuilder_TestFileUpload, LucideIcons.upload, () => Run(MainFormCommand.TestFileUpload), uploadsEnabled)
         };
     }
 

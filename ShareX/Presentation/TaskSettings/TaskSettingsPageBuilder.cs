@@ -777,8 +777,6 @@ internal sealed class TaskSettingsPageBuilder
         return Page("upload-clipboard", Strings.TaskSettingsWindow_ClipboardUpload, LucideIcons.clipboard,
             EnabledCard(_uploadOverride, Strings.TaskSettingsWindow_ClipboardContent,
                 Check(Strings.TaskSettingsWindow_IfClipboardContainsAFileURLDownloadAndUploadIt, () => upload.ClipboardUploadURLContents, value => upload.ClipboardUploadURLContents = value),
-                Check(Strings.TaskSettingsWindow_IfClipboardContainsAURLUseURLShortener, () => upload.ClipboardUploadShortenURL, value => upload.ClipboardUploadShortenURL = value),
-                Check(Strings.TaskSettingsWindow_IfClipboardContainsAURLShareItUsingURLSharingService, () => upload.ClipboardUploadShareURL, value => upload.ClipboardUploadShareURL = value),
                 Check(Strings.TaskSettingsWindow_IfClipboardContainsAFolderPathIndexAndUploadIt, () => upload.ClipboardUploadAutoIndexFolder, value => upload.ClipboardUploadAutoIndexFolder = value)));
     }
 
@@ -1197,7 +1195,6 @@ internal sealed class TaskSettingsPageBuilder
         nameof(TaskSettingsAdvanced.ClipboardContentFormat) => Strings.TaskSettingsWindow_ClipboardContentFormat,
         nameof(TaskSettingsAdvanced.BalloonTipContentFormat) => Strings.TaskSettingsWindow_BalloonTipContentFormat,
         nameof(TaskSettingsAdvanced.OpenURLFormat) => Strings.TaskSettingsWindow_OpenURLFormat,
-        nameof(TaskSettingsAdvanced.AutoShortenURLLength) => Strings.TaskSettingsWindow_AutoShortenURLLength,
         nameof(TaskSettingsAdvanced.AutoCloseAfterUploadForm) => Strings.TaskSettingsWindow_AutoCloseAfterUploadForm,
         nameof(TaskSettingsAdvanced.NamePatternMaxLength) => Strings.TaskSettingsWindow_NamePatternMaxLength,
         nameof(TaskSettingsAdvanced.NamePatternMaxTitleLength) => Strings.TaskSettingsWindow_NamePatternMaxTitleLength,

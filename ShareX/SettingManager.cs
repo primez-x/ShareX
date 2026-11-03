@@ -241,6 +241,8 @@ namespace ShareX
 
         private static void ApplicationConfigBackwardCompatibilityTasks()
         {
+            DefaultTaskSettings.EnforceUploadPolicy(true);
+
             if (SystemOptions.DisableUpload)
             {
                 DefaultTaskSettings.AfterCaptureJob = DefaultTaskSettings.AfterCaptureJob.Remove(AfterCaptureTasks.UploadImageToHost);
@@ -329,6 +331,11 @@ namespace ShareX
 
         private static void HotkeysConfigBackwardCompatibilityTasks()
         {
+            foreach (TaskSettings taskSettings in HotkeysConfig.Hotkeys.Select(x => x.TaskSettings).Where(x => x != null))
+            {
+                taskSettings.EnforceUploadPolicy(!taskSettings.UseDefaultDestinations);
+            }
+
             if (SystemOptions.DisableUpload)
             {
                 foreach (TaskSettings taskSettings in HotkeysConfig.Hotkeys.Select(x => x.TaskSettings))

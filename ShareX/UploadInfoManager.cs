@@ -433,32 +433,6 @@ namespace ShareX
             }
         }
 
-        public void ShortenURL(UrlShortenerType urlShortener)
-        {
-            if (IsItemSelected && SelectedItem.IsURLExist) UploadManager.ShortenURL(SelectedItem.Info.Result.ToString(), urlShortener);
-        }
-
-        public void ShareURL(URLSharingServices urlSharingService)
-        {
-            if (IsItemSelected && SelectedItem.IsURLExist) UploadManager.ShareURL(SelectedItem.Info.Result.ToString(), urlSharingService);
-        }
-
-        public async void SearchImageUsingGoogleLens()
-        {
-            if (IsItemSelected && SelectedItem.IsURLExist)
-            {
-                await TaskHelpers.SearchImageUsingGoogleLensAsync(SelectedItem.Info.Result.URL);
-            }
-        }
-
-        public async void SearchImageUsingBing()
-        {
-            if (IsItemSelected && SelectedItem.IsURLExist)
-            {
-                await TaskHelpers.SearchImageUsingBingAsync(SelectedItem.Info.Result.URL);
-            }
-        }
-
         public void ShowQRCode()
         {
             if (IsItemSelected && SelectedItem.IsURLExist) TaskHelpers.OpenQRCode(SelectedItem.Info.Result.URL);

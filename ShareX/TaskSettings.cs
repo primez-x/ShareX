@@ -59,11 +59,11 @@ namespace ShareX
         public AfterUploadTasks AfterUploadJob = AfterUploadTasks.CopyURLToClipboard;
 
         public bool UseDefaultDestinations = true;
-        public ImageDestination ImageDestination = ImageDestination.Imgur;
-        public FileDestination ImageFileDestination = FileDestination.Dropbox;
-        public TextDestination TextDestination = TextDestination.Pastebin;
-        public FileDestination TextFileDestination = FileDestination.Dropbox;
-        public FileDestination FileDestination = FileDestination.Dropbox;
+        public ImageDestination ImageDestination = ImageDestination.FileUploader;
+        public FileDestination ImageFileDestination = UploadPolicy.DefaultFileDestination;
+        public TextDestination TextDestination = TextDestination.FileUploader;
+        public FileDestination TextFileDestination = UploadPolicy.DefaultFileDestination;
+        public FileDestination FileDestination = UploadPolicy.DefaultFileDestination;
         public UrlShortenerType URLShortenerDestination = UrlShortenerType.BITLY;
         public URLSharingServices URLSharingServiceDestination = URLSharingServices.Email;
 
@@ -247,6 +247,30 @@ namespace ShareX
                     AdvancedSettings = defaultTaskSettings.AdvancedSettings;
                 }
             }
+        }
+
+        /// <summary>
+        /// Moves destinations that <see cref="UploadPolicy"/> blocks to allowed destinations, and turns off URL shortening and URL sharing.
+        /// If <paramref name="ownsDestinations"/> is true and the image destination was blocked, image upload after capture is turned off.
+        /// The capture then stays local and does not go to a destination the user did not choose.
+        /// </summary>
+        public void EnforceUploadPolicy(bool ownsDestinations)
+        {
+            bool imageDestinationBlocked = !UploadPolicy.IsAllowed(ImageDestination) || !UploadPolicy.IsAllowed(ImageFileDestination);
+
+            if (ownsDestinations && imageDestinationBlocked)
+            {
+                AfterCaptureJob = AfterCaptureJob.Remove(AfterCaptureTasks.UploadImageToHost);
+            }
+
+            ImageDestination = ImageDestination.FileUploader;
+            TextDestination = TextDestination.FileUploader;
+            if (!UploadPolicy.IsAllowed(ImageFileDestination)) ImageFileDestination = UploadPolicy.DefaultFileDestination;
+            if (!UploadPolicy.IsAllowed(TextFileDestination)) TextFileDestination = UploadPolicy.DefaultFileDestination;
+            if (!UploadPolicy.IsAllowed(FileDestination)) FileDestination = UploadPolicy.DefaultFileDestination;
+
+            AfterUploadJob = AfterUploadJob.Remove(AfterUploadTasks.UseURLShortener, AfterUploadTasks.ShareURL);
+            UploadSettings?.UploaderFilters?.RemoveAll(x => x.GetUploaderService() == null);
         }
 
         public void Cleanup()
@@ -465,8 +489,6 @@ namespace ShareX
         #region Upload / Clipboard upload
 
         public bool ClipboardUploadURLContents = false;
-        public bool ClipboardUploadShortenURL = false;
-        public bool ClipboardUploadShareURL = false;
         public bool ClipboardUploadAutoIndexFolder = false;
 
         #endregion Upload / Clipboard upload
@@ -551,8 +573,6 @@ namespace ShareX
         [Category("After upload"), DefaultValue("$result"), Description("After upload task \"Open URL\" format. Supported variables: $result, $url, $shorturl, $thumbnailurl, $deletionurl, $filepath, $filename, $filenamenoext, $folderpath, $foldername, $uploadtime and other variables such as %y-%mo-%d etc.")]
         public string OpenURLFormat { get; set; }
 
-        [Category("After upload"), DefaultValue(0), Description("Automatically shorten URL if the URL is longer than the specified number of characters. 0 means automatic URL shortening is not active.")]
-        public int AutoShortenURLLength { get; set; }
 
         [Category("After upload"), DefaultValue(false), Description("After upload form will be automatically closed after 60 seconds.")]
         public bool AutoCloseAfterUploadForm { get; set; }
