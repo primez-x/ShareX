@@ -386,28 +386,12 @@ namespace ShareX
         DeleteFile
     }
 
-    public enum ThumbnailViewClickAction // Localized
-    {
-        Default,
-        Select,
-        OpenImageViewer,
-        OpenFile,
-        OpenFolder,
-        OpenURL,
-        EditImage
-    }
-
     public enum FileExistAction // Localized
     {
         Ask,
         Overwrite,
         UniqueName,
         Cancel
-    }
-
-    public enum ThumbnailTitleLocation // Localized
-    {
-        Top, Bottom
     }
 
     public enum ScreenTearingTestMode

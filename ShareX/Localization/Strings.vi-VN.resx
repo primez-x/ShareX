@@ -640,17 +640,11 @@
   <data name="ApplicationSettingsWindow_ShowProgressInTrayIcon" xml:space="preserve">
     <value>Hiện tiến độ ở biểu tượng trong khay hệ thống</value>
   </data>
-  <data name="ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup" xml:space="preserve">
-    <value>Hiện tác vụ gần đây ở cửa sổ chính khi khởi động</value>
-  </data>
   <data name="ApplicationSettingsWindow_ShowRecentTasksInTrayMenu" xml:space="preserve">
     <value>Hiện tác vụ gần đây ở menu khay hệ thống</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowShareXInSendToMenu" xml:space="preserve">
     <value>Hiện ShareX trong menu "Send to"</value>
-  </data>
-  <data name="ApplicationSettingsWindow_ShowTitle" xml:space="preserve">
-    <value>Hiển thị tiêu đề</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowTrayIcon" xml:space="preserve">
     <value>Hiện biểu tượng ở khay hệ thống</value>
@@ -679,17 +673,11 @@
   <data name="ApplicationSettingsWindow_TheseFormatsAppearUnderTheCopySubmenuInTheMainWindowContextMenu" xml:space="preserve">
     <value>Các định dạng này xuất hiện trong menu con Sao chép của menu ngữ cảnh cửa sổ chính.</value>
   </data>
-  <data name="ApplicationSettingsWindow_ThumbnailClickActionLabel" xml:space="preserve">
-    <value>Hành động nhấp vào hình thu nhỏ:</value>
-  </data>
   <data name="ApplicationSettingsWindow_ThumbnailSizeLabel" xml:space="preserve">
     <value>Kích thước thu nhỏ:</value>
   </data>
   <data name="ApplicationSettingsWindow_ThumbnailView" xml:space="preserve">
     <value>Chế độ xem hình thu nhỏ</value>
-  </data>
-  <data name="ApplicationSettingsWindow_TitleLocationLabel" xml:space="preserve">
-    <value>Vị trí tiêu đề:</value>
   </data>
   <data name="ApplicationSettingsWindow_TopCenter" xml:space="preserve">
     <value>Trên giữa</value>

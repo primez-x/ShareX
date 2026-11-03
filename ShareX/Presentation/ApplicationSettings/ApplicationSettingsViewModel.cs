@@ -81,8 +81,6 @@ public sealed class ApplicationSettingsViewModel : INotifyPropertyChanged, IDisp
     public IReadOnlyList<LanguageOption> LanguageOptions { get; } = CreateLanguageOptions();
     public IReadOnlyList<EnumOption<HotkeyType>> HotkeyTypeOptions { get; } = CreateEnumOptions<HotkeyType>();
     public IReadOnlyList<EnumOption<UpdateChannel>> UpdateChannelOptions { get; } = CreateEnumOptions<UpdateChannel>();
-    public IReadOnlyList<EnumOption<ThumbnailTitleLocation>> ThumbnailTitleLocationOptions { get; } = CreateEnumOptions<ThumbnailTitleLocation>();
-    public IReadOnlyList<EnumOption<ThumbnailViewClickAction>> ThumbnailClickActionOptions { get; } = CreateEnumOptions<ThumbnailViewClickAction>();
     public IReadOnlyList<EnumOption<ProxyMethod>> ProxyMethodOptions { get; } = CreateEnumOptions<ProxyMethod>();
     public IReadOnlyList<EnumOption<ImageContentAlignment>> DropAlignmentOptions { get; } =
     [
@@ -497,14 +495,6 @@ public sealed class ApplicationSettingsViewModel : INotifyPropertyChanged, IDisp
     public bool AutoCleanupLogFiles { get => Settings.AutoCleanupLogFiles; set => SetSetting(Settings.AutoCleanupLogFiles, value, x => Settings.AutoCleanupLogFiles = x); }
     public decimal CleanupKeepFileCount { get => Settings.CleanupKeepFileCount; set => SetSetting(Settings.CleanupKeepFileCount, decimal.ToInt32(value), x => Settings.CleanupKeepFileCount = x); }
 
-    public bool ShowThumbnailTitle { get => Settings.ShowThumbnailTitle; set => SetSetting(Settings.ShowThumbnailTitle, value, x => Settings.ShowThumbnailTitle = x); }
-
-    public EnumOption<ThumbnailTitleLocation>? SelectedThumbnailTitleLocation
-    {
-        get => Find(ThumbnailTitleLocationOptions, Settings.ThumbnailTitleLocation);
-        set { if (value != null) SetSetting(Settings.ThumbnailTitleLocation, value.Value, x => Settings.ThumbnailTitleLocation = x); }
-    }
-
     public decimal ThumbnailWidth
     {
         get => Settings.ThumbnailSize.Width;
@@ -515,12 +505,6 @@ public sealed class ApplicationSettingsViewModel : INotifyPropertyChanged, IDisp
     {
         get => Settings.ThumbnailSize.Height;
         set => SetSetting(Settings.ThumbnailSize.Height, decimal.ToInt32(value), x => Settings.ThumbnailSize = new Size(Settings.ThumbnailSize.Width, x));
-    }
-
-    public EnumOption<ThumbnailViewClickAction>? SelectedThumbnailClickAction
-    {
-        get => Find(ThumbnailClickActionOptions, Settings.ThumbnailClickAction);
-        set { if (value != null) SetSetting(Settings.ThumbnailClickAction, value.Value, x => Settings.ThumbnailClickAction = x); }
     }
 
     public ClipboardFormatItem? SelectedClipboardFormat
@@ -551,7 +535,6 @@ public sealed class ApplicationSettingsViewModel : INotifyPropertyChanged, IDisp
     public bool HistoryCheckURL { get => Settings.HistoryCheckURL; set => SetSetting(Settings.HistoryCheckURL, value, x => Settings.HistoryCheckURL = x); }
     public bool RecentTasksSave { get => Settings.RecentTasksSave; set => SetSetting(Settings.RecentTasksSave, value, x => Settings.RecentTasksSave = x); }
     public decimal RecentTasksMaxCount { get => Settings.RecentTasksMaxCount; set => SetSetting(Settings.RecentTasksMaxCount, decimal.ToInt32(value), x => Settings.RecentTasksMaxCount = x); }
-    public bool RecentTasksShowInMainWindow { get => Settings.RecentTasksShowInMainWindow; set => SetSetting(Settings.RecentTasksShowInMainWindow, value, x => Settings.RecentTasksShowInMainWindow = x); }
     public bool RecentTasksShowInTrayMenu { get => Settings.RecentTasksShowInTrayMenu; set => SetSetting(Settings.RecentTasksShowInTrayMenu, value, x => Settings.RecentTasksShowInTrayMenu = x); }
     public bool RecentTasksTrayMenuMostRecentFirst { get => Settings.RecentTasksTrayMenuMostRecentFirst; set => SetSetting(Settings.RecentTasksTrayMenuMostRecentFirst, value, x => Settings.RecentTasksTrayMenuMostRecentFirst = x); }
 

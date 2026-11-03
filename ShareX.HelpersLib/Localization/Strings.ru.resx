@@ -1227,33 +1227,6 @@
   <data name="TextDestination_FileUploader" xml:space="preserve">
     <value>Файловый сервис</value>
   </data>
-  <data name="ThumbnailTitleLocation_Bottom" xml:space="preserve">
-    <value>Внизу</value>
-  </data>
-  <data name="ThumbnailTitleLocation_Top" xml:space="preserve">
-    <value>Вверху</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Default" xml:space="preserve">
-    <value>По умолчанию</value>
-  </data>
-  <data name="ThumbnailViewClickAction_EditImage" xml:space="preserve">
-    <value>Редактировать изображение</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFile" xml:space="preserve">
-    <value>Открыть файл</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFolder" xml:space="preserve">
-    <value>Открыть папку</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenImageViewer" xml:space="preserve">
-    <value>Открыть просмотр изображений</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenURL" xml:space="preserve">
-    <value>Открыть ссылку</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Select" xml:space="preserve">
-    <value>Выбрать</value>
-  </data>
   <data name="ToastClickAction_AnnotateImage" xml:space="preserve">
     <value>Пометить изображение</value>
   </data>

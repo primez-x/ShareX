@@ -1227,33 +1227,6 @@
   <data name="TextDestination_FileUploader" xml:space="preserve">
     <value>파일 업로더</value>
   </data>
-  <data name="ThumbnailTitleLocation_Bottom" xml:space="preserve">
-    <value>아래쪽</value>
-  </data>
-  <data name="ThumbnailTitleLocation_Top" xml:space="preserve">
-    <value>위쪽</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Default" xml:space="preserve">
-    <value>기본값</value>
-  </data>
-  <data name="ThumbnailViewClickAction_EditImage" xml:space="preserve">
-    <value>편집 이미지</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFile" xml:space="preserve">
-    <value>열기 파일</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFolder" xml:space="preserve">
-    <value>열기 폴더</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenImageViewer" xml:space="preserve">
-    <value>열기 이미지 viewer</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenURL" xml:space="preserve">
-    <value>열기 URL</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Select" xml:space="preserve">
-    <value>선택</value>
-  </data>
   <data name="ToastClickAction_AnnotateImage" xml:space="preserve">
     <value>편집 이미지</value>
   </data>

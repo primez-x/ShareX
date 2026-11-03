@@ -640,17 +640,11 @@
   <data name="ApplicationSettingsWindow_ShowProgressInTrayIcon" xml:space="preserve">
     <value>在系統匣圖示顯示進度</value>
   </data>
-  <data name="ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup" xml:space="preserve">
-    <value>啟動時在主視窗中顯示最近的排程</value>
-  </data>
   <data name="ApplicationSettingsWindow_ShowRecentTasksInTrayMenu" xml:space="preserve">
     <value>在系統匣選單顯示最近的排程</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowShareXInSendToMenu" xml:space="preserve">
     <value>在「傳送到」選單中顯示 ShareX</value>
-  </data>
-  <data name="ApplicationSettingsWindow_ShowTitle" xml:space="preserve">
-    <value>顯示標題</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowTrayIcon" xml:space="preserve">
     <value>顯示系統匣圖示</value>
@@ -679,17 +673,11 @@
   <data name="ApplicationSettingsWindow_TheseFormatsAppearUnderTheCopySubmenuInTheMainWindowContextMenu" xml:space="preserve">
     <value>這些格式會顯示在主視窗內容功能表的「複製」子功能表中。</value>
   </data>
-  <data name="ApplicationSettingsWindow_ThumbnailClickActionLabel" xml:space="preserve">
-    <value>點擊縮圖的操作：</value>
-  </data>
   <data name="ApplicationSettingsWindow_ThumbnailSizeLabel" xml:space="preserve">
     <value>縮圖大小：</value>
   </data>
   <data name="ApplicationSettingsWindow_ThumbnailView" xml:space="preserve">
     <value>縮圖模式</value>
-  </data>
-  <data name="ApplicationSettingsWindow_TitleLocationLabel" xml:space="preserve">
-    <value>標題位置：</value>
   </data>
   <data name="ApplicationSettingsWindow_TopCenter" xml:space="preserve">
     <value>上中</value>

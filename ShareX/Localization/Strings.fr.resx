@@ -640,17 +640,11 @@
   <data name="ApplicationSettingsWindow_ShowProgressInTrayIcon" xml:space="preserve">
     <value>Afficher la progression dans l’icône de la zone de notification</value>
   </data>
-  <data name="ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup" xml:space="preserve">
-    <value>Afficher les tâches récentes dans la fenêtre principale au démarrage</value>
-  </data>
   <data name="ApplicationSettingsWindow_ShowRecentTasksInTrayMenu" xml:space="preserve">
     <value>Afficher les tâches récentes dans le menu de la zone de notification</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowShareXInSendToMenu" xml:space="preserve">
     <value>Afficher ShareX dans le menu « Envoyer vers »</value>
-  </data>
-  <data name="ApplicationSettingsWindow_ShowTitle" xml:space="preserve">
-    <value>Afficher le titre</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowTrayIcon" xml:space="preserve">
     <value>Afficher l’icône de la zone de notification</value>
@@ -679,17 +673,11 @@
   <data name="ApplicationSettingsWindow_TheseFormatsAppearUnderTheCopySubmenuInTheMainWindowContextMenu" xml:space="preserve">
     <value>Ces formats apparaissent dans le sous-menu Copier du menu contextuel de la fenêtre principale.</value>
   </data>
-  <data name="ApplicationSettingsWindow_ThumbnailClickActionLabel" xml:space="preserve">
-    <value>Action lors d’un clic sur une miniature :</value>
-  </data>
   <data name="ApplicationSettingsWindow_ThumbnailSizeLabel" xml:space="preserve">
     <value>Taille des miniatures :</value>
   </data>
   <data name="ApplicationSettingsWindow_ThumbnailView" xml:space="preserve">
     <value>Vue des miniatures</value>
-  </data>
-  <data name="ApplicationSettingsWindow_TitleLocationLabel" xml:space="preserve">
-    <value>Emplacement du titre :</value>
   </data>
   <data name="ApplicationSettingsWindow_TopCenter" xml:space="preserve">
     <value>En haut au centre</value>

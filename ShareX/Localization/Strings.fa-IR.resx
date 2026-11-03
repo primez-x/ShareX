@@ -640,17 +640,11 @@
   <data name="ApplicationSettingsWindow_ShowProgressInTrayIcon" xml:space="preserve">
     <value>نشان دادن پیشرفت در نوار وظیفه:</value>
   </data>
-  <data name="ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup" xml:space="preserve">
-    <value>وظایف اخیر را در پنجره اصلی نشان بده</value>
-  </data>
   <data name="ApplicationSettingsWindow_ShowRecentTasksInTrayMenu" xml:space="preserve">
     <value>در Tray Menu وظایف اخیر را نشان بده</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowShareXInSendToMenu" xml:space="preserve">
     <value>شیر ایکس را در منوی ارسال به ویندوز اضافه کن</value>
-  </data>
-  <data name="ApplicationSettingsWindow_ShowTitle" xml:space="preserve">
-    <value>نمایش عنوان</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowTrayIcon" xml:space="preserve">
     <value>نشان دادن آیکن در نوار وظیفه:</value>
@@ -679,17 +673,11 @@
   <data name="ApplicationSettingsWindow_TheseFormatsAppearUnderTheCopySubmenuInTheMainWindowContextMenu" xml:space="preserve">
     <value>این قالب‌ها در زیرمنوی «کپی» از منوی زمینه‌ای پنجرهٔ اصلی نمایش داده می‌شوند.</value>
   </data>
-  <data name="ApplicationSettingsWindow_ThumbnailClickActionLabel" xml:space="preserve">
-    <value>عمل کلیک روی بندانگشتی:</value>
-  </data>
   <data name="ApplicationSettingsWindow_ThumbnailSizeLabel" xml:space="preserve">
     <value>اندازه بندانگشتی:</value>
   </data>
   <data name="ApplicationSettingsWindow_ThumbnailView" xml:space="preserve">
     <value>نمای بندانگشتی</value>
-  </data>
-  <data name="ApplicationSettingsWindow_TitleLocationLabel" xml:space="preserve">
-    <value>محل عنوان:</value>
   </data>
   <data name="ApplicationSettingsWindow_TopCenter" xml:space="preserve">
     <value>بالا وسط</value>

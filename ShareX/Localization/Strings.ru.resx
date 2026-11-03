@@ -640,17 +640,11 @@
   <data name="ApplicationSettingsWindow_ShowProgressInTrayIcon" xml:space="preserve">
     <value>Показывать прогресс на иконке в трее</value>
   </data>
-  <data name="ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup" xml:space="preserve">
-    <value>Показывать последние задачи в основном окне при запуске</value>
-  </data>
   <data name="ApplicationSettingsWindow_ShowRecentTasksInTrayMenu" xml:space="preserve">
     <value>Показывать последние задачи в трее</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowShareXInSendToMenu" xml:space="preserve">
     <value>Показывать ShareX в меню "Отправить"</value>
-  </data>
-  <data name="ApplicationSettingsWindow_ShowTitle" xml:space="preserve">
-    <value>Показывать заголовки</value>
   </data>
   <data name="ApplicationSettingsWindow_ShowTrayIcon" xml:space="preserve">
     <value>Показывать иконку в трее</value>
@@ -679,17 +673,11 @@
   <data name="ApplicationSettingsWindow_TheseFormatsAppearUnderTheCopySubmenuInTheMainWindowContextMenu" xml:space="preserve">
     <value>Эти форматы отображаются в подменю «Копировать» контекстного меню главного окна.</value>
   </data>
-  <data name="ApplicationSettingsWindow_ThumbnailClickActionLabel" xml:space="preserve">
-    <value>Действие при нажатии:</value>
-  </data>
   <data name="ApplicationSettingsWindow_ThumbnailSizeLabel" xml:space="preserve">
     <value>Размер миниатюры:</value>
   </data>
   <data name="ApplicationSettingsWindow_ThumbnailView" xml:space="preserve">
     <value>Режим списка</value>
-  </data>
-  <data name="ApplicationSettingsWindow_TitleLocationLabel" xml:space="preserve">
-    <value>Положение заголовка:</value>
   </data>
   <data name="ApplicationSettingsWindow_TopCenter" xml:space="preserve">
     <value>Сверху по центру</value>

@@ -1231,33 +1231,6 @@ namespace ShareX.HelpersLib.Localization {
         public static string TextDestination_FileUploader {
             get { return ResourceManager.GetString("TextDestination_FileUploader", resourceCulture); }
         }
-        public static string ThumbnailTitleLocation_Bottom {
-            get { return ResourceManager.GetString("ThumbnailTitleLocation_Bottom", resourceCulture); }
-        }
-        public static string ThumbnailTitleLocation_Top {
-            get { return ResourceManager.GetString("ThumbnailTitleLocation_Top", resourceCulture); }
-        }
-        public static string ThumbnailViewClickAction_Default {
-            get { return ResourceManager.GetString("ThumbnailViewClickAction_Default", resourceCulture); }
-        }
-        public static string ThumbnailViewClickAction_EditImage {
-            get { return ResourceManager.GetString("ThumbnailViewClickAction_EditImage", resourceCulture); }
-        }
-        public static string ThumbnailViewClickAction_OpenFile {
-            get { return ResourceManager.GetString("ThumbnailViewClickAction_OpenFile", resourceCulture); }
-        }
-        public static string ThumbnailViewClickAction_OpenFolder {
-            get { return ResourceManager.GetString("ThumbnailViewClickAction_OpenFolder", resourceCulture); }
-        }
-        public static string ThumbnailViewClickAction_OpenImageViewer {
-            get { return ResourceManager.GetString("ThumbnailViewClickAction_OpenImageViewer", resourceCulture); }
-        }
-        public static string ThumbnailViewClickAction_OpenURL {
-            get { return ResourceManager.GetString("ThumbnailViewClickAction_OpenURL", resourceCulture); }
-        }
-        public static string ThumbnailViewClickAction_Select {
-            get { return ResourceManager.GetString("ThumbnailViewClickAction_Select", resourceCulture); }
-        }
         public static string ToastClickAction_AnnotateImage {
             get { return ResourceManager.GetString("ToastClickAction_AnnotateImage", resourceCulture); }
         }

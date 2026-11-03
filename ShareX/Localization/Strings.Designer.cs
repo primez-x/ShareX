@@ -1341,16 +1341,6 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("ApplicationSettingsWindow_ThumbnailView", resourceCulture);
             }
         }
-        public static string ApplicationSettingsWindow_ShowTitle {
-            get {
-                return ResourceManager.GetString("ApplicationSettingsWindow_ShowTitle", resourceCulture);
-            }
-        }
-        public static string ApplicationSettingsWindow_TitleLocationLabel {
-            get {
-                return ResourceManager.GetString("ApplicationSettingsWindow_TitleLocationLabel", resourceCulture);
-            }
-        }
         public static string ApplicationSettingsWindow_ThumbnailSizeLabel {
             get {
                 return ResourceManager.GetString("ApplicationSettingsWindow_ThumbnailSizeLabel", resourceCulture);
@@ -1359,11 +1349,6 @@ namespace ShareX.Localization {
         public static string ApplicationSettingsWindow_Reset {
             get {
                 return ResourceManager.GetString("ApplicationSettingsWindow_Reset", resourceCulture);
-            }
-        }
-        public static string ApplicationSettingsWindow_ThumbnailClickActionLabel {
-            get {
-                return ResourceManager.GetString("ApplicationSettingsWindow_ThumbnailClickActionLabel", resourceCulture);
             }
         }
         public static string ApplicationSettingsWindow_ClipboardFormats {
@@ -1439,11 +1424,6 @@ namespace ShareX.Localization {
         public static string ApplicationSettingsWindow_MaximumNumberOfTasksToSaveLabel {
             get {
                 return ResourceManager.GetString("ApplicationSettingsWindow_MaximumNumberOfTasksToSaveLabel", resourceCulture);
-            }
-        }
-        public static string ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup {
-            get {
-                return ResourceManager.GetString("ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup", resourceCulture);
             }
         }
         public static string ApplicationSettingsWindow_ShowRecentTasksInTrayMenu {

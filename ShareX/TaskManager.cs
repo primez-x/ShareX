@@ -416,17 +416,5 @@ namespace ShareX
                 }
             });
         }
-
-        public static void AddRecentTasksToMainWindow()
-        {
-            if (Tasks.Count == 0)
-            {
-                foreach (RecentTask recentTask in RecentManager.Tasks)
-                {
-                    WorkerTask task = WorkerTask.CreateHistoryTask(recentTask);
-                    Start(task);
-                }
-            }
-        }
     }
 }

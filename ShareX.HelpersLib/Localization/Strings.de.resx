@@ -1227,33 +1227,6 @@ Möchten Sie es dennoch ausführen?</value>
   <data name="TextDestination_FileUploader" xml:space="preserve">
     <value>Dateiuploader</value>
   </data>
-  <data name="ThumbnailTitleLocation_Bottom" xml:space="preserve">
-    <value>Unten</value>
-  </data>
-  <data name="ThumbnailTitleLocation_Top" xml:space="preserve">
-    <value>Oben</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Default" xml:space="preserve">
-    <value>Standard</value>
-  </data>
-  <data name="ThumbnailViewClickAction_EditImage" xml:space="preserve">
-    <value>Bild bearbeiten</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFile" xml:space="preserve">
-    <value>Datei öffnen</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFolder" xml:space="preserve">
-    <value>Ordner öffnen</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenImageViewer" xml:space="preserve">
-    <value>Bildbetrachter öffnen</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenURL" xml:space="preserve">
-    <value>URL öffnen</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Select" xml:space="preserve">
-    <value>Auswählen</value>
-  </data>
   <data name="ToastClickAction_AnnotateImage" xml:space="preserve">
     <value>Bild bearbeiten</value>
   </data>

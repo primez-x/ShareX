@@ -1227,33 +1227,6 @@
   <data name="TextDestination_FileUploader" xml:space="preserve">
     <value>שירות העלאת קבצים</value>
   </data>
-  <data name="ThumbnailTitleLocation_Bottom" xml:space="preserve">
-    <value>למטה</value>
-  </data>
-  <data name="ThumbnailTitleLocation_Top" xml:space="preserve">
-    <value>למעלה</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Default" xml:space="preserve">
-    <value>ברירת מחדל</value>
-  </data>
-  <data name="ThumbnailViewClickAction_EditImage" xml:space="preserve">
-    <value>ערוך תמונה</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFile" xml:space="preserve">
-    <value>פתח קובץ</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFolder" xml:space="preserve">
-    <value>פתח תיקייה</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenImageViewer" xml:space="preserve">
-    <value>פתח מציג תמונה</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenURL" xml:space="preserve">
-    <value>פתח קישור</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Select" xml:space="preserve">
-    <value>בחר</value>
-  </data>
   <data name="ToastClickAction_AnnotateImage" xml:space="preserve">
     <value>ערוך תמונה</value>
   </data>

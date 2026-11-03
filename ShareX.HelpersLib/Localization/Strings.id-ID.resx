@@ -1227,33 +1227,6 @@ Apakah Anda tetap ingin menjalankannya?</value>
   <data name="TextDestination_FileUploader" xml:space="preserve">
     <value>Pengunggah file</value>
   </data>
-  <data name="ThumbnailTitleLocation_Bottom" xml:space="preserve">
-    <value>Bawah</value>
-  </data>
-  <data name="ThumbnailTitleLocation_Top" xml:space="preserve">
-    <value>Atas</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Default" xml:space="preserve">
-    <value>Bawaan</value>
-  </data>
-  <data name="ThumbnailViewClickAction_EditImage" xml:space="preserve">
-    <value>Edit gambar</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFile" xml:space="preserve">
-    <value>Buka file</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenFolder" xml:space="preserve">
-    <value>Buka folder</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenImageViewer" xml:space="preserve">
-    <value>Buka penampil gambar</value>
-  </data>
-  <data name="ThumbnailViewClickAction_OpenURL" xml:space="preserve">
-    <value>Buka URL</value>
-  </data>
-  <data name="ThumbnailViewClickAction_Select" xml:space="preserve">
-    <value>Pilih</value>
-  </data>
   <data name="ToastClickAction_AnnotateImage" xml:space="preserve">
     <value>Edit gambar</value>
   </data>

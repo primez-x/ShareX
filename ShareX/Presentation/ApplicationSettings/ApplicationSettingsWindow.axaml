@@ -333,21 +333,12 @@
                             <Border Classes="section-card" controls:SettingsSearch.IsPanel="True">
                                 <StackPanel Spacing="6">
                                     <TextBlock Classes="section-title" Text="{x:Static res:Strings.ApplicationSettingsWindow_ThumbnailView}"/>
-                                    <CheckBox Classes="setting" Content="{x:Static res:Strings.ApplicationSettingsWindow_ShowTitle}" IsChecked="{Binding ShowThumbnailTitle, Mode=TwoWay}"/>
-                                    <Grid ColumnDefinitions="180,*" ColumnSpacing="8">
-                                        <TextBlock Text="{x:Static res:Strings.ApplicationSettingsWindow_TitleLocationLabel}" VerticalAlignment="Center" FontWeight="Normal"/>
-                                        <ComboBox Grid.Column="1" Classes="form-control" ItemsSource="{Binding ThumbnailTitleLocationOptions}" SelectedItem="{Binding SelectedThumbnailTitleLocation, Mode=TwoWay}"/>
-                                    </Grid>
                                     <Grid ColumnDefinitions="180,130,Auto,130,Auto" ColumnSpacing="8">
                                         <TextBlock Text="{x:Static res:Strings.ApplicationSettingsWindow_ThumbnailSizeLabel}" VerticalAlignment="Center" FontWeight="Normal"/>
                                         <NumericUpDown Grid.Column="1" Classes="form-control" Minimum="50" Maximum="500" Value="{Binding ThumbnailWidth, Mode=TwoWay}"/>
                                         <TextBlock Grid.Column="2" Text="×" VerticalAlignment="Center"/>
                                         <NumericUpDown Grid.Column="3" Classes="form-control" Minimum="50" Maximum="500" Value="{Binding ThumbnailHeight, Mode=TwoWay}"/>
                                         <Button Grid.Column="4" Classes="compact" Content="{x:Static res:Strings.ApplicationSettingsWindow_Reset}" Click="OnResetThumbnailSizeClick"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="180,*" ColumnSpacing="8">
-                                        <TextBlock Text="{x:Static res:Strings.ApplicationSettingsWindow_ThumbnailClickActionLabel}" VerticalAlignment="Center" FontWeight="Normal"/>
-                                        <ComboBox Grid.Column="1" Classes="form-control" ItemsSource="{Binding ThumbnailClickActionOptions}" SelectedItem="{Binding SelectedThumbnailClickAction, Mode=TwoWay}"/>
                                     </Grid>
                                 </StackPanel>
                             </Border>
@@ -438,7 +429,6 @@
                                         <TextBlock Text="{x:Static res:Strings.ApplicationSettingsWindow_MaximumNumberOfTasksToSaveLabel}" VerticalAlignment="Center" FontWeight="Normal"/>
                                         <NumericUpDown Grid.Column="1" Classes="form-control" Minimum="1" Maximum="10000" Value="{Binding RecentTasksMaxCount, Mode=TwoWay}"/>
                                     </Grid>
-                                    <CheckBox Classes="setting" Content="{x:Static res:Strings.ApplicationSettingsWindow_ShowRecentTasksInMainWindowOnStartup}" IsChecked="{Binding RecentTasksShowInMainWindow, Mode=TwoWay}"/>
                                     <CheckBox Classes="setting" Content="{x:Static res:Strings.ApplicationSettingsWindow_ShowRecentTasksInTrayMenu}" IsChecked="{Binding RecentTasksShowInTrayMenu, Mode=TwoWay}"/>
                                     <CheckBox Classes="setting" Content="{x:Static res:Strings.ApplicationSettingsWindow_InTrayMenuShowMostRecentTasksFirst}" IsChecked="{Binding RecentTasksTrayMenuMostRecentFirst, Mode=TwoWay}"/>
                                 </StackPanel>

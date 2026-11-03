@@ -76,7 +76,6 @@ namespace ShareX
                 }
 
                 UpdateTrayMenu();
-                UpdateMainWindowList();
             }
         }
 
@@ -138,14 +137,6 @@ namespace ShareX
         private void UpdateTrayMenu()
         {
             MainWindowIntegration.RefreshMenus();
-        }
-
-        private void UpdateMainWindowList()
-        {
-            if (ApplicationState.Settings.RecentTasksSave && ApplicationState.Settings.RecentTasksShowInMainWindow && Tasks.Count > 0)
-            {
-                TaskManager.AddRecentTasksToMainWindow();
-            }
         }
     }
 }

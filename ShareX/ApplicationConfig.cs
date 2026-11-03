@@ -103,10 +103,7 @@ namespace ShareX
 
         #region Main window
 
-        public bool ShowThumbnailTitle = true;
-        public ThumbnailTitleLocation ThumbnailTitleLocation = ThumbnailTitleLocation.Top;
         public Size ThumbnailSize = new Size(200, 150);
-        public ThumbnailViewClickAction ThumbnailClickAction = ThumbnailViewClickAction.Default;
         public List<string> HiddenTools = new List<string>();
 
         #endregion Main window
@@ -133,7 +130,6 @@ namespace ShareX
         public RecentTask[] RecentTasks = null;
         public bool RecentTasksSave = false;
         public int RecentTasksMaxCount = 10;
-        public bool RecentTasksShowInMainWindow = true;
         public bool RecentTasksShowInTrayMenu = true;
         public bool RecentTasksTrayMenuMostRecentFirst = false;
 
