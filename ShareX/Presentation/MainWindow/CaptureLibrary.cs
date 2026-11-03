@@ -56,6 +56,9 @@ internal sealed class CaptureLibrary : IDisposable
 
     private readonly ThumbnailGallery<CaptureLibraryItem> _gallery = new();
     private readonly HashSet<string> _historyPaths = new(StringComparer.OrdinalIgnoreCase);
+
+    // History items of files that a failed task card shows. The history card returns when the task card goes away.
+    private readonly Dictionary<string, HistoryItem> _historyBehindFailedTasks = new(StringComparer.OrdinalIgnoreCase);
     private int _thumbnailWidth;
     private int _thumbnailHeight;
     private long _cursor;
@@ -92,6 +95,7 @@ internal sealed class CaptureLibrary : IDisposable
         _version++;
         _gallery.Clear();
         _historyPaths.Clear();
+        _historyBehindFailedTasks.Clear();
         _cursor = 0;
         _hasMore = true;
         _loading = false;
@@ -131,7 +135,7 @@ internal sealed class CaptureLibrary : IDisposable
 
             foreach (HistoryItem item in batch.Items)
             {
-                if (_historyPaths.Add(item.FilePath))
+                if (_historyPaths.Add(item.FilePath) && !HideBehindFailedTask(item))
                 {
                     _gallery.Add(new CaptureLibraryItem(item, _thumbnailWidth, _thumbnailHeight));
                 }
@@ -220,6 +224,8 @@ internal sealed class CaptureLibrary : IDisposable
         CaptureLibraryItem? item = _gallery.Items.FirstOrDefault(x => ReferenceEquals(x.Task, task));
         bool show = !_disposed && TaskManager.Tasks.Contains(task) && ShouldShowTask(task);
 
+        string? filePath = task.Info?.FilePath;
+
         if (show && item == null)
         {
             _gallery.Insert(0, new CaptureLibraryItem(task, _thumbnailWidth, _thumbnailHeight));
@@ -227,21 +233,64 @@ internal sealed class CaptureLibrary : IDisposable
         else if (!show && item != null)
         {
             _gallery.Remove(item);
+
+            // The failed task card covered the history card of the same file. Show the history card again.
+            if (!string.IsNullOrEmpty(filePath) && _historyBehindFailedTasks.Remove(filePath, out HistoryItem? hidden))
+            {
+                _gallery.Insert(TaskCount, new CaptureLibraryItem(hidden, _thumbnailWidth, _thumbnailHeight));
+            }
         }
         else
         {
             item?.RefreshTask();
         }
+
+        // A failed task card shows the file with the errors, so the history card of the same file is hidden.
+        if (show && task.Status == TaskStatus.Failed && !string.IsNullOrEmpty(filePath))
+        {
+            CaptureLibraryItem? historyCard = _gallery.Items.FirstOrDefault(x => x.History != null &&
+                string.Equals(x.History.FilePath, filePath, StringComparison.OrdinalIgnoreCase));
+
+            if (historyCard != null)
+            {
+                _historyBehindFailedTasks[filePath] = historyCard.History!;
+                _gallery.Remove(historyCard);
+            }
+        }
+    }
+
+    private bool HideBehindFailedTask(HistoryItem item)
+    {
+        bool failedTaskShows = _gallery.Items.Any(x => x.Task?.Status == TaskStatus.Failed &&
+            string.Equals(x.Task.Info?.FilePath, item.FilePath, StringComparison.OrdinalIgnoreCase));
+
+        if (failedTaskShows)
+        {
+            _historyBehindFailedTasks[item.FilePath] = item;
+        }
+
+        return failedTaskShows;
+    }
+
+    /// <summary>Removes the cards of a deleted file. The history items stay, so upload links and deletion links are kept.</summary>
+    public void RemoveFile(string filePath)
+    {
+        _historyBehindFailedTasks.Remove(filePath);
+
+        foreach (CaptureLibraryItem item in _gallery.Items.Where(x => x.History != null &&
+            string.Equals(x.History.FilePath, filePath, StringComparison.OrdinalIgnoreCase)).ToArray())
+        {
+            _gallery.Remove(item);
+        }
+
+        ItemsChanged?.Invoke();
     }
 
     private bool ShouldShowTask(WorkerTask task)
     {
         TaskInfo? info = task.Info;
         if (info == null || !Matches(info.FileName, info.FilePath)) return false;
-        if (task.IsBusy) return true;
-
-        // A failed task with a file also has a history item. The history card then shows the file.
-        return task.Status == TaskStatus.Failed && (string.IsNullOrEmpty(info.FilePath) || !_historyPaths.Contains(info.FilePath));
+        return task.IsBusy || task.Status == TaskStatus.Failed;
     }
 
     private int TaskCount => _gallery.Items.TakeWhile(x => x.IsTask).Count();
@@ -252,6 +301,15 @@ internal sealed class CaptureLibrary : IDisposable
 
         foreach (HistoryItem item in e.Items.OrderBy(x => x.Id))
         {
+            // Keep the history item behind a failed task card current, so the card that returns later is correct.
+            if (!string.IsNullOrEmpty(item.FilePath) && _historyBehindFailedTasks.TryGetValue(item.FilePath, out HistoryItem? hidden) &&
+                (hidden.Id == item.Id || e.Kind == HistoryChangeKind.Added))
+            {
+                if (e.Kind == HistoryChangeKind.Deleted) _historyBehindFailedTasks.Remove(item.FilePath);
+                else _historyBehindFailedTasks[item.FilePath] = item;
+                continue;
+            }
+
             // An added item replaces the older card of the same file.
             CaptureLibraryItem? existing = _gallery.Items.FirstOrDefault(x => x.History != null &&
                 (x.History.Id == item.Id || (e.Kind == HistoryChangeKind.Added &&
@@ -274,7 +332,7 @@ internal sealed class CaptureLibrary : IDisposable
             if (e.Kind == HistoryChangeKind.Added) index = TaskCount;
 
             if (!string.IsNullOrEmpty(item.FilePath) && Matches(item.FileName, item.FilePath) && File.Exists(item.FilePath) &&
-                _historyPaths.Add(item.FilePath))
+                _historyPaths.Add(item.FilePath) && !HideBehindFailedTask(item))
             {
                 _gallery.Insert(index, new CaptureLibraryItem(item, _thumbnailWidth, _thumbnailHeight));
             }

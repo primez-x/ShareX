@@ -326,7 +326,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         return new DrawingSize(Math.Max(96, size.Width), Math.Max(72, size.Height));
     }
 
-    private void ReloadLibrary()
+    internal void ReloadLibrary()
     {
         if (_disposed || !_libraryStarted) return;
 
@@ -629,12 +629,19 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         PreviewSizeLabel.IsVisible = PreviewSize.IsVisible = !string.IsNullOrEmpty(PreviewSize.Text);
     }
 
+    private static bool HasErrors(CaptureLibraryItem? item) =>
+        item?.Task?.Status == TaskStatus.Failed && item.Task.Info?.Result?.IsError == true;
+
+    private void OnShowErrorsClick(object? sender, RoutedEventArgs e) => _selected?.Task?.ShowErrorWindow();
+
     private void UpdatePreviewActions()
     {
         CaptureLibraryItem? item = _selected;
         bool fileExists = item != null && TryGetExistingFile(item, out _);
         bool isWorking = item?.Task?.IsWorking == true;
 
+        // A failed upload shows the way to the error details first, so the abnormal state is obvious.
+        ShowErrorsButton.IsVisible = HasErrors(item);
         EditButton.IsVisible = fileExists && item!.IsImage && !isWorking;
         OpenButton.IsEnabled = fileExists;
         CopyButton.IsEnabled = fileExists;
@@ -719,7 +726,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             MainMenuEntry.Separator(),
             new(Strings.MainWindow_StopUpload, LucideIcons.circle_stop, () => task?.Stop(), isVisible: isWorking),
             new(Strings.MainWindow_ShowErrors, LucideIcons.triangle_alert, () => task?.ShowErrorWindow(),
-                isVisible: task?.Status == TaskStatus.Failed && task.Info?.Result?.IsError == true),
+                isVisible: HasErrors(item)),
             new(Strings.MainWindow_RemoveFromList, LucideIcons.list_x, () => TaskManager.Remove(task),
                 isVisible: task != null && !isWorking),
             MainMenuEntry.Separator(),
@@ -786,7 +793,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         if (TryGetExistingFile(item, out string filePath) && CanShare(filePath)) UploadManager.UploadFile(filePath);
     }
 
-    private static void DeleteItem(CaptureLibraryItem item)
+    private void DeleteItem(CaptureLibraryItem item)
     {
         if (!TryGetExistingFile(item, out string filePath) || item.Task?.IsWorking == true ||
             MessageBox.Show(Strings.MainForm_tsmiDeleteSelectedFile_Click_Do_you_really_want_to_delete_this_file_,
@@ -798,10 +805,10 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         FileHelpers.DeleteFile(filePath, true);
 
-        // The history change event and the task removal event remove the card.
+        // Only the file is deleted. The history item stays, so upload links and deletion links are kept.
         if (item.History != null)
         {
-            ApplicationState.HistoryManager?.Delete(item.History);
+            _library.RemoveFile(filePath);
         }
         else
         {

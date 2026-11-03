@@ -136,6 +136,9 @@ public static class MainWindowIntegration
 
     public static void RefreshMenus() => RunOnUiThread(() => _window?.RefreshMenus());
 
+    // A backup import or export reconnects History, so the library reads the new database.
+    public static void ReloadLibrary() => RunOnUiThread(() => _window?.ReloadLibrary());
+
     internal static void SetScreenshotDelay(decimal delay)
     {
         ApplicationState.DefaultTaskSettings.CaptureSettings.ScreenshotDelay = delay;

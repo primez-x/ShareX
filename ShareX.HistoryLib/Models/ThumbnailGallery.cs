@@ -395,7 +395,8 @@ public sealed class ThumbnailLoader : IDisposable
             DebugHelper.WriteException(ex);
         }
 
-        if (token.IsCancellationRequested || FileHelpers.IsVideoFile(filePath)) return null;
+        // Only image files can be decoded. Other files without a shell thumbnail get no thumbnail.
+        if (token.IsCancellationRequested || !FileHelpers.IsImageFile(filePath)) return null;
         using FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         AvaloniaBitmap thumbnail = AvaloniaBitmap.DecodeToWidth(stream, width);
         if (token.IsCancellationRequested)

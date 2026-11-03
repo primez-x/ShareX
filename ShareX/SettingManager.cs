@@ -474,6 +474,7 @@ namespace ShareX
                 if (history)
                 {
                     HistoryConnect();
+                    MainWindowIntegration.ReloadLibrary();
                 }
             }
 
@@ -501,6 +502,7 @@ namespace ShareX
             finally
             {
                 HistoryConnect();
+                MainWindowIntegration.ReloadLibrary();
             }
 
             return false;

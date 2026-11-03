@@ -574,6 +574,14 @@
                                 </Grid>
 
                                 <WrapPanel Orientation="Horizontal">
+                                    <Button x:Name="ShowErrorsButton" Classes="preview-action"
+                                            AutomationProperties.Name="{x:Static res:Strings.MainWindow_ShowErrors}"
+                                            Click="OnShowErrorsClick">
+                                        <StackPanel Orientation="Horizontal" Spacing="7">
+                                            <TextBlock Classes="icon" Text="{x:Static theming:LucideIcons.triangle_alert}"/>
+                                            <TextBlock Text="{x:Static res:Strings.MainWindow_ShowErrors}"/>
+                                        </StackPanel>
+                                    </Button>
                                     <Button x:Name="EditButton" Classes="preview-action active"
                                             AutomationProperties.Name="{x:Static res:Strings.MainWindow_Edit}"
                                             Click="OnEditClick">
