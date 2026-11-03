@@ -43,7 +43,9 @@ namespace ShareX.ScreenCaptureLib
         public bool QuickCapture = true;
         public bool DetectWindows = true;
         public bool DetectControls = true;
-        public bool ActiveMonitorMode = false;
+        // One overlay window across every monitor repaints the whole virtual screen on each mouse move, which is slow on
+        // large or USB (DisplayLink) multi-monitor setups. The monitor under the cursor alone redraws about 3 to 4 times faster.
+        public bool ActiveMonitorOnly = true;
         public int BackgroundDimStrength = 20;
         public bool DimAllExceptSelection = false;
         public List<ImageEditorToolbarItemOptions> ToolbarItems = new List<ImageEditorToolbarItemOptions>();

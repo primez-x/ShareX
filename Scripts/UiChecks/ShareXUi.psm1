@@ -38,9 +38,13 @@ function Reset-SxApp([string]$Repo = (Split-Path (Split-Path $PSScriptRoot -Pare
     $config = $ConfigJson | ConvertFrom-Json
     $config | Add-Member -NotePropertyName PrintScreenKeyQuestionAsked -NotePropertyValue $true -Force
     [IO.File]::WriteAllText((Join-Path $script:Profile 'ApplicationConfig.json'), ($config | ConvertTo-Json -Depth 10))
+    # No hotkeys by default: a running ShareX already owns Print Screen, and a clash opens a blocking warning. Checks that need hotkeys write their own.
+    [IO.File]::WriteAllText((Join-Path $script:Profile 'HotkeysConfig.json'), '{"Hotkeys": []}')
 }
 
 function Start-SxApp([string[]]$Arguments = @('-portable')) {
+    # -multi keeps the test app separate. Without -multi a running ShareX receives the arguments and runs them on the real profile.
+    if ($Arguments -notcontains '-multi') { $Arguments += '-multi' }
     Start-Process -FilePath (Join-Path $script:App 'ShareX.exe') -ArgumentList $Arguments -WorkingDirectory $script:App -PassThru
 }
 

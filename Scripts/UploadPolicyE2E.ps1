@@ -69,7 +69,8 @@ $nm = Join-Path $out 'shorten.json'
 [IO.File]::WriteAllText($nm, '{"Action":"ShortenURL","URL":"https://example.com/a-long-url"}', $utf8)
 
 function Invoke-ShareX([string[]]$arguments, [int]$timeoutSec = 90) {
-    $p = Start-Process -FilePath $exe -ArgumentList $arguments -WorkingDirectory $app -PassThru
+    # -multi keeps the test app separate. Without -multi a running ShareX receives the arguments and runs them on the real profile.
+    $p = Start-Process -FilePath $exe -ArgumentList ($arguments + '-multi') -WorkingDirectory $app -PassThru
     if (-not $p.WaitForExit($timeoutSec * 1000)) {
         Stop-Process -Id $p.Id -Force
         return "TIMEOUT"
@@ -128,7 +129,7 @@ public static class Win {
 '@
 
 [void][Win]::SetProcessDPIAware()
-$p = Start-Process -FilePath $exe -ArgumentList @("`"$png`"", '-portable', '-silent') -WorkingDirectory $app -PassThru
+$p = Start-Process -FilePath $exe -ArgumentList @("`"$png`"", '-portable', '-silent', '-multi') -WorkingDirectory $app -PassThru
 Start-Sleep -Seconds 15
 $i = 0
 foreach ($h in [Win]::For([uint32]$p.Id)) {

@@ -227,7 +227,12 @@ public partial class SettingsWindow : Window
                 Hint(Strings.SettingsWindow_ImageFileFormatHint),
                 Check(Strings.SettingsWindow_ShowCursor,
                     () => DefaultTaskSettings.CaptureSettings.ShowCursor,
-                    value => DefaultTaskSettings.CaptureSettings.ShowCursor = value)));
+                    value => DefaultTaskSettings.CaptureSettings.ShowCursor = value)),
+            Card(Strings.SettingsWindow_RegionSelection,
+                Check(Strings.SettingsWindow_ActiveMonitorOnly,
+                    () => DefaultTaskSettings.CaptureSettings.RegionCaptureOptions.ActiveMonitorOnly,
+                    value => DefaultTaskSettings.CaptureSettings.RegionCaptureOptions.ActiveMonitorOnly = value),
+                Hint(Strings.SettingsWindow_ActiveMonitorOnlyHint)));
     }
 
     private Control BuildShortcutsPage(string id, string title, string icon)

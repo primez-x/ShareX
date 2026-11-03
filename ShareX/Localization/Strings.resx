@@ -3205,4 +3205,13 @@ Use Print Screen for ShareX instead? You can change this later in ShareX Setting
   <data name="SettingsWindow_UsePrintScreenKey" xml:space="preserve">
     <value>Use Print Screen for ShareX</value>
   </data>
+  <data name="SettingsWindow_RegionSelection" xml:space="preserve">
+    <value>Region selection</value>
+  </data>
+  <data name="SettingsWindow_ActiveMonitorOnly" xml:space="preserve">
+    <value>Select on one monitor at a time</value>
+  </data>
+  <data name="SettingsWindow_ActiveMonitorOnlyHint" xml:space="preserve">
+    <value>Region selection is much smoother, especially with several or USB monitors. Move the mouse to a monitor before you press Print Screen. Turn off to select a region across monitors.</value>
+  </data>
 </root>

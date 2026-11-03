@@ -164,6 +164,14 @@ public static class AvaloniaBootstrapper
             .UsePlatformDetect()
             .WithInterFont();
 
+        // Present windows through the redirection surface. The default WinUI composition presents a full-screen
+        // window much slower: region selection on a 5120x2160 monitor ran at about 31 fps with WinUI composition
+        // and about 50 to 60 fps with the redirection surface. Transparent windows (pin to screen, recording frame) still work.
+        builder = builder.With(new Win32PlatformOptions
+        {
+            CompositionMode = [Win32CompositionMode.RedirectionSurface]
+        });
+
 #if DEBUG
         builder = builder.LogToTrace();
 #endif

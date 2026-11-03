@@ -495,7 +495,7 @@ internal sealed class TaskSettingsPageBuilder
             EnabledCard(_captureOverride, Strings.TaskSettingsWindow_Selection,
                 Check(Strings.TaskSettingsWindow_QuickCapture, () => options.QuickCapture, value => options.QuickCapture = value),
                 Check(Strings.TaskSettingsWindow_DetectWindowRegions, detectWindows), detectControls,
-                Check(Strings.TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor, () => options.ActiveMonitorMode, value => options.ActiveMonitorMode = value),
+                Check(Strings.TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor, () => options.ActiveMonitorOnly, value => options.ActiveMonitorOnly = value),
                 Row(Strings.TaskSettingsWindow_BackgroundDimStrengthPercent, Number(() => options.BackgroundDimStrength, value => options.BackgroundDimStrength = (int)value, 0, 100)),
                 Check(Strings.TaskSettingsWindow_DimAllExceptCurrentSelection, () => options.DimAllExceptSelection, value => options.DimAllExceptSelection = value),
                 Button(Strings.TaskSettingsWindow_CustomizeToolbarWithEllipsis, () => _window.ShowRegionCaptureToolbarEditor(options))),

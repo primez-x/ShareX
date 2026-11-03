@@ -3,6 +3,9 @@
 # Leaves the Windows setting off (value 0) at the end. Stop any other ShareX that uses Print Screen first.
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'ShareXUi.psm1') -Force
+# Print Screen can have only one owner, so this check cannot run while another ShareX (not the test copy) is running.
+$otherShareX = Get-Process ShareX -ErrorAction SilentlyContinue | Where-Object { $_.Path -notlike '*\Temp\sharex-e2e\app\*' }
+if ($otherShareX) { "SKIPPED: close the running ShareX ($($otherShareX[0].Path)) first, because the running ShareX owns Print Screen."; return }
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type @'
 using System; using System.Runtime.InteropServices;

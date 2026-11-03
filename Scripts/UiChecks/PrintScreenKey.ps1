@@ -2,6 +2,9 @@
 # Turns the Windows Snipping Tool setting on for the test, answers "No", and restores the previous setting at the end. Needs Windows 11.
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'ShareXUi.psm1') -Force
+# Print Screen can have only one owner, so this check cannot run while another ShareX (not the test copy) is running.
+$otherShareX = Get-Process ShareX -ErrorAction SilentlyContinue | Where-Object { $_.Path -notlike '*\Temp\sharex-e2e\app\*' }
+if ($otherShareX) { "SKIPPED: close the running ShareX ($($otherShareX[0].Path)) first, because the running ShareX owns Print Screen."; return }
 Get-Process ShareX -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*\Temp\sharex-e2e\app\*' } | ForEach-Object { Stop-Process -Id $_.Id -Force; $_.WaitForExit(10000) | Out-Null }
 
 Reset-SxApp -ConfigJson '{"ShowStartScreen": false, "CapturePanelRunAtStartup": false}'

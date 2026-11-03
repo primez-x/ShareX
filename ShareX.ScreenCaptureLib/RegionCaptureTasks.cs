@@ -88,12 +88,12 @@ public static class RegionCaptureTasks
             CaptureCursor = false
         };
 
-        Rectangle screenBounds = options.ActiveMonitorMode
+        Rectangle screenBounds = options.ActiveMonitorOnly
             ? CaptureHelpers.GetActiveScreenBounds()
             : CaptureHelpers.GetScreenBounds();
 
         SKBitmap frozenScreenshot;
-        using (Bitmap canvas = options.ActiveMonitorMode
+        using (Bitmap canvas = options.ActiveMonitorOnly
             ? screenshot.CaptureActiveMonitor()
             : screenshot.CaptureFullscreen())
         {

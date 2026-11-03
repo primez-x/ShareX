@@ -4994,6 +4994,21 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("SettingsWindow_UsePrintScreenKey", resourceCulture);
             }
         }
+        public static string SettingsWindow_RegionSelection {
+            get {
+                return ResourceManager.GetString("SettingsWindow_RegionSelection", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ActiveMonitorOnly {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ActiveMonitorOnly", resourceCulture);
+            }
+        }
+        public static string SettingsWindow_ActiveMonitorOnlyHint {
+            get {
+                return ResourceManager.GetString("SettingsWindow_ActiveMonitorOnlyHint", resourceCulture);
+            }
+        }
         public static string WorkerTask_DestinationBlockedByUploadPolicy {
             get {
                 return ResourceManager.GetString("WorkerTask_DestinationBlockedByUploadPolicy", resourceCulture);
