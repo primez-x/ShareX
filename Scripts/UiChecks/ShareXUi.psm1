@@ -35,8 +35,10 @@ function Reset-SxApp([string]$Repo = (Split-Path (Split-Path $PSScriptRoot -Pare
     New-Item -ItemType Directory -Force $script:App, $script:Profile, $script:Out | Out-Null
     Copy-Item (Join-Path $Repo 'ShareX\bin\Debug\*') $script:App -Recurse -Force
     # Pre-answer the one-time Print Screen question, so the question does not block unattended checks.
+    # Mark Win+Shift+S as added, so the test copy does not take Win+Shift+S from the user. Checks that need the shortcut set the value to false.
     $config = $ConfigJson | ConvertFrom-Json
     $config | Add-Member -NotePropertyName PrintScreenKeyQuestionAsked -NotePropertyValue $true -Force
+    if ($null -eq $config.SnippingToolHotkeyAdded) { $config | Add-Member -NotePropertyName SnippingToolHotkeyAdded -NotePropertyValue $true }
     [IO.File]::WriteAllText((Join-Path $script:Profile 'ApplicationConfig.json'), ($config | ConvertTo-Json -Depth 10))
     # No hotkeys by default: a running ShareX already owns Print Screen, and a clash opens a blocking warning. Checks that need hotkeys write their own.
     [IO.File]::WriteAllText((Join-Path $script:Profile 'HotkeysConfig.json'), '{"Hotkeys": []}')

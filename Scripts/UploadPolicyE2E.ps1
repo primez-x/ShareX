@@ -34,7 +34,8 @@ $legacyApp = @'
   },
   "ShowTray": true,
   "ShowStartScreen": false,
-  "PrintScreenKeyQuestionAsked": true
+  "PrintScreenKeyQuestionAsked": true,
+  "SnippingToolHotkeyAdded": true
 }
 '@
 $legacyHotkeys = @'

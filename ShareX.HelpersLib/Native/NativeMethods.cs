@@ -143,6 +143,9 @@ namespace ShareX.HelpersLib
         public static extern short GetKeyState(int keyCode);
 
         [DllImport("user32.dll")]
+        public static extern short GetAsyncKeyState(int keyCode);
+
+        [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ClipCursor(in RECT rectangle);
 
@@ -245,6 +248,10 @@ namespace ShareX.HelpersLib
         [DllImport("user32.dll")]
         public static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
 
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
@@ -291,7 +298,7 @@ namespace ShareX.HelpersLib
         /// <param name="vk">Specifies the virtual-key code of the hot key</param>
         /// <returns><c>true</c> if the function succeeds, otherwise <c>false</c></returns>
         /// <seealso cref="http://msdn.microsoft.com/en-us/library/ms646309(VS.85).aspx"/>
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 

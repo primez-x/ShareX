@@ -348,6 +348,18 @@ namespace ShareX
                 fullScreenHotkey.HotkeyInfo.Hotkey = InputKey.Control | InputKey.PrintScreen;
             }
 
+            // Add Win+Shift+S one time, so a user who removes the shortcut later does not get the shortcut again.
+            if (!Settings.SnippingToolHotkeyAdded)
+            {
+                Settings.SnippingToolHotkeyAdded = true;
+
+                if (!HotkeysConfig.Hotkeys.Any(x => HotkeyManager.IsSnippingToolHotkey(x.HotkeyInfo)))
+                {
+                    int regionIndex = HotkeysConfig.Hotkeys.FindIndex(x => x.TaskSettings?.Job == HotkeyType.RectangleRegion);
+                    HotkeysConfig.Hotkeys.Insert(regionIndex < 0 ? HotkeysConfig.Hotkeys.Count : regionIndex + 1, HotkeyManager.SnippingToolHotkey());
+                }
+            }
+
             if (SystemOptions.DisableUpload)
             {
                 foreach (TaskSettings taskSettings in HotkeysConfig.Hotkeys.Select(x => x.TaskSettings))

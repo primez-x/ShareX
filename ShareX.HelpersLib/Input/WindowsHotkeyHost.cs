@@ -30,6 +30,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace ShareX.HelpersLib;
 
@@ -40,6 +42,13 @@ public sealed class WindowsHotkeyHost : IHotkeyHost
     private readonly Stopwatch repeatLimitTimer = Stopwatch.StartNew();
     private readonly HashSet<HotkeyInfo> registeredHotkeys = new();
     private WindowsNativeWindow window;
+    private const int ERROR_HOTKEY_ALREADY_REGISTERED = 1409;
+    // Windows keeps some Win shortcuts for itself, for example Win+Shift+S for Snipping Tool, so RegisterHotKey fails for them.
+    // A low-level keyboard hook sees the keys before Windows does, so ShareX takes these shortcuts with the hook instead.
+    private LowLevelHook keyboardHook;
+    private HookedHotkey[] hookedHotkeys = [];
+    private IntPtr hookWindow;
+    private HookedHotkey blockedHotkey; // Used only on the hook thread.
     private bool closing;
 
     public event HotkeyEventHandler HotkeyPress;
@@ -94,7 +103,11 @@ public sealed class WindowsHotkeyHost : IHotkeyHost
                 return;
             }
         }
-        if (!NativeMethods.RegisterHotKey(handle, hotkeyInfo.ID, (uint)hotkeyInfo.ModifiersEnum, (uint)hotkeyInfo.KeyCode))
+        if (NativeMethods.RegisterHotKey(handle, hotkeyInfo.ID, (uint)hotkeyInfo.ModifiersEnum, (uint)hotkeyInfo.KeyCode))
+        {
+            registeredHotkeys.Add(hotkeyInfo);
+        }
+        else if (!(Marshal.GetLastWin32Error() == ERROR_HOTKEY_ALREADY_REGISTERED && hotkeyInfo.Win && HookHotkey(hotkeyInfo)))
         {
             NativeMethods.GlobalDeleteAtom(hotkeyInfo.ID);
             DebugHelper.WriteLine("Unable to register hotkey: " + hotkeyInfo);
@@ -102,7 +115,6 @@ public sealed class WindowsHotkeyHost : IHotkeyHost
             hotkeyInfo.Status = HotkeyStatus.Failed;
             return;
         }
-        registeredHotkeys.Add(hotkeyInfo);
         hotkeyInfo.Status = HotkeyStatus.Registered;
     }
 
@@ -111,7 +123,7 @@ public sealed class WindowsHotkeyHost : IHotkeyHost
         VerifyAccess();
         ObjectDisposedException.ThrowIf(IsDisposed, this);
         if (hotkeyInfo == null) return false;
-        if (hotkeyInfo.ID > 0 && NativeMethods.UnregisterHotKey(Handle, hotkeyInfo.ID))
+        if (hotkeyInfo.ID > 0 && (UnhookHotkey(hotkeyInfo) || NativeMethods.UnregisterHotKey(Handle, hotkeyInfo.ID)))
         {
             NativeMethods.GlobalDeleteAtom(hotkeyInfo.ID);
             registeredHotkeys.Remove(hotkeyInfo);
@@ -122,6 +134,100 @@ public sealed class WindowsHotkeyHost : IHotkeyHost
         hotkeyInfo.Status = HotkeyStatus.Failed;
         return false;
     }
+
+    private bool HookHotkey(HotkeyInfo hotkeyInfo)
+    {
+        try
+        {
+            if (keyboardHook == null)
+            {
+                hookWindow = Handle;
+                keyboardHook = new LowLevelHook(NativeConstants.WH_KEYBOARD_LL, OnKeyboardInput, "ShareX hotkey input");
+            }
+        }
+        catch (Exception e)
+        {
+            DebugHelper.WriteException(e, "Unable to start the keyboard hook for hotkeys that Windows reserves.");
+            return false;
+        }
+
+        Volatile.Write(ref hookedHotkeys, [.. hookedHotkeys, new HookedHotkey(hotkeyInfo, hotkeyInfo.ID, (int)hotkeyInfo.KeyCode, hotkeyInfo.ModifiersEnum)]);
+        DebugHelper.WriteLine("Windows reserves this hotkey, so a keyboard hook takes the keys first: " + hotkeyInfo);
+        return true;
+    }
+
+    private bool UnhookHotkey(HotkeyInfo hotkeyInfo)
+    {
+        if (!hookedHotkeys.Any(x => x.Info == hotkeyInfo)) return false;
+
+        Volatile.Write(ref hookedHotkeys, hookedHotkeys.Where(x => x.Info != hotkeyInfo).ToArray());
+        if (hookedHotkeys.Length == 0) StopKeyboardHook();
+        return true;
+    }
+
+    private void StopKeyboardHook()
+    {
+        keyboardHook?.Dispose();
+        keyboardHook = null;
+    }
+
+    /// <summary>Runs on the hook thread for every key event on the desktop, so the work stays small and never waits for the UI.</summary>
+    private bool OnKeyboardInput(int message, IntPtr data)
+    {
+        int key = Marshal.ReadInt32(data); // vkCode is the first field of KBDLLHOOKSTRUCT.
+        bool keyDown = message is (int)KeyEvent.WM_KEYDOWN or (int)KeyEvent.WM_SYSKEYDOWN;
+        Modifiers modifiers = GetPressedModifiers();
+
+        if (blockedHotkey != null && blockedHotkey.Key == key)
+        {
+            // Hide the repeats and the release of the key that started the hotkey, so Windows does not see half of the shortcut.
+            // A new press after the modifiers changed is a normal key press, for example when the release went to the lock screen.
+            if (!keyDown || blockedHotkey.Modifiers == modifiers)
+            {
+                if (!keyDown) blockedHotkey = null;
+                return true;
+            }
+            blockedHotkey = null;
+        }
+
+        if (!keyDown) return false;
+
+        foreach (HookedHotkey hotkey in Volatile.Read(ref hookedHotkeys))
+        {
+            if (hotkey.Key == key && hotkey.Modifiers == modifiers)
+            {
+                blockedHotkey = hotkey;
+                // Windows opens Start when Win goes up with no other key pressed since Win went down. A press of an unassigned key prevents that.
+                SendUnassignedKeyPress();
+                NativeMethods.PostMessage(hookWindow, (uint)WindowsMessages.HOTKEY, hotkey.ID, (key << 16) | (int)modifiers);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static Modifiers GetPressedModifiers()
+    {
+        static bool IsDown(VirtualKeyCode key) => (NativeMethods.GetAsyncKeyState((int)key) & 0x8000) != 0;
+
+        Modifiers modifiers = Modifiers.None;
+        if (IsDown(VirtualKeyCode.MENU)) modifiers |= Modifiers.Alt;
+        if (IsDown(VirtualKeyCode.CONTROL)) modifiers |= Modifiers.Control;
+        if (IsDown(VirtualKeyCode.SHIFT)) modifiers |= Modifiers.Shift;
+        if (IsDown(VirtualKeyCode.LWIN) || IsDown(VirtualKeyCode.RWIN)) modifiers |= Modifiers.Win;
+        return modifiers;
+    }
+
+    private static void SendUnassignedKeyPress()
+    {
+        const VirtualKeyCode unassignedKey = (VirtualKeyCode)0xE8;
+        InputManager input = new();
+        input.AddKeyPress(unassignedKey);
+        input.SendInputs();
+    }
+
+    private sealed record HookedHotkey(HotkeyInfo Info, ushort ID, int Key, Modifiers Modifiers);
 
     private void OnNativeMessage(object sender, NativeWindowMessageEventArgs message)
     {
@@ -182,6 +288,14 @@ public sealed class WindowsHotkeyHost : IHotkeyHost
                 hotkey.Status = HotkeyStatus.NotConfigured;
             }
             registeredHotkeys.Clear();
+            foreach (HookedHotkey hotkey in hookedHotkeys)
+            {
+                NativeMethods.GlobalDeleteAtom(hotkey.ID);
+                hotkey.Info.ID = 0;
+                hotkey.Info.Status = HotkeyStatus.NotConfigured;
+            }
+            hookedHotkeys = [];
+            StopKeyboardHook();
             if (window != null)
             {
                 window.MessageReceived -= OnNativeMessage;

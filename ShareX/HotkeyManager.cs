@@ -220,12 +220,23 @@ namespace ShareX
             }
         }
 
+        /// <summary>
+        /// Win+Shift+S selects a region, the same as Snipping Tool. Some laptops have a screenshot key that sends Win+Shift+S
+        /// instead of Print Screen, so this shortcut also makes that key open ShareX.
+        /// </summary>
+        public static HotkeySettings SnippingToolHotkey() =>
+            new HotkeySettings(HotkeyType.RectangleRegion, InputKey.Shift | InputKey.S) { HotkeyInfo = { Win = true } };
+
+        public static bool IsSnippingToolHotkey(HotkeyInfo hotkeyInfo) =>
+            hotkeyInfo != null && hotkeyInfo.Win && hotkeyInfo.Hotkey == (InputKey.Shift | InputKey.S);
+
         public static List<HotkeySettings> GetDefaultHotkeyList()
         {
             return new List<HotkeySettings>
             {
                 // Print Screen selects a region, the same as the Windows Snipping Tool that ShareX replaces.
                 new HotkeySettings(HotkeyType.RectangleRegion, InputKey.PrintScreen),
+                SnippingToolHotkey(),
                 new HotkeySettings(HotkeyType.PrintScreen, InputKey.Control | InputKey.PrintScreen),
                 new HotkeySettings(HotkeyType.ActiveWindow, InputKey.Alt | InputKey.PrintScreen),
                 new HotkeySettings(HotkeyType.ScreenRecorder, InputKey.Shift | InputKey.PrintScreen),
