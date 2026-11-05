@@ -577,6 +577,7 @@ namespace ShareX
             }
 
             ImageData imageData = null;
+            bool copyImage = Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.CopyImageToClipboard);
 
             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.AnnotateImage))
             {
@@ -587,8 +588,15 @@ namespace ShareX
                     SaveImageToScreenshotsFolder(imageData);
                 }
 
+                // The editor stays open until the user closes the editor, so copy the capture now.
+                if (copyImage)
+                {
+                    CopyImageToClipboard();
+                }
+
                 // The editor saves to the capture file path. A null result means the editor closed without edits: keep the original image.
                 Bitmap editedImage = TaskHelpers.AnnotateImage(Image, Info.FilePath, Info.TaskSettings, true);
+                copyImage = copyImage && editedImage != null;
 
                 if (editedImage != null)
                 {
@@ -613,10 +621,10 @@ namespace ShareX
                 }
             }
 
-            if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.CopyImageToClipboard))
+            // After the editor, copy again only when the user edited the image, so the clipboard matches the saved file.
+            if (copyImage)
             {
-                ClipboardHelpers.CopyImage(Image, Info.FileName);
-                DebugHelper.WriteLine("Image copied to clipboard.");
+                CopyImageToClipboard();
             }
 
             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.PinToScreen))
@@ -689,6 +697,12 @@ namespace ShareX
             }
 
             return true;
+        }
+
+        private void CopyImageToClipboard()
+        {
+            ClipboardHelpers.CopyImage(Image, Info.FileName);
+            DebugHelper.WriteLine("Image copied to clipboard.");
         }
 
         private ImageData PrepareImageData()
