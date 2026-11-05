@@ -2573,9 +2573,6 @@ Aktif ekran kaydını sonlandırmak istiyor musunuz?</value>
   <data name="TaskSettingsWindow_RegionCapture" xml:space="preserve">
     <value>Bölge yakalama</value>
   </data>
-  <data name="TaskSettingsWindow_RegionCaptureDisableAnnotation" xml:space="preserve">
-    <value>Bölge yakalama açıklamalarını devre dışı bırak</value>
-  </data>
   <data name="TaskSettingsWindow_RememberWindowState" xml:space="preserve">
     <value>Pencere durumunu hatırla</value>
   </data>

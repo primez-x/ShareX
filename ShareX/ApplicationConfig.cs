@@ -41,6 +41,7 @@ namespace ShareX
         public bool ShowStartScreen = true;
         public bool PrintScreenKeyQuestionAsked = false;
         public bool SnippingToolHotkeyAdded = false;
+        public bool PreviewEditDefaultsApplied = false;
         public string FileUploadDefaultDirectory = "";
         public int NameParserAutoIncrementNumber = 0;
         public List<QuickTaskInfo> QuickTaskPresets = QuickTaskInfo.DefaultPresets;

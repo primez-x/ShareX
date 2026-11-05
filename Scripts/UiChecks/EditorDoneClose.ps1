@@ -1,4 +1,4 @@
-# Runtime check: a full-screen capture opens the editor on the saved file; Done rewrites the file, Close keeps the original.
+# Runtime check: with "Open the editor after capture" on, a full-screen capture opens the editor on the saved file; Done rewrites the file, Close keeps the original.
 # Also checks the clipboard: the capture is on the clipboard while the editor is open. Done copies the result again; Close does not.
 # The capture contains screen content, so the script deletes the capture and clears the clipboard afterwards.
 # Report: %LOCALAPPDATA%\Temp\sharex-e2e\ui\EditorDoneClose-<Button>.txt
@@ -10,7 +10,7 @@ $report = New-Object System.Collections.Generic.List[string]
 function Check([string]$Name, [bool]$Ok, [string]$Detail) { $report.Add(("{0} {1} :: {2}" -f $(if ($Ok) { 'PASS' } else { 'FAIL' }), $Name, $Detail)) }
 function Get-CopyCount { @((Get-ChildItem (Join-Path $Profile 'Logs') -Filter *.txt -Recurse | Get-Content) -match 'Image copied to clipboard\.').Count }
 
-Reset-SxApp -ConfigJson '{"ShowStartScreen": false, "CapturePanelRunAtStartup": false}'
+Reset-SxApp -ConfigJson '{"ShowStartScreen": false, "CapturePanelRunAtStartup": false, "DefaultTaskSettings": {"OpenEditorAfterCapture": true}}'
 [System.Windows.Forms.Clipboard]::Clear()
 $p = Start-SxApp @('-portable', '-silent', '-AutoClose', '-PrintScreen')
 try {

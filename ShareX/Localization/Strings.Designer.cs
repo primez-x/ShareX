@@ -3214,11 +3214,6 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("TaskSettingsWindow_AutoClearClipboard", resourceCulture);
             }
         }
-        public static string TaskSettingsWindow_RegionCaptureDisableAnnotation {
-            get {
-                return ResourceManager.GetString("TaskSettingsWindow_RegionCaptureDisableAnnotation", resourceCulture);
-            }
-        }
         public static string TaskSettingsWindow_ImageExtensions {
             get {
                 return ResourceManager.GetString("TaskSettingsWindow_ImageExtensions", resourceCulture);

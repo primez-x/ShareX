@@ -909,7 +909,7 @@ namespace ShareX
                 new HistoryWindowServices
                 {
                     UploadFile = filePath => UploadManager.UploadFile(filePath),
-                    EditImage = filePath => AnnotateImageFromFile(filePath),
+                    EditImage = filePath => EditCaptureFile(filePath),
                     TrimVideo = filePath => OpenVideoTrimmer(inputFilePath: filePath),
                     TrimAnimatedGif = filePath => OpenAnimatedGifTrimmer(filePath),
                     PinToScreen = filePath => PinToScreen(filePath),
@@ -925,7 +925,7 @@ namespace ShareX
                 new HistoryWindowServices
                 {
                     UploadFile = filePath => UploadManager.UploadFile(filePath),
-                    EditImage = filePath => AnnotateImageFromFile(filePath),
+                    EditImage = filePath => EditCaptureFile(filePath),
                     TrimVideo = filePath => OpenVideoTrimmer(inputFilePath: filePath),
                     TrimAnimatedGif = filePath => OpenAnimatedGifTrimmer(filePath),
                     PinToScreen = filePath => PinToScreen(filePath),
@@ -1385,6 +1385,46 @@ namespace ShareX
             }
         }
 
+        /// <summary>
+        /// Opens a saved capture in the editor. Done writes the edits back to the same file and copies the result.
+        /// Close keeps the file as it is. No new capture file is made.
+        /// </summary>
+        public static void EditCaptureFile(string filePath, TaskSettings taskSettings = null)
+        {
+            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+            {
+                MessageBox.Show(string.Format(Strings.TaskHelpers_FileDoesNotExist, filePath), "ShareX", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (taskSettings == null) taskSettings = TaskSettings.GetDefaultTaskSettings();
+
+            ThreadWorker worker = new ThreadWorker();
+
+            worker.DoWork += () =>
+            {
+                using Bitmap bmp = SkiaImageHelpers.LoadImage(filePath);
+                if (bmp == null) return;
+
+                using Bitmap editedImage = AnnotateImage(bmp, filePath, taskSettings, true);
+                if (editedImage == null) return;
+
+                if (SkiaImageHelpers.SaveImage(editedImage, filePath))
+                {
+                    DebugHelper.WriteLine("Edited image saved to file: " + filePath);
+                    MainWindowIntegration.RefreshLibraryFile(filePath);
+                }
+
+                if (taskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.CopyImageToClipboard))
+                {
+                    InvokeOnUiThread(() => ClipboardHelpers.CopyImage(editedImage, Path.GetFileName(filePath)));
+                    DebugHelper.WriteLine("Image copied to clipboard.");
+                }
+            };
+
+            worker.Start(ApartmentState.STA);
+        }
+
         public static void AnnotateImageAsync(Bitmap bmp, string filePath, TaskSettings taskSettings)
         {
             ThreadWorker worker = new ThreadWorker();
@@ -1433,7 +1473,11 @@ namespace ShareX
                         newFilePath = Path.Combine(screenshotsFolder, fileName);
                     }
 
-                    SkiaImageHelpers.SaveImage(img, newFilePath);
+                    if (SkiaImageHelpers.SaveImage(img, newFilePath))
+                    {
+                        MainWindowIntegration.RefreshLibraryFile(newFilePath);
+                    }
+
                     return newFilePath;
                 },
                 SaveImageAsRequested = (skBitmap, newFilePath) =>

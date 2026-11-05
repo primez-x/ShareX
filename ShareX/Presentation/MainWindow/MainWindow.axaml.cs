@@ -337,6 +337,16 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         _ = _library.ReloadAsync(SearchTextBox.Text ?? string.Empty, _filter, _thumbnailSize.Width, _thumbnailSize.Height);
     }
 
+    internal void RefreshLibraryFile(string filePath)
+    {
+        foreach (CaptureLibraryItem item in _library.Items)
+        {
+            if (string.Equals(item.FilePath, filePath, StringComparison.OrdinalIgnoreCase)) item.ReloadThumbnail();
+        }
+
+        if (string.Equals(_selected?.FilePath, filePath, StringComparison.OrdinalIgnoreCase)) UpdatePreview();
+    }
+
     private void OnLibraryItemsChanged()
     {
         if (_selected != null && _library.Gallery.IndexOf(_selected) < 0)
@@ -758,7 +768,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         if (TryGetExistingFile(item, out string filePath) && FileHelpers.IsImageFile(filePath))
         {
-            TaskHelpers.AnnotateImageFromFile(filePath);
+            TaskHelpers.EditCaptureFile(filePath);
         }
     }
 

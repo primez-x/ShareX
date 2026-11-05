@@ -2822,9 +2822,6 @@ Do you want to abort the active screen recording?</value>
   <data name="TaskSettingsWindow_RegionCapture" xml:space="preserve">
     <value>Region capture</value>
   </data>
-  <data name="TaskSettingsWindow_RegionCaptureDisableAnnotation" xml:space="preserve">
-    <value>Disable region capture annotations</value>
-  </data>
   <data name="TaskSettingsWindow_RememberWindowState" xml:space="preserve">
     <value>Remember window state</value>
   </data>

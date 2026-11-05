@@ -49,16 +49,14 @@ Invoke-SxButton (Wait-SxButton $p 'All')
 Start-Sleep -Seconds 2
 
 if ($LiveUpdate) {
-    $before = (Get-Cards $p).Count
-    $second = Start-SxApp @('-portable', '-PrintScreen')
-    [void]$second.WaitForExit(15000)
-    $close = $null
-    for ($t = 0; $t -lt 40 -and -not $close; $t++) {
-        Start-Sleep -Milliseconds 500
-        $close = Get-SxButtons $p | Where-Object { $_.Current.Name -eq 'Close' -and $_.Current.HelpText -like '*original*' } | Select-Object -First 1
-    }
-    if ($close) { Invoke-SxButton $close } else { 'Editor Close button not found' }
-    Start-Sleep -Seconds 4
+    # Capture in the same app from Capture options > Full screen. The capture saves without the editor, so the card appears when the task ends.
+    Invoke-SxButton (Wait-SxButton $p 'Capture options')
+    Start-Sleep -Seconds 1
+    $menuCond = New-Object System.Windows.Automation.AndCondition(
+        (New-Object System.Windows.Automation.PropertyCondition($A::ProcessIdProperty, $p.Id)),
+        (New-Object System.Windows.Automation.PropertyCondition($A::NameProperty, 'Full screen')))
+    $A::RootElement.FindFirst([System.Windows.Automation.TreeScope]::Descendants, $menuCond).GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+    Start-Sleep -Seconds 6
     $after = Get-Cards $p
     $new = $after | Where-Object { $_ -notmatch '^Capture \d{3}|notes\.txt' }
     "Live update: new card(s): $($new -join ', ')"

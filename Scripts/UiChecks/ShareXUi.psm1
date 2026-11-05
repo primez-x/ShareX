@@ -39,6 +39,8 @@ function Reset-SxApp([string]$Repo = (Split-Path (Split-Path $PSScriptRoot -Pare
     $config = $ConfigJson | ConvertFrom-Json
     $config | Add-Member -NotePropertyName PrintScreenKeyQuestionAsked -NotePropertyValue $true -Force
     if ($null -eq $config.SnippingToolHotkeyAdded) { $config | Add-Member -NotePropertyName SnippingToolHotkeyAdded -NotePropertyValue $true }
+    # Mark the preview edit defaults as applied, so a seeded DefaultTaskSettings stays as seeded. PreviewEdit.ps1 sets the value to false.
+    if ($null -eq $config.PreviewEditDefaultsApplied) { $config | Add-Member -NotePropertyName PreviewEditDefaultsApplied -NotePropertyValue $true }
     [IO.File]::WriteAllText((Join-Path $script:Profile 'ApplicationConfig.json'), ($config | ConvertTo-Json -Depth 10))
     # No hotkeys by default: a running ShareX already owns Print Screen, and a clash opens a blocking warning. Checks that need hotkeys write their own.
     [IO.File]::WriteAllText((Join-Path $script:Profile 'HotkeysConfig.json'), '{"Hotkeys": []}')

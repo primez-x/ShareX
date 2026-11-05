@@ -139,6 +139,9 @@ public static class MainWindowIntegration
     // A backup import or export reconnects History, so the library reads the new database.
     public static void ReloadLibrary() => RunOnUiThread(() => _window?.ReloadLibrary());
 
+    // An edit wrote the file again, so the library cards of the file load the thumbnail again.
+    public static void RefreshLibraryFile(string filePath) => RunOnUiThread(() => _window?.RefreshLibraryFile(filePath));
+
     internal static void SetScreenshotDelay(decimal delay)
     {
         ApplicationState.DefaultTaskSettings.CaptureSettings.ScreenshotDelay = delay;

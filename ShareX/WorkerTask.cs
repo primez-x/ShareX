@@ -616,6 +616,7 @@ namespace ShareX
                         if (!string.IsNullOrEmpty(Info.FilePath) && imageData.Write(Info.FilePath))
                         {
                             DebugHelper.WriteLine("Edited image saved to file: " + Info.FilePath);
+                            MainWindowIntegration.RefreshLibraryFile(Info.FilePath);
                         }
                     }
                 }

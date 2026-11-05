@@ -1189,7 +1189,6 @@ internal sealed class TaskSettingsPageBuilder
         nameof(TaskSettingsAdvanced.UseAfterCaptureTasksDuringFileUpload) => Strings.TaskSettingsWindow_UseAfterCaptureTasksDuringFileUpload,
         nameof(TaskSettingsAdvanced.TextTaskSaveAsFile) => Strings.TaskSettingsWindow_TextTaskSaveAsFile,
         nameof(TaskSettingsAdvanced.AutoClearClipboard) => Strings.TaskSettingsWindow_AutoClearClipboard,
-        nameof(TaskSettingsAdvanced.RegionCaptureDisableAnnotation) => Strings.TaskSettingsWindow_RegionCaptureDisableAnnotation,
         nameof(TaskSettingsAdvanced.ImageExtensions) => Strings.TaskSettingsWindow_ImageExtensions,
         nameof(TaskSettingsAdvanced.TextExtensions) => Strings.TaskSettingsWindow_TextExtensions,
         nameof(TaskSettingsAdvanced.EarlyCopyURL) => Strings.TaskSettingsWindow_EarlyCopyURL,

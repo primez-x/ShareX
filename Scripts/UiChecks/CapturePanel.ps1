@@ -6,7 +6,8 @@ Add-Type -AssemblyName System.Windows.Forms
 function Find-Panel($p) { Get-SxWindows $p | Where-Object { $_.Title -like '*Capture panel*' } | Select-Object -First 1 }
 
 # Dark theme run
-Reset-SxApp
+# The panel hides while the editor is open, so this check turns on "Open the editor after capture".
+Reset-SxApp -ConfigJson '{"ShowStartScreen": false, "DefaultTaskSettings": {"OpenEditorAfterCapture": true}}'
 $p = Start-SxApp @('-portable', '-silent')
 $region = Wait-SxButton $p 'Region'
 if (-not $region) { Stop-Process -Id $p.Id -Force; throw 'Region button not found' }

@@ -33,7 +33,6 @@ namespace ShareX
     public abstract class CaptureBase
     {
         public bool AllowAutoHideForm { get; set; } = true;
-        public bool AllowAnnotation { get; set; } = true;
 
         public void Capture(bool autoHideForm)
         {
@@ -111,7 +110,6 @@ namespace ShareX
 
             try
             {
-                AllowAnnotation = true;
                 metadata = await ExecuteAsync(taskSettings);
             }
             catch (Exception ex)
@@ -141,11 +139,7 @@ namespace ShareX
             {
                 TaskHelpers.PlayNotificationSoundAsync(NotificationSound.Capture, taskSettings);
 
-                if (!AllowAnnotation)
-                {
-                    taskSettings.AfterCaptureJob = taskSettings.AfterCaptureJob.Remove(AfterCaptureTasks.AnnotateImage);
-                }
-                else if (taskSettings.OpenEditorAfterCapture)
+                if (taskSettings.OpenEditorAfterCapture)
                 {
                     taskSettings.AfterCaptureJob = taskSettings.AfterCaptureJob.Add(AfterCaptureTasks.AnnotateImage);
                 }

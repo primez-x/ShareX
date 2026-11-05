@@ -243,6 +243,19 @@ namespace ShareX
         {
             DefaultTaskSettings.EnforceUploadPolicy(true);
 
+            // A capture saves and shows a preview now; a click on the preview opens the editor. Apply the new defaults one time.
+            // Keep a left click action that the user changed from the old default.
+            if (!Settings.PreviewEditDefaultsApplied)
+            {
+                Settings.PreviewEditDefaultsApplied = true;
+                DefaultTaskSettings.OpenEditorAfterCapture = false;
+
+                if (DefaultTaskSettings.GeneralSettings.ToastWindowLeftClickAction == ToastClickAction.OpenUrl)
+                {
+                    DefaultTaskSettings.GeneralSettings.ToastWindowLeftClickAction = ToastClickAction.AnnotateImage;
+                }
+            }
+
             if (SystemOptions.DisableUpload)
             {
                 DefaultTaskSettings.AfterCaptureJob = DefaultTaskSettings.AfterCaptureJob.Remove(AfterCaptureTasks.UploadImageToHost);

@@ -2573,9 +2573,6 @@ Do you want to megszakítás the active képernyőfelvétel?</value>
   <data name="TaskSettingsWindow_RegionCapture" xml:space="preserve">
     <value>Területrögzítés</value>
   </data>
-  <data name="TaskSettingsWindow_RegionCaptureDisableAnnotation" xml:space="preserve">
-    <value>Területrögzítési jegyzetek letiltása</value>
-  </data>
   <data name="TaskSettingsWindow_RememberWindowState" xml:space="preserve">
     <value>Ablakállapot megjegyzése</value>
   </data>

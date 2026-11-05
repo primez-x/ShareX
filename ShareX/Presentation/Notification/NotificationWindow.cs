@@ -573,7 +573,7 @@ public partial class NotificationWindow : Window
                 case ToastClickAction.AnnotateImage:
                     if (!string.IsNullOrEmpty(config.FilePath) && FileHelpers.IsImageFile(config.FilePath))
                     {
-                        TaskHelpers.AnnotateImageFromFile(config.FilePath);
+                        TaskHelpers.EditCaptureFile(config.FilePath);
                     }
                     break;
                 case ToastClickAction.CopyImageToClipboard:

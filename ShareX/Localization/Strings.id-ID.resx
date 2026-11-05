@@ -2573,9 +2573,6 @@ Apakah Anda ingin membatalkan perekaman layar aktif?</value>
   <data name="TaskSettingsWindow_RegionCapture" xml:space="preserve">
     <value>Tangkap wilayah</value>
   </data>
-  <data name="TaskSettingsWindow_RegionCaptureDisableAnnotation" xml:space="preserve">
-    <value>Nonaktifkan anotasi tangkapan wilayah</value>
-  </data>
   <data name="TaskSettingsWindow_RememberWindowState" xml:space="preserve">
     <value>Ingat keadaan jendela</value>
   </data>

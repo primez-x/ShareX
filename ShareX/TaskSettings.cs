@@ -54,7 +54,7 @@ namespace ShareX
 
         public bool UseDefaultAfterCaptureJob = true;
         public AfterCaptureTasks AfterCaptureJob = AfterCaptureTasks.CopyImageToClipboard | AfterCaptureTasks.SaveImageToFile;
-        public bool OpenEditorAfterCapture = true;
+        public bool OpenEditorAfterCapture = false;
 
         public bool UseDefaultAfterUploadJob = true;
         public AfterUploadTasks AfterUploadJob = AfterUploadTasks.CopyURLToClipboard;
@@ -340,7 +340,7 @@ namespace ShareX
         public float ToastWindowFadeDuration = 1f;
         public ImageContentAlignment ToastWindowPlacement = ImageContentAlignment.BottomRight;
         public Size ToastWindowSize = new Size(400, 300);
-        public ToastClickAction ToastWindowLeftClickAction = ToastClickAction.OpenUrl;
+        public ToastClickAction ToastWindowLeftClickAction = ToastClickAction.AnnotateImage;
         public ToastClickAction ToastWindowRightClickAction = ToastClickAction.CloseNotification;
         public ToastClickAction ToastWindowMiddleClickAction = ToastClickAction.AnnotateImage;
         public int ToastWindowButtonSize = 40;
@@ -537,9 +537,6 @@ namespace ShareX
 
         [Category("General"), DefaultValue(false), Description("If task contains upload job then this setting will clear clipboard when task start.")]
         public bool AutoClearClipboard { get; set; }
-
-        [Category("Capture"), DefaultValue(false), Description("Disable annotation support in region capture. Annotation in region capture is always off when the editor opens after capture.")]
-        public bool RegionCaptureDisableAnnotation { get; set; }
 
         [Category("Upload"), Description("Files with these file extensions will be uploaded using image uploader.")]
         public List<string> ImageExtensions { get; set; }

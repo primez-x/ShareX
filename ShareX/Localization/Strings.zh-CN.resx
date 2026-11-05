@@ -2573,9 +2573,6 @@
   <data name="TaskSettingsWindow_RegionCapture" xml:space="preserve">
     <value>区域捕获</value>
   </data>
-  <data name="TaskSettingsWindow_RegionCaptureDisableAnnotation" xml:space="preserve">
-    <value>禁用区域捕获注释</value>
-  </data>
   <data name="TaskSettingsWindow_RememberWindowState" xml:space="preserve">
     <value>记住窗口状态</value>
   </data>
