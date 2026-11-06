@@ -40,7 +40,8 @@ namespace ShareX
 
         public static void UpdateSystemOptions()
         {
-            DisableUpdateCheck = GetSystemOptionBoolean("DisableUpdateCheck");
+            // Fork: upstream releases would install stock ShareX over this build, and the fork publishes no releases.
+            DisableUpdateCheck = true;
             DisableUpload = GetSystemOptionBoolean("DisableUpload");
             DisableLogging = GetSystemOptionBoolean("DisableLogging");
             PersonalPath = GetSystemOptionString("PersonalPath");
