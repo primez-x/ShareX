@@ -28,6 +28,7 @@
 using ShareX.AvaloniaUI.Integration;
 using ShareX.HelpersLib;
 using ShareX.ImageEditor.Integration;
+using ShareX.ScreenCaptureLib.Presentation.RegionCapture;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -159,5 +160,6 @@ internal static class Program
         }
 
         DebugHelper.WriteLine("Hotkey host init finished.");
+        RegionCaptureIntegration.PrepareWindow();
     }
 }

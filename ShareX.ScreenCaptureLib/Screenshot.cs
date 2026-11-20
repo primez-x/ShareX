@@ -105,9 +105,16 @@ namespace ShareX.ScreenCaptureLib
 
         public Bitmap CaptureActiveMonitor()
         {
-            Rectangle bounds = CaptureHelpers.GetActiveScreenBounds();
+            return CaptureMonitor(CaptureHelpers.GetActiveScreenBounds());
+        }
 
-            return CaptureRectangle(bounds);
+        /// <summary>
+        /// Captures the bounds of one monitor. Monitor bounds are always on the desktop, so this capture skips the desktop
+        /// bounds check. The check reads the monitor list on the UI thread, which can be busy while capture windows open.
+        /// </summary>
+        public Bitmap CaptureMonitor(Rectangle bounds)
+        {
+            return CaptureRectangleNative(bounds, CaptureCursor);
         }
 
         private Bitmap CaptureRectangleNative(Rectangle rect, bool captureCursor = false)

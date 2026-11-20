@@ -29,6 +29,7 @@ using ShareX.HelpersLib;
 using ShareX.ImageEditor.Integration;
 using ShareX.ScreenCaptureLib.Presentation.RegionCapture;
 using SkiaSharp;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 using Bitmap = SkiaSharp.SKBitmap;
@@ -81,6 +82,7 @@ public static class RegionCaptureTasks
 
     private static async Task<AvaloniaRegionCaptureResult?> CaptureAsync(RegionCaptureOptions? options)
     {
+        long startTimestamp = Stopwatch.GetTimestamp();
         options ??= new RegionCaptureOptions();
 
         Screenshot screenshot = new Screenshot
@@ -92,13 +94,9 @@ public static class RegionCaptureTasks
             ? CaptureHelpers.GetActiveScreenBounds()
             : CaptureHelpers.GetScreenBounds();
 
-        SKBitmap frozenScreenshot;
-        using (Bitmap canvas = options.ActiveMonitorOnly
-            ? screenshot.CaptureActiveMonitor()
-            : screenshot.CaptureFullscreen())
-        {
-            frozenScreenshot = canvas.Copy();
-        }
+        SKBitmap frozenScreenshot = options.ActiveMonitorOnly
+            ? screenshot.CaptureMonitor(screenBounds)
+            : screenshot.CaptureRectangle(screenBounds);
 
         AvaloniaRegionCaptureRequest request = new AvaloniaRegionCaptureRequest
         {
@@ -107,7 +105,8 @@ public static class RegionCaptureTasks
             RegionCaptureOptions = options,
             ImageEditorOptions = new ImageEditorOptions(),
             EnableAnnotations = false,
-            CaptureMonitor = options.ActiveMonitorOnly ? screenshot.CaptureRectangle : null
+            CaptureMonitor = options.ActiveMonitorOnly ? screenshot.CaptureMonitor : null,
+            StartTimestamp = startTimestamp
         };
 
         return await RegionCaptureIntegration.CaptureAsync(request);

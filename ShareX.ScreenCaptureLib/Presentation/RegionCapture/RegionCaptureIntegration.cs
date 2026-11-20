@@ -32,6 +32,7 @@ using ShareX.ImageEditor.Integration;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -80,6 +81,33 @@ public static class RegionCaptureIntegration
         return completion.Task;
     }
 
+    // A selection window that is built and not shown yet. The window layout takes 40-110 ms to build.
+    private static RegionCaptureWindow? _spareWindow;
+
+    /// <summary>
+    /// Builds a selection window when the app is idle. The next region capture shows this window, so the capture does
+    /// not wait for the window layout to build.
+    /// </summary>
+    public static void PrepareWindow()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            if (_spareWindow != null)
+            {
+                return;
+            }
+
+            try
+            {
+                _spareWindow = new RegionCaptureWindow();
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException(ex);
+            }
+        }, DispatcherPriority.ApplicationIdle);
+    }
+
     private static async Task<AvaloniaRegionCaptureResult?> ShowWindowsAsync(AvaloniaRegionCaptureRequest request)
     {
         List<RegionCaptureWindow> windows = [];
@@ -104,17 +132,19 @@ public static class RegionCaptureIntegration
 
         void Show(AvaloniaRegionCaptureRequest monitorRequest)
         {
-            RegionCaptureWindow? window = null;
+            RegionCaptureWindow? window = _spareWindow;
+            _spareWindow = null;
 
             try
             {
-                window = new RegionCaptureWindow(monitorRequest);
-                captures.Add(window.CaptureAsync());
+                window ??= new RegionCaptureWindow();
+                captures.Add(window.CaptureAsync(monitorRequest));
             }
             catch
             {
                 if (window == null || !window.IsVisible)
                 {
+                    window?.Close();
                     DisposeRequest(monitorRequest);
                 }
                 else
@@ -136,6 +166,9 @@ public static class RegionCaptureIntegration
             ApplyWindowRegions();
         }
 
+        // Screenshots of the other monitors that no window owns yet.
+        Queue<(Rectangle Bounds, Task<SKBitmap?> Screenshot)> otherMonitors = new();
+
         try
         {
             try
@@ -148,7 +181,18 @@ public static class RegionCaptureIntegration
                 throw;
             }
 
+            // Capture the other monitors off the UI thread while the first window opens. All monitors then show the
+            // same moment, and a slow USB (DisplayLink) monitor does not delay the first window.
+            if (request.CaptureMonitor is { } captureMonitor)
+            {
+                foreach (Rectangle bounds in GetOtherMonitors(request.ScreenBounds))
+                {
+                    otherMonitors.Enqueue((bounds, Task.Run<SKBitmap?>(() => captureMonitor(bounds))));
+                }
+            }
+
             Show(request);
+            LogFirstDraw(windows[0], request.StartTimestamp);
 
             if (request.RegionCaptureOptions.DetectWindows)
             {
@@ -159,49 +203,55 @@ public static class RegionCaptureIntegration
                 });
             }
 
-            if (request.CaptureMonitor != null)
+            while (otherMonitors.TryPeek(out (Rectangle Bounds, Task<SKBitmap?> Screenshot) monitor))
             {
-                // The monitor under the cursor shows first. Each other monitor is captured off the UI thread, because a
-                // capture of a USB (DisplayLink) monitor can take several hundred milliseconds.
-                foreach (Rectangle bounds in GetOtherMonitors(request.ScreenBounds))
+                // Let the open windows draw before the next window takes the UI thread, so the monitor under the cursor
+                // shows first and stays responsive while the other windows open.
+                await WhenDrawnAsync(windows[^1], captures[^1]);
+
+                SKBitmap? screenshot;
+                try
                 {
-                    SKBitmap? screenshot;
-                    try
-                    {
-                        screenshot = await Task.Run(() => request.CaptureMonitor(bounds));
-                    }
-                    catch (Exception ex)
-                    {
-                        // Keep selection on the monitors that opened, for example when a monitor disconnects.
-                        DebugHelper.WriteException(ex);
-                        continue;
-                    }
-
-                    if (screenshot == null)
-                    {
-                        continue;
-                    }
-
-                    // The user can finish or cancel on the first monitor before every monitor opens.
-                    if (captures.Any(capture => capture.IsCompleted))
-                    {
-                        screenshot.Dispose();
-                        break;
-                    }
-
-                    Show(new AvaloniaRegionCaptureRequest
-                    {
-                        Screenshot = screenshot,
-                        ScreenBounds = bounds,
-                        RegionCaptureOptions = request.RegionCaptureOptions,
-                        ImageEditorOptions = request.ImageEditorOptions,
-                        EnableAnnotations = request.EnableAnnotations
-                    });
+                    screenshot = await monitor.Screenshot;
                 }
+                catch (Exception ex)
+                {
+                    // Keep selection on the monitors that opened, for example when a monitor disconnects.
+                    DebugHelper.WriteException(ex);
+                    screenshot = null;
+                }
+
+                otherMonitors.Dequeue();
+
+                if (screenshot == null)
+                {
+                    continue;
+                }
+
+                // The user can finish or cancel on the first monitor before every monitor opens.
+                if (captures.Any(capture => capture.IsCompleted))
+                {
+                    screenshot.Dispose();
+                    continue;
+                }
+
+                Show(new AvaloniaRegionCaptureRequest
+                {
+                    Screenshot = screenshot,
+                    ScreenBounds = monitor.Bounds,
+                    RegionCaptureOptions = request.RegionCaptureOptions,
+                    ImageEditorOptions = request.ImageEditorOptions,
+                    EnableAnnotations = request.EnableAnnotations
+                });
             }
         }
         catch
         {
+            foreach ((Rectangle _, Task<SKBitmap?> screenshot) in otherMonitors)
+            {
+                _ = screenshot.ContinueWith(task => task.Result?.Dispose(), TaskContinuationOptions.OnlyOnRanToCompletion);
+            }
+
             foreach (RegionCaptureWindow window in windows)
             {
                 window.CancelCapture();
@@ -216,6 +266,8 @@ public static class RegionCaptureIntegration
             window.CancelCapture();
         }
 
+        PrepareWindow();
+
         foreach (Task<AvaloniaRegionCaptureResult?> capture in captures.Where(capture => capture != first))
         {
             _ = capture.ContinueWith(task => DebugHelper.WriteException(task.Exception!),
@@ -223,6 +275,32 @@ public static class RegionCaptureIntegration
         }
 
         return await first;
+    }
+
+    // The second animation frame starts after the first frame of the window drew.
+    private static void LogFirstDraw(RegionCaptureWindow window, long startTimestamp)
+    {
+        window.RequestAnimationFrame(_ =>
+        {
+            if (window.IsVisible)
+            {
+                window.RequestAnimationFrame(_ => DebugHelper.WriteLine(
+                    $"Region capture shown in {Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds:F0} ms."));
+            }
+        });
+    }
+
+    // Esc can close a window before the window draws, so the window result also ends the wait.
+    private static Task WhenDrawnAsync(RegionCaptureWindow window, Task<AvaloniaRegionCaptureResult?> capture)
+    {
+        if (capture.IsCompleted)
+        {
+            return Task.CompletedTask;
+        }
+
+        TaskCompletionSource drawn = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        window.RequestAnimationFrame(_ => drawn.TrySetResult());
+        return Task.WhenAny(drawn.Task, capture);
     }
 
     private static Rectangle[] GetOtherMonitors(Rectangle shown)

@@ -55,11 +55,8 @@ function Get-Log { (Get-ChildItem (Join-Path $Profile 'Logs') -Filter *.txt -Rec
 function Get-Captures { @(Get-ChildItem (Join-Path $Profile 'Screenshots') -Recurse -File -ErrorAction SilentlyContinue) }
 function Get-Overlays($Process) { @(Get-SxWindows $Process | Where-Object { $_.Title -eq 'Region capture' }) }
 function Wait-Overlays($Process, [int]$Count) {
-    $sw = [Diagnostics.Stopwatch]::StartNew()
-    $script:FirstSeconds = $null
     for ($t = 0; $t -lt 300; $t++) {
         $o = Get-Overlays $Process
-        if ($o.Count -gt 0 -and $null -eq $script:FirstSeconds) { $script:FirstSeconds = [math]::Round($sw.Elapsed.TotalSeconds, 2) }
         if ($o.Count -ge $Count) { return $o }
         Start-Sleep -Milliseconds 50
     }
@@ -70,16 +67,26 @@ function Wait-Capture([int]$Before) {
     $null
 }
 function Get-ImageSize($File) { $img = [System.Drawing.Image]::FromFile($File.FullName); try { "$($img.Width)x$($img.Height)" } finally { $img.Dispose() } }
+# A capture is correct when every pixel is opaque and the pixels are not all one color.
+function Test-ImagePixels($File) {
+    $img = New-Object System.Drawing.Bitmap $File.FullName
+    try {
+        $colors = New-Object System.Collections.Generic.HashSet[int]
+        $transparent = 0
+        for ($y = 0; $y -lt $img.Height; $y += 2) { for ($x = 0; $x -lt $img.Width; $x += 2) { $c = $img.GetPixel($x, $y); if ($c.A -ne 255) { $transparent++ }; [void]$colors.Add($c.ToArgb()) } }
+        [pscustomobject]@{ Ok = ($transparent -eq 0 -and $colors.Count -gt 1); Detail = "transparent pixels: $transparent; colors: $($colors.Count)" }
+    } finally { $img.Dispose() }
+}
 function Start-RegionCapture {
     # Press the hotkey like a user, because Windows lets a process take the foreground only after the process receives the input.
     [SxInput]::MoveTo($start.X + $start.Width / 2, $start.Y + $start.Height / 2)
     [SxInput]::Hotkey()
-    $sw = [Diagnostics.Stopwatch]::StartNew()
     $overlays = Wait-Overlays $app $screens.Count
-    $sw.Stop()
     Start-Sleep -Milliseconds 800
-    $report.Add("INFO window timing :: seconds from hotkey until the first window showed: $script:FirstSeconds, until every window showed: $([math]::Round($sw.Elapsed.TotalSeconds, 2))")
-    [pscustomobject]@{ Overlays = $overlays; First = $script:FirstSeconds; Seconds = [math]::Round($sw.Elapsed.TotalSeconds, 2) }
+    # ShareX logs the time from the capture start until the window under the cursor drew the first frame.
+    $shown = [regex]::Matches((Get-Log), 'Region capture shown in (\d+) ms') | Select-Object -Last 1
+    $report.Add("INFO paint latency :: first window drew $(if ($shown) { $shown.Groups[1].Value } else { '?' }) ms after the capture started (Debug build)")
+    [pscustomobject]@{ Overlays = $overlays }
 }
 
 Reset-SxApp -ConfigJson '{"ShowStartScreen": false, "CapturePanelRunAtStartup": false}'
@@ -115,6 +122,8 @@ try {
     [SxInput]::Drag($other.X + 100, $other.Y + 100, $other.X + 500, $other.Y + 400)
     $file = Wait-Capture $before
     Check 'selection on the other monitor saves a 401x301 capture (end pixel included)' ($file -and (Get-ImageSize $file) -eq '401x301') "$(if ($file) { "$($file.Name) $(Get-ImageSize $file)" } else { 'no capture' })"
+    $pixels = if ($file) { Test-ImagePixels $file } else { [pscustomobject]@{ Ok = $false; Detail = 'no capture' } }
+    Check 'capture pixels are opaque and show the screen' $pixels.Ok $pixels.Detail
     Start-Sleep -Milliseconds 500
     Check 'every selection window closes' ((Get-Overlays $app).Count -eq 0) "open: $((Get-Overlays $app).Count)"
 

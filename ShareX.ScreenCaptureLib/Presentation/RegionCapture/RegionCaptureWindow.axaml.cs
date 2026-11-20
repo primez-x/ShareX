@@ -123,9 +123,18 @@ public partial class RegionCaptureWindow : Window
         AddHandler(PointerReleasedEvent, OnCaptureHostPointerReleased, RoutingStrategies.Tunnel, handledEventsToo: true);
     }
 
-    public RegionCaptureWindow(AvaloniaRegionCaptureRequest request) : this()
+    /// <summary>Shows the window for one capture request. A window shows one request only.</summary>
+    public Task<AvaloniaRegionCaptureResult?> CaptureAsync(AvaloniaRegionCaptureRequest request)
     {
-        _request = request ?? throw new ArgumentNullException(nameof(request));
+        ArgumentNullException.ThrowIfNull(request);
+        if (_request != null)
+        {
+            throw new InvalidOperationException("The window already shows a capture request.");
+        }
+
+        // A window can be built before the capture, so the window takes the current theme here.
+        RequestedThemeVariant = ThemeManager.GetCurrentTheme();
+        _request = request;
         _imageWidth = Math.Max(1, request.ScreenBounds.Width);
         _imageHeight = Math.Max(1, request.ScreenBounds.Height);
         // With one window per monitor, only the window under the cursor takes the keyboard when the windows open.
@@ -133,14 +142,6 @@ public partial class RegionCaptureWindow : Window
         ShowActivated = _pointerInside;
         InitializeCaptureWorkspace();
         Opened += OnOpened;
-    }
-
-    public Task<AvaloniaRegionCaptureResult?> CaptureAsync()
-    {
-        if (_request == null)
-        {
-            throw new InvalidOperationException("A capture request is required.");
-        }
 
         ConfigureInitialPixelBounds();
         Show();

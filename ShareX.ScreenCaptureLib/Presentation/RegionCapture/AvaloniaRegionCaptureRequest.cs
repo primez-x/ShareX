@@ -28,6 +28,7 @@
 using ShareX.ImageEditor.Integration;
 using SkiaSharp;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace ShareX.ScreenCaptureLib.Presentation.RegionCapture;
@@ -57,4 +58,10 @@ public sealed class AvaloniaRegionCaptureRequest
     /// the cursor, and region selection opens one more window for each other monitor.
     /// </summary>
     public Func<Rectangle, SKBitmap>? CaptureMonitor { get; init; }
+
+    /// <summary>
+    /// <see cref="Stopwatch"/> timestamp of the capture start, before the screenshot. The log reports the time from this
+    /// moment until the first window draws.
+    /// </summary>
+    public long StartTimestamp { get; init; } = Stopwatch.GetTimestamp();
 }

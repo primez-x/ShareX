@@ -27,6 +27,7 @@ using SkiaSharp;
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace ShareX.HelpersLib;
@@ -56,7 +57,7 @@ public static class WindowsImageInterop
         return new Size(info.Width, info.Height);
     }
 
-    public static SKBitmap FromHBitmap(IntPtr handle, bool preserveAlpha = false)
+    public static unsafe SKBitmap FromHBitmap(IntPtr handle, bool preserveAlpha = false)
     {
         Size size = GetBitmapSize(handle);
         SKBitmap result = new(new SKImageInfo(size.Width, size.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul));
@@ -66,7 +67,11 @@ public static class WindowsImageInterop
             BITMAPINFOHEADER header = new(size.Width, -size.Height, 32) { biSize = 40, biSizeImage = checked((uint)size.Width * (uint)size.Height * 4) };
             if (GetDIBits(dc, handle, 0, (uint)size.Height, result.GetPixels(), ref header, 0) != size.Height)
                 throw new Win32Exception();
-            if (!preserveAlpha) SetOpaque(result);
+            if (!preserveAlpha)
+            {
+                Span<uint> pixels = new((void*)result.GetPixels(), size.Width * size.Height);
+                SetOpaque(pixels, pixels);
+            }
             return result;
         }
         catch { result.Dispose(); throw; }
@@ -81,7 +86,8 @@ public static class WindowsImageInterop
         if (source == IntPtr.Zero) throw new Win32Exception();
         try
         {
-            return DrawNative(rectangle.Size, SKColors.Black, dc =>
+            // BitBlt writes every pixel, so the capture skips the background fill.
+            return DrawNative(rectangle.Size, null, dc =>
             {
                 if (!NativeMethods.BitBlt(dc, 0, 0, rectangle.Width, rectangle.Height, source,
                     rectangle.X, rectangle.Y, NativeRasterOperation.SourceCopy | NativeRasterOperation.CaptureBlt))
@@ -92,7 +98,7 @@ public static class WindowsImageInterop
         finally { NativeMethods.ReleaseDC(window, source); }
     }
 
-    private static unsafe SKBitmap DrawNative(Size size, SKColor background, Action<IntPtr> draw, Action<SKCanvas> drawBackground = null)
+    private static unsafe SKBitmap DrawNative(Size size, SKColor? background, Action<IntPtr> draw, Action<SKCanvas> drawBackground = null)
     {
         IntPtr dc = NativeMethods.CreateCompatibleDC(IntPtr.Zero);
         if (dc == IntPtr.Zero) throw new Win32Exception();
@@ -103,22 +109,26 @@ public static class WindowsImageInterop
             handle = NativeMethods.CreateDIBSection(dc, ref header, 0, out IntPtr pixels, IntPtr.Zero, 0);
             if (handle == IntPtr.Zero) throw new Win32Exception();
             previous = NativeMethods.SelectObject(dc, handle);
-            using SKBitmap surface = new();
-            if (!surface.InstallPixels(new SKImageInfo(size.Width, size.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul), pixels, size.Width * 4))
-                throw new InvalidOperationException("Unable to access Windows image pixels.");
-            surface.Erase(background);
-            if (drawBackground != null)
+            if (background != null || drawBackground != null)
             {
-                using SKCanvas canvas = new(surface);
-                drawBackground(canvas);
-                canvas.Flush();
+                using SKBitmap surface = new();
+                if (!surface.InstallPixels(new SKImageInfo(size.Width, size.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul), pixels, size.Width * 4))
+                    throw new InvalidOperationException("Unable to access Windows image pixels.");
+                surface.Erase(background ?? SKColors.Black);
+                if (drawBackground != null)
+                {
+                    using SKCanvas canvas = new(surface);
+                    drawBackground(canvas);
+                    canvas.Flush();
+                }
             }
             draw(dc);
             GdiFlush();
-            // GDI mask operations can clear alpha. Restore it before Skia copies
-            // the pixels, otherwise transparent RGB values are discarded.
-            SetOpaque(surface);
-            return surface.Copy();
+            // GDI clears alpha. Copy the pixels out of the GDI bitmap and make every pixel opaque in the same pass.
+            SKBitmap result = new(new SKImageInfo(size.Width, size.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul));
+            int count = size.Width * size.Height;
+            SetOpaque(new ReadOnlySpan<uint>((void*)pixels, count), new Span<uint>((void*)result.GetPixels(), count));
+            return result;
         }
         finally
         {
@@ -179,13 +189,20 @@ public static class WindowsImageInterop
         return (System.Drawing.Icon)icon.Clone();
     }
 
-    private static unsafe void SetOpaque(SKBitmap bitmap)
+    /// <summary>Copies BGRA pixels and sets alpha to 255. The source and the target can be the same pixels.</summary>
+    private static void SetOpaque(ReadOnlySpan<uint> source, Span<uint> target)
     {
-        for (int y = 0; y < bitmap.Height; y++)
+        const uint Alpha = 0xFF000000;
+        Vector<uint> alpha = new(Alpha);
+        int index = 0;
+        for (; index <= source.Length - Vector<uint>.Count; index += Vector<uint>.Count)
         {
-            byte* row = (byte*)bitmap.GetPixels() + y * bitmap.RowBytes;
-            for (int x = 0; x < bitmap.Width; x++) row[x * 4 + 3] = 255;
+            (new Vector<uint>(source[index..]) | alpha).CopyTo(target[index..]);
         }
-        bitmap.NotifyPixelsChanged();
+
+        for (; index < source.Length; index++)
+        {
+            target[index] = source[index] | Alpha;
+        }
     }
 }
