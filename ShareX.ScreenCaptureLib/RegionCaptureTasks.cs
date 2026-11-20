@@ -106,7 +106,8 @@ public static class RegionCaptureTasks
             ScreenBounds = screenBounds,
             RegionCaptureOptions = options,
             ImageEditorOptions = new ImageEditorOptions(),
-            EnableAnnotations = false
+            EnableAnnotations = false,
+            CaptureMonitor = options.ActiveMonitorOnly ? screenshot.CaptureRectangle : null
         };
 
         return await RegionCaptureIntegration.CaptureAsync(request);

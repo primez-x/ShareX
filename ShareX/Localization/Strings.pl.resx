@@ -2588,9 +2588,6 @@ Czy chcesz przerwać aktywne nagrywanie ekranu?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Zamiennik:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Ogranicz przechwytywanie i kursor do aktywnego monitora</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Wymuś HTTPS dla wynikowych adresów URL</value>
   </data>

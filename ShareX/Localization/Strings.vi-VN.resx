@@ -2588,9 +2588,6 @@ Bạn có muốn hủy phiên quay màn hình đang hoạt động không?</valu
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Nội dung thay thế:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Giới hạn thao tác chụp và con trỏ trong màn hình đang hoạt động</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Buộc dùng HTTPS cho URL kết quả</value>
   </data>

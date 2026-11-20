@@ -2588,9 +2588,6 @@
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>取代內容：</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>將擷取和游標限制於作用中的顯示器</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>強制結果 URL 使用 HTTPS</value>
   </data>

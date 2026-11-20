@@ -2588,9 +2588,6 @@
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Замена:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Ограничить захват и курсор активным монитором</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Принудительно использовать HTTPS для результирующих URL</value>
   </data>

@@ -104,7 +104,11 @@ public partial class RegionCaptureWindow : Window
     private bool _annotationRightButtonPressed;
     private bool _workspaceOwnsScreenshot;
     private bool _closing;
+    private bool _pointerInside;
     private Exception? _startupException;
+
+    /// <summary>Raised when a left-button press starts a selection, so the other monitors' windows clear theirs.</summary>
+    internal event EventHandler? SelectionStarted;
 
     public RegionCaptureWindow()
     {
@@ -124,10 +128,9 @@ public partial class RegionCaptureWindow : Window
         _request = request ?? throw new ArgumentNullException(nameof(request));
         _imageWidth = Math.Max(1, request.ScreenBounds.Width);
         _imageHeight = Math.Max(1, request.ScreenBounds.Height);
-        if (request.RegionCaptureOptions.ActiveMonitorOnly)
-        {
-            Helpers.LockCursorToWindow(this);
-        }
+        // With one window per monitor, only the window under the cursor takes the keyboard when the windows open.
+        _pointerInside = request.ScreenBounds.Contains(CaptureHelpers.GetCursorPosition());
+        ShowActivated = _pointerInside;
         InitializeCaptureWorkspace();
         Opened += OnOpened;
     }
@@ -476,18 +479,23 @@ public partial class RegionCaptureWindow : Window
                 ActivateRegionTool();
             }
 
-            Activate();
-            Focus();
+            if (_pointerInside)
+            {
+                Activate();
+                Focus();
+            }
+
             _regionInputSurface.Focus();
 
             DrawingPoint cursorPosition = CaptureHelpers.GetCursorPosition();
             _lastPointerPoint = ClampPoint(new Point(
                 cursorPosition.X - _request.ScreenBounds.X,
                 cursorPosition.Y - _request.ScreenBounds.Y));
-            UpdateToolbarPosition(new PixelPoint(cursorPosition.X, cursorPosition.Y));
+            DrawingRectangle bounds = _request.ScreenBounds;
+            UpdateToolbarPosition(_pointerInside
+                ? new PixelPoint(cursorPosition.X, cursorPosition.Y)
+                : new PixelPoint(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2));
             UpdateHud(_lastPointerPoint);
-
-            _ = LoadWindowRegionsAsync();
 
             int inputDelay = Math.Max(0, RegionCaptureOptions.InputDelay);
             if (inputDelay > 0)
@@ -507,37 +515,62 @@ public partial class RegionCaptureWindow : Window
         }
     }
 
-    private async Task LoadWindowRegionsAsync()
+    /// <summary>Sets the window and control rectangles that region selection highlights under the cursor.</summary>
+    internal void SetWindowRegions(IReadOnlyList<SimpleWindowInfo> windows)
     {
-        if (_request == null || !_request.RegionCaptureOptions.DetectWindows)
+        if (!_closing)
+        {
+            _windows = windows;
+            UpdateHover(_lastPointerPoint);
+        }
+    }
+
+    protected override void OnPointerEntered(PointerEventArgs e)
+    {
+        base.OnPointerEntered(e);
+
+        if (_closing || _request == null)
         {
             return;
         }
 
-        try
+        _pointerInside = true;
+        _regionOverlay.ShowCursorCrosshair = _request.RegionCaptureOptions.ShowScreenCrosshair;
+        if (!IsActive)
         {
-            IntPtr ignoredHandle = TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
-            WindowsRectangleList windows = new WindowsRectangleList
-            {
-                IncludeChildWindows = _request.RegionCaptureOptions.DetectControls,
-                Timeout = 5000
-            };
-
-            if (ignoredHandle != IntPtr.Zero)
-            {
-                windows.IgnoreHandleList.Add(ignoredHandle);
-            }
-
-            IReadOnlyList<SimpleWindowInfo> result = await Task.Run(windows.GetWindowInfoList);
-            if (!_closing)
-            {
-                _windows = result;
-                UpdateHover(_lastPointerPoint);
-            }
+            // Esc and the arrow keys must work on the monitor under the cursor before the first click.
+            Activate();
         }
-        catch (Exception ex)
+    }
+
+    protected override void OnPointerExited(PointerEventArgs e)
+    {
+        base.OnPointerExited(e);
+
+        if (_closing || _interaction != RegionInteraction.None)
         {
-            DebugHelper.WriteException(ex);
+            return;
+        }
+
+        _pointerInside = false;
+        HidePointerHud();
+    }
+
+    /// <summary>Hides the magnifier, crosshair, and window highlight while the cursor is on another monitor.</summary>
+    private void HidePointerHud()
+    {
+        _magnifierPanel.IsVisible = false;
+        _regionOverlay.ShowCursorCrosshair = false;
+        _regionOverlay.HoverRectangle = default;
+        _hoverCandidate = null;
+    }
+
+    /// <summary>Clears the selection on this monitor because a selection started on another monitor.</summary>
+    internal void ClearSelectionForOtherMonitor()
+    {
+        if (!_closing && (HasValidSelection() || _interaction != RegionInteraction.None))
+        {
+            ClearSelection();
         }
     }
 
@@ -688,6 +721,8 @@ public partial class RegionCaptureWindow : Window
             SetSelection(default, null);
             SetInteraction(RegionInteraction.Creating);
         }
+
+        SelectionStarted?.Invoke(this, EventArgs.Empty);
 
         if (_interaction is RegionInteraction.Creating or RegionInteraction.PendingHover)
         {
@@ -1064,7 +1099,7 @@ public partial class RegionCaptureWindow : Window
 
     private void UpdateHover(Point imagePoint)
     {
-        if (_request == null || HasValidSelection() || _interaction != RegionInteraction.None)
+        if (_request == null || !_pointerInside || HasValidSelection() || _interaction != RegionInteraction.None)
         {
             _regionOverlay.HoverRectangle = default;
             _hoverCandidate = null;
@@ -1225,6 +1260,13 @@ public partial class RegionCaptureWindow : Window
     {
         if (_request == null)
         {
+            return;
+        }
+
+        if (!_pointerInside)
+        {
+            HidePointerHud();
+            UpdateSelectionInfo();
             return;
         }
 
@@ -1670,7 +1712,7 @@ public partial class RegionCaptureWindow : Window
         return _windows.FirstOrDefault(window => window.IsWindow && window.Rectangle.Contains(point))?.WindowInfo;
     }
 
-    private void CancelCapture()
+    internal void CancelCapture()
     {
         if (_closing)
         {

@@ -2588,9 +2588,6 @@ Aktif ekran kaydını sonlandırmak istiyor musunuz?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Değiştirilen metin:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Yakalamayı ve imleci etkin monitörle sınırla</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Sonuç URL'lerinde HTTPS'yi zorunlu kıl</value>
   </data>

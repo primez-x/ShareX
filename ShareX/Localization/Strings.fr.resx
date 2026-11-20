@@ -2588,9 +2588,6 @@ Voulez-vous annuler l'enregistrement d'écran en cours ?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Remplacement :</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Limiter la capture et le curseur au moniteur actif</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Forcer HTTPS pour les URL résultantes</value>
   </data>

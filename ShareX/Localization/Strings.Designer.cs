@@ -2574,11 +2574,6 @@ namespace ShareX.Localization {
                 return ResourceManager.GetString("TaskSettingsWindow_DetectWindowRegions", resourceCulture);
             }
         }
-        public static string TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor {
-            get {
-                return ResourceManager.GetString("TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor", resourceCulture);
-            }
-        }
         public static string TaskSettingsWindow_BackgroundDimStrengthPercent {
             get {
                 return ResourceManager.GetString("TaskSettingsWindow_BackgroundDimStrengthPercent", resourceCulture);

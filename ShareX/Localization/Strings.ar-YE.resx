@@ -2588,9 +2588,6 @@
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>البديل:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>تقييد الالتقاط والمؤشر بالشاشة النشطة</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>فرض HTTPS لعناوين URL الناتجة</value>
   </data>

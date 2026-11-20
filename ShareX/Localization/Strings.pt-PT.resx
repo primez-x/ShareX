@@ -2588,9 +2588,6 @@ Pretende cancelar a gravação de ecrã ativa?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Substituição:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Restringir a captura e o cursor ao monitor ativo</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Forçar HTTPS nas URLs resultantes</value>
   </data>

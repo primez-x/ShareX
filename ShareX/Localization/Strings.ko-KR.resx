@@ -2588,9 +2588,6 @@ Do you want to abort the active 화면 녹화?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>바꿀 내용:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>캡처와 커서를 활성 모니터로 제한</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>결과 URL에 HTTPS 강제 적용</value>
   </data>

@@ -2588,9 +2588,6 @@ Möchten Sie die aktive Bildschirmaufzeichnung abbrechen?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Ersetzung:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Aufnahme und Cursor auf den aktiven Monitor beschränken</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>HTTPS für Ergebnis-URLs erzwingen</value>
   </data>

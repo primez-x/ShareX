@@ -2588,9 +2588,6 @@
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>תחליף:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>הגבלת הלכידה והסמן לצג הפעיל</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>כפיית HTTPS עבור כתובות URL של תוצאות</value>
   </data>

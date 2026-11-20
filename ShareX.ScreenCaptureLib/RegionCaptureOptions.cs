@@ -44,7 +44,8 @@ namespace ShareX.ScreenCaptureLib
         public bool DetectWindows = true;
         public bool DetectControls = true;
         // One overlay window across every monitor repaints the whole virtual screen on each mouse move, which is slow on
-        // large or USB (DisplayLink) multi-monitor setups. The monitor under the cursor alone redraws about 3 to 4 times faster.
+        // large or USB (DisplayLink) multi-monitor setups. When true, each monitor gets its own overlay window: the cursor
+        // moves freely between monitors, a selection stays on one monitor, and only the window under the cursor redraws.
         public bool ActiveMonitorOnly = true;
         public int BackgroundDimStrength = 20;
         public bool DimAllExceptSelection = false;

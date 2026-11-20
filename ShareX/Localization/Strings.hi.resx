@@ -2588,9 +2588,6 @@
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>प्रतिस्थापन:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>कैप्चर और कर्सर को सक्रिय मॉनिटर तक सीमित करें</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>परिणाम URL के लिए HTTPS बाध्य करें</value>
   </data>

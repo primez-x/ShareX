@@ -2588,9 +2588,6 @@ Do you want to abort the active registrazione schermo?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Sostituzione:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Limita acquisizione e cursore al monitor attivo</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Forza HTTPS per gli URL risultanti</value>
   </data>

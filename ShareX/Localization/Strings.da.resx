@@ -2588,9 +2588,6 @@ Vil du afbryde den aktive skærmoptagelse?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Erstatning:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Begræns optagelsen og markøren til den aktive skærm</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Gennemtving HTTPS for resultat-URL'er</value>
   </data>

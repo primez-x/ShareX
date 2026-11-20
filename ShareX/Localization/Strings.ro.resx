@@ -2588,9 +2588,6 @@ Vrei să anulezi înregistrarea activă a ecranului?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Înlocuire:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Limitează captura și cursorul la monitorul activ</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Forțează HTTPS pentru URL-urile rezultate</value>
   </data>

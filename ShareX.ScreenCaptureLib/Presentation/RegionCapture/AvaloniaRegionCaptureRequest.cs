@@ -27,6 +27,7 @@
 
 using ShareX.ImageEditor.Integration;
 using SkiaSharp;
+using System;
 using System.Drawing;
 
 namespace ShareX.ScreenCaptureLib.Presentation.RegionCapture;
@@ -50,4 +51,10 @@ public sealed class AvaloniaRegionCaptureRequest
 
     /// <summary>Cursor draw position in screenshot pixel coordinates.</summary>
     public Point CursorPosition { get; init; }
+
+    /// <summary>
+    /// Captures the physical-pixel bounds of another monitor. When set, <see cref="Screenshot"/> covers the monitor under
+    /// the cursor, and region selection opens one more window for each other monitor.
+    /// </summary>
+    public Func<Rectangle, SKBitmap>? CaptureMonitor { get; init; }
 }

@@ -2588,9 +2588,6 @@ Chcete aktivní nahrávání obrazovky přerušit?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Náhrada:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Omezit zachycení a kurzor na aktivní monitor</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Vynutit HTTPS u výsledných adres URL</value>
   </data>

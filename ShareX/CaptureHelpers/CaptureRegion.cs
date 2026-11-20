@@ -88,7 +88,8 @@ namespace ShareX
                 // The editor is the single annotation surface. The user opens the editor from the capture preview.
                 EnableAnnotations = false,
                 CursorBitmap = cursorBitmap,
-                CursorPosition = cursorPosition
+                CursorPosition = cursorPosition,
+                CaptureMonitor = activeMonitorMode ? screenshot.CaptureRectangle : null
             };
 
             AvaloniaRegionCaptureResult result = await RegionCaptureIntegration.CaptureAsync(request);

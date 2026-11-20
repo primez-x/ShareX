@@ -2588,9 +2588,6 @@ Ejecute ShareX como administrador y cambie la ubicación de la carpeta personal.
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Reemplazo:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Restringir la captura y el cursor al monitor activo</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Forzar HTTPS en las URL resultantes</value>
   </data>

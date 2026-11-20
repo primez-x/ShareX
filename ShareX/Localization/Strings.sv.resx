@@ -2588,9 +2588,6 @@ Vill du avbryta den aktiva skärminspelningen?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Ersättning:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Begränsa bildtagning och markör till den aktiva bildskärmen</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>Tvinga HTTPS för resultat-URL:er</value>
   </data>

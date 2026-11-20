@@ -2588,9 +2588,6 @@ Do you want to megszakítás the active képernyőfelvétel?</value>
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>Csere:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>Rögzítés és kurzor korlátozása az aktív monitorra</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>HTTPS kényszerítése az eredmény URL-jeinél</value>
   </data>

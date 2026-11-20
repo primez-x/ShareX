@@ -2588,9 +2588,6 @@
   <data name="TaskSettingsWindow_Replacement" xml:space="preserve">
     <value>การแทนที่:</value>
   </data>
-  <data name="TaskSettingsWindow_RestrictCaptureAndCursorToTheActiveMonitor" xml:space="preserve">
-    <value>จำกัดการจับภาพและเคอร์เซอร์ไว้ที่จอภาพที่ใช้งานอยู่</value>
-  </data>
   <data name="TaskSettingsWindow_ResultForceHTTPS" xml:space="preserve">
     <value>บังคับใช้ HTTPS สำหรับ URL ผลลัพธ์</value>
   </data>

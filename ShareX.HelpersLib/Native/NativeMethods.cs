@@ -145,14 +145,6 @@ namespace ShareX.HelpersLib
         [DllImport("user32.dll")]
         public static extern short GetAsyncKeyState(int keyCode);
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ClipCursor(in RECT rectangle);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ClipCursor(IntPtr rectangle);
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern IntPtr GetParent(IntPtr hWnd);
 
